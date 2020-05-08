@@ -1,4 +1,4 @@
-##2049
+# 2049
 
 2049 is a puzzle game based on Gabrielle Cirulli's 2048. Match and add tiles to create the 2049 tile.
 
