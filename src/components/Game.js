@@ -1,13 +1,12 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component } from 'react';
 import Info from './Info';
 import Board from './Board';
-var GameManager = require('../GameManager');
-//import PropTypes from 'prop-types';
 
 class Game extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Game
             board: [],
             previousBoards: [],
             cells: [],
@@ -17,7 +16,6 @@ class Game extends Component {
             score: 0,
             bestScore: 0,
             
-
             //Timer
             hr: 0,
             min: 0,
@@ -45,28 +43,20 @@ class Game extends Component {
       }
 
     initGame() {
-        //if previous game = true
-            //load previous
-        //else 
-            //load new game
-                // get tiles
-
         this.getBoard(null);
-        this.startTime();
-
-        console.log('Initializing game master', GameManager);          
+        this.startTime();        
     }
     getBoard(data) {
         var board = [];
         var cells = [];
 
-        // If no previous game is found, create new board
+        //If no previous game is found, create new board
         if (!this.state.currentBoard && this.state.board.length < (this.props.size * this.props.size)) {
             var tileType;
             var startTile1 = Math.floor(Math.random() * 16 + 1);
             var startTile2 = Math.floor(Math.random() * 16 + 1);
 
-            //select two beginning tile locations at random
+            //Select two beginning tile locations at random
             while (startTile1 === startTile2) {
                 startTile2 = Math.floor(Math.random() * 16 + 1);
             }
@@ -75,13 +65,14 @@ class Game extends Component {
             for (var x = 0; x < this.props.size; x++){
                 var row = [];
                 for (var y = 0; y < this.props.size; y++){
+                    //Add random tiles
                     counter++;
-                    //add random tiles
                     if (counter === startTile1 || counter === startTile2) {
                         tileType = true;
                     } else {
                         tileType = false;
                     }   
+
                     //Add tile to board
                     board.push(this.newTile(x, y, tileType));
                     row.push(this.newTile(x, y, tileType));
@@ -98,12 +89,12 @@ class Game extends Component {
         } else if (!data){
             this.getBoard(null);
         } else {
-            for (var x = 0; x < this.props.size; x++){
+            for (var a = 0; a < this.props.size; a++){
                 var row = [];
-                for (var y = 0; y < this.props.size; y++){ 
+                for (var b = 0; b < this.props.size; b++){ 
                     //Add tile to board
-                    board.push(data[x][y]);
-                    row.push(data[x][y]);
+                    board.push(data[a][b]);
+                    row.push(data[a][b]);
                 }
                 cells.push(row);
             }
@@ -111,7 +102,6 @@ class Game extends Component {
             this.setState({
                 board: board,
                 currentBoard: board,
-                previousBoards: [],
                 cells: cells
             });            
         }
@@ -122,8 +112,6 @@ class Game extends Component {
         for (var a = 0; a < this.state.previousBoards.length; a++){
             prevBoards.push(this.state.previousBoards[a]);
         }
-            
-        console.log(prevBoards, this.state.previousBoards);
 
         this.setState({
             previousBoards: prevBoards
@@ -254,9 +242,7 @@ class Game extends Component {
         });            
     }
     move () {
-        console.log('======================= MOVE ======================');
-        console.log('board before move', this.state.board);
-
+        //Move start
         var moved;
 
         this.setState({
@@ -283,15 +269,11 @@ class Game extends Component {
 
                 cell = { x: x, y: y };
                 tile = this.cellContent(cell);
-                //console.log(cell, 'tile', tile);
 
                 if (tile){
                     var positions = this.findFarthestPosition(cell, this.state.vector);
                     next = this.cellContent(positions.next);
                     
-                    //console.log('moveTile:', 'tile', tile, 'next', next);
-                    //console.log('orignal & farthest' , cell, positions.farthest);
-
                     //merge with next tile
                     if (next && next.num === tile.num && next.mergedFrom === null && (next.x !== tile.x || next.y !== tile.y)){
                         var newNum = Math.round(tile.num * 2);
@@ -304,7 +286,6 @@ class Game extends Component {
                             previousPosition: cell
                         };
 
-                        //var merged = this.newTile(next.x, next.y, false, newNum, [tile, next], cell);
                         console.log('merged : ', merged);
                         
                         this.removeTile(cell);
@@ -331,16 +312,13 @@ class Game extends Component {
             //add randomm tile if possible
             this.addRandomTile();
 
+            //Update high score
             if (this.state.bestScore < this.state.score) {
                 this.setState({
                     bestScore: this.state.score
                 });
             }
         }
-
-        //console.log('cells after move', this.state.cells);
-        console.log('moved', moved);
-        console.log('board after move', this.state.board);
     }
     getVector(direction) {
         var map = {
@@ -366,7 +344,7 @@ class Game extends Component {
 
         return {
             farthest: previous,
-            next: /*!this.withinBounds(next) ? previous :*/ cell
+            next: cell
         }
     }
         
@@ -408,10 +386,11 @@ class Game extends Component {
         if (vector.y === 1) {
             traversals.y = traversals.y.reverse();
         }       
-        console.log('traversals', traversals);
+
         return traversals;
     }
     board(grid){
+        //get board array from current grid
         var board = [];
 
         if (grid && grid.length === this.props.size){
@@ -472,8 +451,6 @@ class Game extends Component {
         var cells = [];
         var grid = this.state.cells;
 
-        //console.log('before update', grid);
-
         for (var x = 0; x < this.props.size; x++){
             var row = [];
             for (var y = 0; y < this.props.size; y++){ 
@@ -483,11 +460,6 @@ class Game extends Component {
         }    
 
         cells[cell.x][cell.y] = this.newTile(cell.x, cell.y, false, tile.num, tile.mergedFrom, tile.previousPosition);
-        //cells[cell.x][cell.y] = tile;
-
-        var newBoard = this.board(cells);
-
-        //console.log('after update', cells);
 
         this.setState({
             cells: cells,
@@ -495,10 +467,9 @@ class Game extends Component {
         });
     }
     moveTile(tile, cell) {
-        console.log('moving tile', tile, 'to cell', cell);
-
+        //Remove previous tile
         this.removeTile(tile);
-
+        //Add new tile
         this.updatePosition(tile, cell);
     }
     insertTile(tile, cell){
@@ -517,15 +488,14 @@ class Game extends Component {
 
         this.setState({
             cells: cells,
-            board: this.board(cells)
+            board: this.board(cells),
+            currentBoard: this.board(cells)
 
         });
     }
-    removeTile(tile, grid){
+    removeTile(tile){
         var cells = [];
         var grid = this.state.cells;
-
-        console.log('before update', grid);
 
         for (var x = 0; x < this.props.size; x++){
             var row = [];
@@ -540,7 +510,8 @@ class Game extends Component {
 
         this.setState({
             cells: cells,
-            board: this.board(cells)
+            board: this.board(cells),
+            currentBoard: this.board(cells)
         });
     }
 
@@ -614,11 +585,9 @@ class Game extends Component {
             fontFamily: 'Karla',   
             height: '560px',
             width: '440px',
-            //border: 'solid .5pt',
             borderRadius: '9px',
             padding: '12px',
             backgroundColor: '#faf8ef'
-                
         }
 
         return (

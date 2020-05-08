@@ -24,7 +24,6 @@ class Board extends Component {
     }
 }
 
-
 class Tile extends Component {
     constructor(props) {
         super(props);
@@ -93,9 +92,7 @@ class Tile extends Component {
         let tileStyle = {
             height: '87px',
             width: '87px',
-            //border: 'solid 1pt',
             borderRadius: 9,
-            //boxShadow: '.1px .1px .1px #776e65',
             margin: '7px',
             display: 'inline-block',
             userSelect: 'none',
@@ -115,7 +112,6 @@ class Number extends Component {
     render (){
         let numStyle = {
             fontFamily: 'arial',
-            //color: this.props.number !== null ? ('#775e65') : '#cdc1b4',
             fontSize: '3em',
             fontWeight: 'bold',
             textShadow: this.props.number !== null ? '.6px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
@@ -136,9 +132,6 @@ class Number extends Component {
 
 Board.propTypes = {
     board: PropTypes.array.isRequired
-}
-Tile.propTypes = {
-    //num: PropTypes.number.isRequired
 }
 
 export default Board; 

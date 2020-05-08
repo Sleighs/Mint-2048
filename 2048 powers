@@ -1,6 +1,17 @@
-2048 powers
-	bomb
+Overview
+
+Move tiles to add and create the 2049 tile.
+
+Get powers from 
+	- Creating 2049 tiles
+	- Making high scoring moves
+	- Doubling highest tile
+
+Powers
+	Transmute
 		turn a 2 into a 4
-	halve
-		halve a piece
+	Bomb
+		halves a tiles number
+	Freeze
+		Prevent a tile from merging
 

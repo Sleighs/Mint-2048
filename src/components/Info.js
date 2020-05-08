@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-//render game info
+//Render game info
 class Info extends Component {
     render (){
         let infoStyle = {
@@ -13,10 +13,9 @@ class Info extends Component {
             fontSize: '2em',
             userSelect: 'none',
             fontFamily: 'Kanit'
-            //border: '1pt solid red'
         }
         let gameTitleStyle = {
-            fontFamily: 'arial', //'Bitter',
+            fontFamily: 'Bitter',
             display: 'block',
             float: 'left',
             fontWeight: 'bold',
@@ -25,15 +24,12 @@ class Info extends Component {
             height: 70,
             padding: '-10px 0 0 0',
             fontSize: '1.75em',
-            //border: '1pt solid gold',
             color: '#775e65'
         }
-        var infoContainerStyle = {
+        let infoContainerStyle = {
             display: 'block',
-            //border: '1pt solid',
             height: 70,
             width: 405
-
         }
 
         return (
@@ -45,7 +41,6 @@ class Info extends Component {
                 </div>
                 <Score score={this.props.score} bestScore={this.props.bestScore}/>
             </div>
-            
         </div>
         )
     } 
@@ -56,7 +51,6 @@ class Time extends Component {
         let timeStyle = {
             display: 'block',
             fontFamily: 'arial',
-            //border: '1pt solid blue',
             height: 35,
             width: 403,
             margin: '-19px 0 0 0',
@@ -65,7 +59,6 @@ class Time extends Component {
             color: '#777e65'
         }
         let digitStyle = {
-            //border: 'solid 1pt gold',
             textAlign: 'center',
             width: '100%',
             margin: 'auto'
