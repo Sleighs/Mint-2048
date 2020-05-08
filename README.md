@@ -4,6 +4,6 @@
 
 ***
 
-In the project directory, run `npm start` to run the app in development mode at http://localhost:3000.
+In the project directory, run `npm start` to run the app in development mode at localhost:3000.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
