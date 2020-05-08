@@ -1,0 +1,21 @@
+change log
+completed
+    - board components
+    - 4/26 board css
+    - 4/26 timer
+    - score
+    - 4/28 css shadow
+    - 4/29 remove tile
+    - week of 5/1 - removed sending the grid from the move function to move tile functions and instead had each function that moved or removed tiles get the grid from the state, change the grid, then save the state. 
+    - 5/7 gameplay works
+        - the farthest position function was changed from only returning the farthest position to sending back the farthest and the next position. Before each tile was made to move to the farthest position and when it was unavailable tiles wouldnt move.
+
+todo
+    - menu
+    - undo
+    - save progress
+    - track stats
+    - powers
+
+misc
+    - add onhover to timer, click to turn on and off
