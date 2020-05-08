@@ -15,11 +15,11 @@ class Info extends Component {
             fontFamily: 'Kanit'
         }
         let gameTitleStyle = {
-            fontFamily: 'Arial',//'Bitter',
+            fontFamily: 'Arial',
             display: 'block',
             float: 'left',
             fontWeight: 'bold',
-            textShadow: '1px 1px 1px #bbada0',
+            borderRadius: 4,
             width: 135,
             height: 135,
             padding: '45px 10px',
@@ -158,6 +158,19 @@ class Score extends Component {
 }
 
 class Buttons extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            
+        }
+    }
+    
+    newGame(){
+        console.log('New Game!!!');
+    }
+    undoMove(){
+        console.log("UNDO MOVE!!!!")
+    }
     render (){
         let containerStyle = {
             height: 65,
@@ -186,8 +199,8 @@ class Buttons extends Component {
 
         return (
             <div className='btnContainer' style={containerStyle}>
-                <button className='info-btn info-btn-left' style={btnStyle}>{"New"}</button>
-                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}}>{"Undo"}</button>
+                <button className='info-btn info-btn-left' style={btnStyle} onClick={()=>{this.newGame()}}>{"New"} </button>
+                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}} onClick={()=>{this.undoMove()}}>{"Undo"}</button>
             </div>
         )
     }

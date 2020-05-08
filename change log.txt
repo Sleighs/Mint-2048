@@ -18,6 +18,7 @@ todo
     - save progress
     - track stats
     - powers
+    - lose game
 
 misc
     - add onhover to timer, click to turn on and off
