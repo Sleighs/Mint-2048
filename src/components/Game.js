@@ -583,7 +583,7 @@ class Game extends Component {
     render() {
         let style = {
             fontFamily: 'Karla',   
-            height: '560px',
+            height: '620px',
             width: '440px',
             borderRadius: '9px',
             padding: '12px',

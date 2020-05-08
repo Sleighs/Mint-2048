@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 class Info extends Component {
     render (){
         let infoStyle = {
-            height: 112,
+            height: 170,
             width: 412,
             padding: 5,
             margin: 'auto',
@@ -15,21 +15,31 @@ class Info extends Component {
             fontFamily: 'Kanit'
         }
         let gameTitleStyle = {
-            fontFamily: 'Bitter',
+            fontFamily: 'Arial',//'Bitter',
             display: 'block',
             float: 'left',
             fontWeight: 'bold',
             textShadow: '1px 1px 1px #bbada0',
-            width: 120,
-            height: 70,
-            padding: '-10px 0 0 0',
-            fontSize: '1.75em',
-            color: '#775e65'
+            width: 135,
+            height: 135,
+            padding: '45px 10px',
+            color: 'white',
+            backgroundColor: '#edcc61'
+        }
+        let titleStyle = {
+            textAlign: 'center',
+            fontSize: '1em',
         }
         let infoContainerStyle = {
             display: 'block',
-            height: 70,
+            height: 170,
             width: 405
+        }
+        let infoRightStyle = {
+            display: 'inline-block',
+            width: 270,
+            height: 170
+            
         }
 
         return (
@@ -37,9 +47,12 @@ class Info extends Component {
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
                 <div className='game-title' style={gameTitleStyle}>
-                    {"2049"}
+                    <div className='title' style={titleStyle}>{"2049"}</div>
                 </div>
-                <Score score={this.props.score} bestScore={this.props.bestScore}/>
+                <div className='info-right' style={infoRightStyle}>
+                    <Score score={this.props.score} bestScore={this.props.bestScore}/>
+                    <Buttons pressed={false}/>
+                </div>  
             </div>
         </div>
         )
@@ -53,10 +66,10 @@ class Time extends Component {
             fontFamily: 'arial',
             height: 35,
             width: 403,
-            margin: '-19px 0 0 0',
+            margin: '-17px 0 0 0',
             fontSize: '.7em',
             textShadow: '.3px .3px .3px silver',
-            color: '#777e65'
+            color: '#776e65'
         }
         let digitStyle = {
             textAlign: 'center',
@@ -82,29 +95,29 @@ class Score extends Component {
         let scoreBoxStyle = {
             display: 'inline-block',
             textAlign: 'center',
-            textShadow: '.1px .1px .1px #776e65',
+            //textShadow: '.1px .1px .1px #776e65',
             float: 'right',
             minWidth: 210,
-            height: 75,
+            height: 77,
             padding: '5px 0',
             margin: 'auto',
             color: 'white',
             fontFamily: 'arial'
         }
         let scoreStyle = {
-            fontSize: '.7em',
+            fontSize: '.79em',
             height: 25
         }
         let titleStyle = {
-            fontSize: '.5em',
+            fontSize: '.58em',
             height: 22
         }
         let scoreContainerStyle = {
             display: 'inline-block',
             borderRadius: 4,
             padding: '4px 15px',
-            height: 55,
-            minWidth: 85,
+            height: 60,
+            minWidth: 90,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
             margin: 'auto'
@@ -113,8 +126,8 @@ class Score extends Component {
             display: 'inline-block',
             borderRadius: 4,
             padding: '4px 15px',
-            height: 55,
-            minWidth: 85,
+            height: 60,
+            minWidth: 90,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
             float: 'right'            
@@ -142,6 +155,42 @@ class Score extends Component {
             </div>
         )
     } 
+}
+
+class Buttons extends Component {
+    render (){
+        let containerStyle = {
+            height: 65,
+            width: 195,
+            margin: 'auto',
+            display: 'block',
+            float: 'right',
+        }
+        let btnStyle = {
+            width: 90,
+            height: 60,
+            backgroundColor: '#775e65',
+            color: 'white',
+            fontSize: '.7em',
+            margin: 'auto',
+            display: 'inline-block',
+            borderRadius: 4,
+            padding: '4px 15px',
+            textDecoration: 'none',
+            border: 'none'
+        }
+        let undoStyle = {
+
+            float: 'right'
+        }
+
+        return (
+            <div className='btnContainer' style={containerStyle}>
+                <button className='info-btn info-btn-left' style={btnStyle}>{"New"}</button>
+                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}}>{"Undo"}</button>
+            </div>
+        )
+    }
 }
 
 Info.propTypes = {

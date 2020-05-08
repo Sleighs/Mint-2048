@@ -9,7 +9,9 @@ completed
     - week of 5/1 - removed sending the grid from the move function to move tile functions and instead had each function that moved or removed tiles get the grid from the state, change the grid, then save the state. 
     - 5/7 gameplay works
         - the farthest position function was changed from only returning the farthest position to sending back the farthest and the next position. Before each tile was made to move to the farthest position and when it was unavailable tiles wouldnt move.
-
+    5/8 
+        - css for new and undo buttons
+        - commited project to github under 2049
 todo
     - menu
     - undo
