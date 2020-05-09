@@ -15,6 +15,7 @@ class Game extends Component {
             lastDirection: null,
             score: 0,
             bestScore: 0,
+            undo: false,
             
             //Timer
             hr: 0,
@@ -32,6 +33,8 @@ class Game extends Component {
         }
         this.initGame = this.initGame.bind(this);
         this.handleInput = this.handleInput.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.undoMove = this.undoMove.bind(this);
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleInput);
@@ -108,9 +111,11 @@ class Game extends Component {
     }
     prevBoards() {
         var prevBoards = [];
-    
-        for (var a = 0; a < this.state.previousBoards.length; a++){
-            prevBoards.push(this.state.previousBoards[a]);
+        
+        if (this.state.previousBoards.length > 0) {
+            for (var a = 0; a < this.state.previousBoards.length; a++){
+                prevBoards.push(this.state.previousBoards[a]);
+            }
         }
 
         this.setState({
@@ -153,6 +158,34 @@ class Game extends Component {
             sec: timeElapsed.getUTCSeconds(),
             ms: timeElapsed.getUTCMilliseconds()
         });   
+    }
+    
+    newGame(){
+        console.log('New Game!!!');
+    }
+    undoMove(undo){
+        console.log("UNDO MOVE!!!!");
+        console.log(this.state.previousBoards);
+        
+        if(this.state.previousBoards.length > 0 ){
+            var board = this.state.previousBoards[this.state.previousBoards.length - 1];
+
+            var cells = this.grid(board);
+
+            this.setState({
+                board: board,
+                currentBoard: board,
+                cells: cells
+            });
+        }
+
+    }
+    handleClick(event){
+        event.preventDefault();
+        if (event){
+            console.log('e', event);
+        }
+        
     }
     handleInput(event) {
         this.setState({
@@ -286,8 +319,6 @@ class Game extends Component {
                             previousPosition: cell
                         };
 
-                        console.log('merged : ', merged);
-                        
                         this.removeTile(cell);
                         //this.insertTile(merged, {x: next.x, y: next.y});
                         this.updatePosition(merged, {x: next.x, y: next.y});
@@ -319,6 +350,22 @@ class Game extends Component {
                 });
             }
         }
+
+        //Save board for undo
+        var prevBoards = [];
+        
+        if (this.state.previousBoards.length > 0) {
+            for (var a = 0; a < this.state.previousBoards.length; a++){
+                prevBoards.push(this.state.previousBoards[a]);
+            }
+        }
+
+        prevBoards.push(this.state.board);
+
+        this.setState({
+            previousBoards: prevBoards
+        });
+        
     }
     getVector(direction) {
         var map = {
@@ -336,7 +383,6 @@ class Game extends Component {
         do {
             previous = cell;
             cell = {x: previous.x + vector.x, y: previous.y + vector.y };
-            console.log('cell in ffp', cell)
         } while (
             //check to see if tile location exists in bounds and unoccupied
             this.withinBounds(cell) && this.cellAvailable(cell)
@@ -538,7 +584,6 @@ class Game extends Component {
 
             if (availableCells.length > 0){
                 var randomCell = Math.floor(Math.random() * availableCells.length);
-                console.log('avail', availableCells, availableCells.length);
                 var randomTile = availableCells[randomCell];
                 var newRandomTile = this.newTile(randomTile.x, randomTile.y, true, null, null, null, null);
 
@@ -592,7 +637,7 @@ class Game extends Component {
 
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
-                <Info minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} />
+                <Info newGame={this.newGame} undo={this.undoMove} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} />
                 <Board board={this.state.board} userID='user'/>
             </div>
         );

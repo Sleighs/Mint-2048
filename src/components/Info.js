@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 
 //Render game info
 class Info extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+    }
+
     render (){
         let infoStyle = {
             height: 170,
@@ -51,7 +58,7 @@ class Info extends Component {
                 </div>
                 <div className='info-right' style={infoRightStyle}>
                     <Score score={this.props.score} bestScore={this.props.bestScore}/>
-                    <Buttons pressed={false}/>
+                    <Buttons pressed={false} newGame={this.props.newGame} undo={this.props.undo}/>
                 </div>  
             </div>
         </div>
@@ -165,12 +172,6 @@ class Buttons extends Component {
         }
     }
     
-    newGame(){
-        console.log('New Game!!!');
-    }
-    undoMove(){
-        console.log("UNDO MOVE!!!!")
-    }
     render (){
         let containerStyle = {
             height: 65,
@@ -199,8 +200,8 @@ class Buttons extends Component {
 
         return (
             <div className='btnContainer' style={containerStyle}>
-                <button className='info-btn info-btn-left' style={btnStyle} onClick={()=>{this.newGame()}}>{"New"} </button>
-                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}} onClick={()=>{this.undoMove()}}>{"Undo"}</button>
+                <button className='info-btn info-btn-left' style={btnStyle} onClick={this.props.newGame}>{"New"} </button>
+                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}</button>
             </div>
         )
     }
