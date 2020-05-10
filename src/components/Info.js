@@ -171,7 +171,7 @@ class Buttons extends Component {
             
         }
     }
-    
+
     render (){
         let containerStyle = {
             height: 65,
@@ -194,7 +194,6 @@ class Buttons extends Component {
             border: 'none'
         }
         let undoStyle = {
-
             float: 'right'
         }
 
