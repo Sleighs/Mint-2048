@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import GameManager from '../GameManager';
 
 //Render game info
 class Info extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            
-        }
     }
 
     render (){
@@ -31,7 +29,9 @@ class Info extends Component {
             height: 135,
             padding: '45px 10px',
             color: 'white',
-            backgroundColor: '#edcc61'
+            backgroundColor: '#edcc61',
+            //background: 'rgb(237,224,200)',
+            //background: 'radial-gradient(circle, rgba(237,224,200,1) 0%, rgba(236,204,100,1) 61%, rgba(246,94,59,1) 68%)'
         }
         let titleStyle = {
             textAlign: 'center',
@@ -167,9 +167,6 @@ class Score extends Component {
 class Buttons extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        }
     }
 
     render (){
@@ -199,8 +196,8 @@ class Buttons extends Component {
 
         return (
             <div className='btnContainer' style={containerStyle}>
-                <button className='info-btn info-btn-left' style={btnStyle} onClick={this.props.newGame}>{"New"} </button>
-                <button className='info-btn info-btn-right' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}</button>
+                <button className='info-btn info-btn-left newgame-btn' style={btnStyle} onClick={this.props.newGame}>{"New"} </button>
+                <button className='info-btn info-btn-right undo-btn' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}</button>
             </div>
         )
     }
@@ -209,5 +206,7 @@ class Buttons extends Component {
 Info.propTypes = {
     score: PropTypes.number.isRequired
 }
+
+
 
 export default Info; 

@@ -9,3 +9,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
+console.log('2049 is running on port 3000');
+

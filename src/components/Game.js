@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Info from './Info';
 import Board from './Board';
+import GameManager from '../GameManager';
 
 class Game extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Game extends Component {
             score: 0,
             bestScore: 0,
             undo: false,
+            canUndo: false,
             
             //Timer
             hr: 0,
@@ -29,12 +31,15 @@ class Game extends Component {
             stoppedDuration: 0, 
             masterTime: null,
             started: null,
-            timeState: "new"
+            timeState: "new",
+            interval: null
         }
         this.initGame = this.initGame.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.undoMove = this.undoMove.bind(this);
+        this.newGame = this.newGame.bind(this);
+        this.actuate = this.actuate.bind(this);
     }
     componentDidMount() {
         document.addEventListener('keydown', this.handleInput);
@@ -54,7 +59,7 @@ class Game extends Component {
         var cells = [];
 
         //If no previous game is found, create new board
-        if (!this.state.currentBoard && this.state.board.length < (this.props.size * this.props.size)) {
+        if ((!this.state.currentBoard && this.state.board.length < (this.props.size * this.props.size) ) || GameManager.startNewGame === true) {
             var tileType;
             var startTile1 = Math.floor(Math.random() * 16 + 1);
             var startTile2 = Math.floor(Math.random() * 16 + 1);
@@ -83,11 +88,15 @@ class Game extends Component {
                 cells.push(row);
             }
 
+            var prevBoards = [];
+            prevBoards.push(board);
+
             this.setState({
                 board: board,
                 currentBoard: board,
                 cells: cells,
-                previousBoards: []
+                previousBoards: prevBoards,
+                score: 0
             }); 
         } else if (!data){
             this.getBoard(null);
@@ -123,61 +132,109 @@ class Game extends Component {
         });
     }
     startTime(){
-        if (this.state.timeState === "started"){
-            //this.stopTime();
-        } else {
-            if (this.state.timeBegan === null) {
-                this.setState({
-                    timeBegan: new Date(),
-                    timeBeganMaster: this.state.timeBegan
-                });        
-            }
+        if (this.state.timeStarted === true) {clearInterval(this.state.interval, 10)};
 
-            if (this.state.timestopped !== null) {
-                this.setState({
-                    stoppedDuration: this.state.stoppedDuration + (new Date() - this.state.timeStopped)
-                });
-            }
-
+        if (this.state.timeBegan === null) {
             this.setState({
-                timeState: 'started'
-            });
-
-            var interval = setInterval(() => {
-                this.clockRunning()
-            }, 100);  
+                timeBegan: new Date(),
+                timeBeganMaster: this.state.timeBegan
+            });        
         }
+
+        if (this.state.timestopped !== null) {
+            this.setState({
+                stoppedDuration: this.state.stoppedDuration + (new Date() - this.state.timeStopped)
+            });
+        }
+
+        this.setState({
+            timeState: 'running',
+            timeStarted: true
+        });
+
+        //var interval = setInterval(() => {this.clockRunning()}, 100); 
+
+        this.setState({
+            interval: setInterval(() => {
+                this.clockRunning()
+            }, 100)
+        }) 
+         
     }
     clockRunning(){
         var currentTime = new Date();
         var timeElapsed = new Date(currentTime - this.state.timeBegan);
         
         this.setState({
-            hour: timeElapsed.getUTCHours(),
+            hr: timeElapsed.getUTCHours(),
             min: timeElapsed.getUTCMinutes(),
             sec: timeElapsed.getUTCSeconds(),
             ms: timeElapsed.getUTCMilliseconds()
         });   
     }
-    
-    newGame(){
-        console.log('New Game!!!');
-    }
-    undoMove(undo){
-        console.log("UNDO MOVE!!!!");
-        console.log(this.state.previousBoards);
-        
-        if(this.state.previousBoards.length > 0 ){
-            var board = this.state.previousBoards[this.state.previousBoards.length - 1];
-
-            var cells = this.grid(board);
+    actuate(){
+        if (GameManager.startNewGame === true){
+            this.getBoard(null);
 
             this.setState({
-                board: board,
-                currentBoard: board,
-                cells: cells
+                hr: 0,
+                min: 0,
+                sec: 0,
+                ms: 0
             });
+    
+            this.startTime();  
+
+            GameManager.startNewGame = false;
         }
+
+        if (GameManager.undo === true && this.state.canUndo === true) {
+            console.log(this.state.previousBoards);
+            
+            if (this.state.previousBoards.length >= 2){
+                
+                var boards = [];
+
+                for (var i = 0; i < (this.state.previousBoards.length - 1); i++){
+                    boards.push(this.state.previousBoards[i]);
+                }
+
+                var board = boards[boards.length - 1];
+
+                console.log('boards', boards, board);
+    
+                //var cells = this.grid(board);
+    
+                this.setState({
+                    board: board,
+                    //currentBoard: board,
+                    previousBoards: boards,
+                    //cells: cells,
+                    canUndo: false
+                });
+            }
+
+            GameManager.undo = false;
+        }
+
+    }
+    newGame(){
+        console.log('New Game!!!');
+
+        if (GameManager.startNewGame !== true){
+            GameManager.startNewGame = true;
+        }
+        
+        this.actuate();
+    }
+    undoMove(){
+        console.log("UNDO!!");
+
+        if (GameManager.undo  !== true){
+            GameManager.undo = true;
+        }
+
+        this.actuate();
 
     }
     handleClick(event){
@@ -354,7 +411,7 @@ class Game extends Component {
         //Save board for undo
         var prevBoards = [];
         
-        if (this.state.previousBoards.length > 0) {
+        if (this.state.previousBoards) {
             for (var a = 0; a < this.state.previousBoards.length; a++){
                 prevBoards.push(this.state.previousBoards[a]);
             }
@@ -363,7 +420,8 @@ class Game extends Component {
         prevBoards.push(this.state.board);
 
         this.setState({
-            previousBoards: prevBoards
+            previousBoards: prevBoards,
+            canUndo: true
         });
         
     }
@@ -637,7 +695,7 @@ class Game extends Component {
 
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
-                <Info newGame={this.newGame} undo={this.undoMove} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} />
+                <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} />
                 <Board board={this.state.board} userID='user'/>
             </div>
         );
