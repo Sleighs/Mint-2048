@@ -18,6 +18,7 @@ class Game extends Component {
             bestScore: 0,
             undo: false,
             canUndo: false,
+            undoScore: 0,
             
             //Timer
             hr: 0,
@@ -45,22 +46,10 @@ class Game extends Component {
         document.addEventListener('keydown', this.handleInput);
         
         this.initGame();
-      }
+    }
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleInput);
-      }
-    /*useEffect(() => {
-        var interval = setInterval(() => {
-            this.clockRunning()
-
-        }, 100); 
-
-        var count = 0;
-        console.log('count', count);
-        return () => clearInterval(interval);
-
-    }, []);*/
-
+    }
     initGame() {
         this.getBoard(null);
         this.startTime();        
@@ -129,25 +118,27 @@ class Game extends Component {
             });            
         }
     }
-    prevBoards() {
+    /*prevBoards(board) {
         var prevBoards = [];
         
         if (this.state.previousBoards.length > 0) {
             for (var a = 0; a < this.state.previousBoards.length; a++){
-                if (this.state.previousBoards[a] !== this.state.previousBoards[a - 1]) {
-                    prevBoards.push(this.state.previousBoards[a]);
-                }
+                prevBoards.push(this.state.previousBoards[a]);  
             }
         }
+
+        //is grid is different than before add
+        if (prevBoards[prevBoards.length] !== board) {
+            prevBoards.push(board);
+        }
+
         console.log('prev boards', prevBoards);
 
         this.setState({
             previousBoards: prevBoards
         });
-    }
+    }*/
     startTime(type){
-        //if (this.state.timeStarted === true) {clearInterval(this.state.interval, 10)};
-
         if (this.state.timeBegan === null) {
             this.setState({
                 timeBegan: new Date(),
@@ -203,24 +194,25 @@ class Game extends Component {
         if (GameManager.undo === true && this.state.canUndo === true) {
             console.log(this.state.previousBoards);
             
+            // Get previous boards, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
-                
                 var boards = [];
 
-                for (var i = 0; i < (this.state.previousBoards.length - 1); i++){
+                for (var i = 0; i < this.state.previousBoards.length; i++){
                     boards.push(this.state.previousBoards[i]);
                 }
 
-                var board = boards[boards.length - 1];
+                boards.pop();
 
-                console.log('boards', boards, board);
+                var board = boards[boards.length-1];
 
                 this.setState({
                     board: board,
                     currentBoard: board,
                     previousBoards: boards,
                     cells: this.grid(board),
-                    canUndo: false
+                    canUndo: false,
+                    score: this.state.undoScore
                 });
             }
 
@@ -333,7 +325,7 @@ class Game extends Component {
         }
 
         //Save board for undo
-        var prevBoards = [];
+        /*var prevBoards = [];
         
         if (this.state.previousBoards) {
             for (var a = 0; a < this.state.previousBoards.length; a++){
@@ -343,12 +335,12 @@ class Game extends Component {
             }
         }
 
-        prevBoards.push(board);
+        prevBoards.push(board);*/
         
         this.setState({
             board: board,
             currentBoard: board,
-            previousBoards: prevBoards,
+            //previousBoards: prevBoards,
             cells: cells,
             canUndo: true
         });            
@@ -363,7 +355,8 @@ class Game extends Component {
 
         var traversals = this.traversals(this.state.vector); 
         this.setState({
-            traversals: traversals
+            traversals: traversals,
+            undoScore: this.state.score
         });
 
          //traverse grid
@@ -414,13 +407,13 @@ class Game extends Component {
                 
                 if (!this.positionsEqual(cell, positions.farthest)) {
                     moved = true;
-                    console.log (cell, position.farthest, moved);
+                    //console.log (cell, positions.farthest, moved);
                     
                 }
             });
         });
         
-        
+        console.log(moved);
         if (moved) {
             //add randomm tile if possible
             this.addRandomTile();
@@ -432,8 +425,17 @@ class Game extends Component {
                 });
             }
 
+
+            var prevBoards = [];
+            for (var m = 0; m < this.state.previousBoards.length; m++) {
+                prevBoards.push(this.state.previousBoards[m]);
+            }
+            prevBoards.push(this.state.board);
+            this.setState({
+                previousBoards: prevBoards
+            });
         }
-        
+
         this.setState({
             canUndo: true,
             counter: !this.state.counter ? 1 : this.state.counter + 1
@@ -614,7 +616,6 @@ class Game extends Component {
             cells: cells,
             board: this.board(cells),
             currentBoard: this.board(cells)
-
         });
     }
     removeTile(tile){
