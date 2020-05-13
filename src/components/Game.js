@@ -194,7 +194,7 @@ class Game extends Component {
         if (GameManager.undo === true && this.state.canUndo === true) {
             console.log(this.state.previousBoards);
             
-            // Get previous boards, remove most recent, update grid to previous board
+            // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
                 var boards = [];
 

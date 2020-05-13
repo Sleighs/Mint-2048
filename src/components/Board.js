@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import GameManager from '../GameManager';
 
 //render board
 class Board extends Component {
@@ -28,7 +29,7 @@ class Tile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            color: this.getColor()
+            
         }   
     }
 
@@ -88,12 +89,32 @@ class Tile extends Component {
         }
     }
 
+    getTileMargin(size){
+        var margin = '1px';
+        switch(size){
+            case 4:
+                margin = '7px';
+                break;
+            case 5:
+                margin = '5.8px';
+                break;
+            case 6:
+                margin = '4.8px';
+                break;
+            case 7:
+                margin = '2px';
+                break;
+        };
+
+        return margin;
+    }
+
     render (){
         let tileStyle = {
-            height: '87px',
-            width: '87px',
+            height: ((408 / GameManager.size) * .85),
+            width: ((408 / GameManager.size) * .85),
             borderRadius: 9,
-            margin: '7px',
+            margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
             userSelect: 'none',
             backgroundColor: this.getColor('background'),
@@ -109,17 +130,46 @@ class Tile extends Component {
 }
 
 class Number extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+
+        }   
+    }
+    
+    getFontSize(size){
+        var fontSize = '1em';
+
+        switch(size){
+            case 1:
+            case 2:
+            case 3:
+                fontSize = '3.5em';
+                break;
+            case 4:
+                fontSize = '3em';
+                break;
+            case 5:
+                fontSize = '2em';
+                break;
+            case 6:
+                fontSize = '1em';
+                break;
+        }
+        return fontSize;
+    }
+
     render (){
         let numStyle = {
             fontFamily: 'arial',
-            fontSize: '3em',
+            fontSize: this.getFontSize(GameManager.size),
             fontWeight: 'bold',
             textShadow: this.props.number !== null ? '.6px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
-            width: '80px',
-            height: '40px',
+            width: '70%',
+            height: '60%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: '10px'
+            marginTop: '10%'
         }
 
         return (

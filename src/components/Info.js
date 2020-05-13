@@ -27,7 +27,6 @@ class Info extends Component {
         console.log('showMenu', a)
     }
 
-    
 
     render (){
         let infoStyle = {
@@ -76,7 +75,7 @@ class Info extends Component {
         <div className='info' style={infoStyle}>
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle} /*onclick={menuVisible === false ? (()=>{this.showMenu('show')}) : (()=>{this.showMenu('hide')})}*/>
+                <div className='game-title' style={gameTitleStyle}>
                     <div className='title' style={titleStyle}>{"2048+"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
