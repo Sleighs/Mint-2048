@@ -10,8 +10,7 @@ class Menu extends Component {
         }
         return (
             <div className='menu-container' style={menuContainerStyle}>
-                
-                Menu
+
             </div>
         )
     }

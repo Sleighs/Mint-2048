@@ -165,7 +165,7 @@ class Number extends Component {
             fontSize: this.getFontSize(GameManager.size),
             fontWeight: 'bold',
             textShadow: this.props.number !== null ? '.6px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
-            width: '70%',
+            width: '92%',
             height: '60%',
             margin: 'auto',
             textAlign: 'center',
