@@ -16,8 +16,12 @@ completed
     5/10
         - high score 
     5/11
-        - undo button
-        - new game button
+        - undo button - reverts to previous board
+        - new game button - resets board
+    5/13
+        - undo button 
+        - new game
+        - added movesAvailable check
 
 
 todo
@@ -27,6 +31,7 @@ todo
     - powers
     - lose game
     - timer reset on new game
+    - undo 
     
 
 misc

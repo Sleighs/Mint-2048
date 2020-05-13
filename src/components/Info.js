@@ -6,7 +6,28 @@ import GameManager from '../GameManager';
 class Info extends Component {
     constructor(props){
         super(props);
+        this.state = {
+            menuVisible: false
+        }
+
+        this.showMenu = this.showMenu.bind(this);
     }
+    componentDidMount(){
+
+    }
+    showMenu(a) {
+        if (a === 'show') {
+            this.setState({ menuVisible: true });
+        }
+
+        if (a === 'hide') {
+            this.setState({ menuVisible: false });
+        }
+
+        console.log('showMenu', a)
+    }
+
+    
 
     render (){
         let infoStyle = {
@@ -49,12 +70,14 @@ class Info extends Component {
             
         }
 
+        const { menuVisible } = this.state;
+
         return (
         <div className='info' style={infoStyle}>
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle}>
-                    <div className='title' style={titleStyle}>{"2049"}</div>
+                <div className='game-title' style={gameTitleStyle} /*onclick={menuVisible === false ? (()=>{this.showMenu('show')}) : (()=>{this.showMenu('hide')})}*/>
+                    <div className='title' style={titleStyle}>{"2048+"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
                     <Score score={this.props.score} bestScore={this.props.bestScore}/>
@@ -206,7 +229,5 @@ class Buttons extends Component {
 Info.propTypes = {
     score: PropTypes.number.isRequired
 }
-
-
 
 export default Info; 

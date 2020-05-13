@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component,  useEffect } from 'react';
 import Info from './Info';
 import Board from './Board';
 import GameManager from '../GameManager';
@@ -49,6 +49,17 @@ class Game extends Component {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleInput);
       }
+    /*useEffect(() => {
+        var interval = setInterval(() => {
+            this.clockRunning()
+
+        }, 100); 
+
+        var count = 0;
+        console.log('count', count);
+        return () => clearInterval(interval);
+
+    }, []);*/
 
     initGame() {
         this.getBoard(null);
@@ -123,16 +134,19 @@ class Game extends Component {
         
         if (this.state.previousBoards.length > 0) {
             for (var a = 0; a < this.state.previousBoards.length; a++){
-                prevBoards.push(this.state.previousBoards[a]);
+                if (this.state.previousBoards[a] !== this.state.previousBoards[a - 1]) {
+                    prevBoards.push(this.state.previousBoards[a]);
+                }
             }
         }
+        console.log('prev boards', prevBoards);
 
         this.setState({
             previousBoards: prevBoards
         });
     }
-    startTime(){
-        if (this.state.timeStarted === true) {clearInterval(this.state.interval, 10)};
+    startTime(type){
+        //if (this.state.timeStarted === true) {clearInterval(this.state.interval, 10)};
 
         if (this.state.timeBegan === null) {
             this.setState({
@@ -152,19 +166,15 @@ class Game extends Component {
             timeStarted: true
         });
 
-        //var interval = setInterval(() => {this.clockRunning()}, 100); 
-
-        this.setState({
-            interval: setInterval(() => {
-                this.clockRunning()
-            }, 100)
-        }) 
-         
+        GameManager.interval = setInterval(() => {this.clockRunning()}, 100); 
+    }
+    stopTime(){
+        return clearInterval(GameManager.interval);
     }
     clockRunning(){
         var currentTime = new Date();
         var timeElapsed = new Date(currentTime - this.state.timeBegan);
-        
+
         this.setState({
             hr: timeElapsed.getUTCHours(),
             min: timeElapsed.getUTCMinutes(),
@@ -176,15 +186,17 @@ class Game extends Component {
         if (GameManager.startNewGame === true){
             this.getBoard(null);
 
+            this.stopTime();
+
             this.setState({
                 hr: 0,
                 min: 0,
                 sec: 0,
-                ms: 0
+                ms: 0,
+                timeBegan: new Date()
             });
-    
-            this.startTime();  
-
+            
+            this.startTime();
             GameManager.startNewGame = false;
         }
 
@@ -202,21 +214,18 @@ class Game extends Component {
                 var board = boards[boards.length - 1];
 
                 console.log('boards', boards, board);
-    
-                //var cells = this.grid(board);
-    
+
                 this.setState({
                     board: board,
-                    //currentBoard: board,
+                    currentBoard: board,
                     previousBoards: boards,
-                    //cells: cells,
+                    cells: this.grid(board),
                     canUndo: false
                 });
             }
 
             GameManager.undo = false;
         }
-
     }
     newGame(){
         console.log('New Game!!!');
@@ -235,14 +244,12 @@ class Game extends Component {
         }
 
         this.actuate();
-
     }
     handleClick(event){
         event.preventDefault();
         if (event){
-            console.log('e', event);
+            //console.log('e', event);
         }
-        
     }
     handleInput(event) {
         this.setState({
@@ -325,10 +332,25 @@ class Game extends Component {
             cells.push(row);
         }
 
+        //Save board for undo
+        var prevBoards = [];
+        
+        if (this.state.previousBoards) {
+            for (var a = 0; a < this.state.previousBoards.length; a++){
+                if (this.state.previousBoards[a] !== this.state.previousBoards[a - 1]){
+                    prevBoards.push(this.state.previousBoards[a]);
+                }
+            }
+        }
+
+        prevBoards.push(board);
+        
         this.setState({
             board: board,
             currentBoard: board,
-            cells: cells
+            previousBoards: prevBoards,
+            cells: cells,
+            canUndo: true
         });            
     }
     move () {
@@ -338,8 +360,6 @@ class Game extends Component {
         this.setState({
             vector: this.getVector(this.state.direction)
         });
-
-        this.prevBoards();
 
         var traversals = this.traversals(this.state.vector); 
         this.setState({
@@ -377,7 +397,6 @@ class Game extends Component {
                         };
 
                         this.removeTile(cell);
-                        //this.insertTile(merged, {x: next.x, y: next.y});
                         this.updatePosition(merged, {x: next.x, y: next.y});
 
                         // Update the score
@@ -386,15 +405,20 @@ class Game extends Component {
                         if (this.cellAvailable(positions.farthest)){
                             this.moveTile(tile, positions.farthest); 
                         }   
+                        
+                        this.setState({
+                            cells:this.grid(this.state.board)
+                        })
                     } 
                    
                 } 
                 
-                if (next && !this.positionsEqual(cell, next)) {
+                if (!this.positionsEqual(cell, positions.farthest)) {
                     moved = true;
                 }
             });
         });
+        
         
         if (moved) {
             //add randomm tile if possible
@@ -406,23 +430,18 @@ class Game extends Component {
                     bestScore: this.state.score
                 });
             }
-        }
 
-        //Save board for undo
-        var prevBoards = [];
+        }
         
-        if (this.state.previousBoards) {
-            for (var a = 0; a < this.state.previousBoards.length; a++){
-                prevBoards.push(this.state.previousBoards[a]);
-            }
-        }
-
-        prevBoards.push(this.state.board);
-
         this.setState({
-            previousBoards: prevBoards,
-            canUndo: true
-        });
+            canUndo: true,
+            counter: !this.state.counter ? 1 : this.state.counter + 1
+        })
+        console.log('++++++++++++ move ', this.state.counter,' +++++++++++++')
+        console.log('moves available', this.movesAvailable());
+        console.log('board after move', this.state.board);
+        console.log('prev boards', this.state.previousBoards);
+
         
     }
     getVector(direction) {
@@ -681,6 +700,9 @@ class Game extends Component {
                 }         
             }
         }    
+    }
+    movesAvailable() {
+        return (!!this.tileMatchesAvailable() && !!this.availableCells())
     }
 
     render() {
