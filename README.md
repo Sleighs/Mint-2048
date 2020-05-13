@@ -1,4 +1,6 @@
-# 2049
+# 2048+
+
+Play at https://plus-7ed02.firebaseapp.com/
 
 2049 is a puzzle game based on Gabrielle Cirulli's 2048. Match and add tiles to create the 2049 tile.
 
