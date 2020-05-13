@@ -1,9 +1,12 @@
 Overview for 2048+
 
-names
-super
-battle
-
+names ("2048...")
+	super
+	battle
+	blast
+	arena
+	royale
+	ultimate
 
 Move tiles to add and create the 2049 tile.
 

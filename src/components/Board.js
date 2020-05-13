@@ -137,7 +137,7 @@ class Number extends Component {
         }   
     }
     
-    getFontSize(size){
+    getFontSize(size, number){
         var fontSize = '1em';
 
         switch(size){
@@ -148,6 +148,12 @@ class Number extends Component {
                 break;
             case 4:
                 fontSize = '3em';
+                
+                if (number > 64 && number < 1024) {
+                    fontSize = '2.5em';
+                } else if (number > 1000 && number < 16000) {
+                    fontSize = '2em';
+                }
                 break;
             case 5:
                 fontSize = '2em';
@@ -156,20 +162,21 @@ class Number extends Component {
                 fontSize = '1em';
                 break;
         }
+
         return fontSize;
     }
 
     render (){
         let numStyle = {
             fontFamily: 'arial',
-            fontSize: this.getFontSize(GameManager.size),
+            fontSize: this.getFontSize(GameManager.size, this.props.number),
             fontWeight: 'bold',
             textShadow: this.props.number !== null ? '.6px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
-            width: '92%',
+            width: '95%',
             height: '60%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: '10%'
+            marginTop: this.props.number < 100 ? '11%' : '21%'
         }
 
         return (
