@@ -410,11 +410,12 @@ class Game extends Component {
                             cells:this.grid(this.state.board)
                         })
                     } 
-                   
                 } 
                 
                 if (!this.positionsEqual(cell, positions.farthest)) {
                     moved = true;
+                    console.log (cell, position.farthest, moved);
+                    
                 }
             });
         });

@@ -30,8 +30,7 @@ todo
     - track stats
     - powers
     - lose game
-    - timer reset on new game
-    - undo 
+    - swipe function 
     
 
 misc
