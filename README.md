@@ -1,4 +1,4 @@
-# 2048+
+# 2048 Mint
 
 Play at https://plus-7ed02.firebaseapp.com/
 
