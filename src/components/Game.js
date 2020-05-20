@@ -674,9 +674,9 @@ class Game extends Component {
 
     
     // Actuate Game
-    actuate(){
+    actuate(type){
         // New Game
-        if (GameManager.startNewGame === true){
+        if (type === 'new game' && GameManager.startNewGame === true){
             this.getBoard(null);
 
             this.stopTime();
@@ -695,7 +695,7 @@ class Game extends Component {
         }
 
         //Undo Move
-        if (GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0) {
+        if (type === 'undo' && GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0) {
             // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
                 var boards = [];
@@ -738,7 +738,7 @@ class Game extends Component {
             GameManager.startNewGame = true;
         }
         
-        this.actuate();
+        this.actuate('new game');
     }
     undoMove(){
         if (GameManager.undo  !== true){
@@ -747,7 +747,7 @@ class Game extends Component {
 
         console.log("Undo!", GameManager.undoCount);
 
-        this.actuate();
+        this.actuate('undo');
     }
     openMenu(){
         if (GameManager.showMenu !== true) {
