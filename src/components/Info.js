@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Menu from './Menu';
 import GameManager from '../GameManager';
 
 //Render game info
@@ -7,26 +8,8 @@ class Info extends Component {
     constructor(props){
         super(props);
         this.state = {
-            menuVisible: false
         }
-
-        this.showMenu = this.showMenu.bind(this);
     }
-    componentDidMount(){
-
-    }
-    showMenu(a) {
-        if (a === 'show') {
-            this.setState({ menuVisible: true });
-        }
-
-        if (a === 'hide') {
-            this.setState({ menuVisible: false });
-        }
-
-        console.log('showMenu', a)
-    }
-
 
     render (){
         let infoStyle = {
@@ -49,13 +32,14 @@ class Info extends Component {
             height: 135,
             padding: '45px 10px',
             color: 'white',
-            backgroundColor: '#edcc61',
+            backgroundColor: '#98E7BD' //'#BFF0D6'//'#C3FAE4', //'#edcc61',
             //background: 'rgb(237,224,200)',
             //background: 'radial-gradient(circle, rgba(237,224,200,1) 0%, rgba(236,204,100,1) 61%, rgba(246,94,59,1) 68%)'
         }
         let titleStyle = {
             textAlign: 'center',
-            fontSize: '1em',
+            fontSize: '1.4em',
+            margin: '-8px 0 0 0'
         }
         let infoContainerStyle = {
             display: 'block',
@@ -69,14 +53,12 @@ class Info extends Component {
             
         }
 
-        const { menuVisible } = this.state;
-
         return (
         <div className='info' style={infoStyle}>
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle}>
-                    <div className='title' style={titleStyle}>{"2048+"}</div>
+                <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
+                    <div className='title' style={titleStyle}>{"2048"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
                     <Score score={this.props.score} bestScore={this.props.bestScore}/>

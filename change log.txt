@@ -22,6 +22,8 @@ completed
         - undo button 
         - new game
         - added movesAvailable check
+    5/20
+        - moved returns false if player moves and no tiles move
 
 
 todo
@@ -32,10 +34,11 @@ todo
     - lose game
     - swipe function 
     - resize game for different sizes
+    - 
     
 
 misc
-    - add onhover to timer, click to turn on and off
+    - add onhover to timer, click to display on and off
 
 
 notes

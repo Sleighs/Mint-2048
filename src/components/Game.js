@@ -1,7 +1,9 @@
-import React, { Component,  useEffect } from 'react';
+import React, { Component } from 'react';
 import Info from './Info';
 import Board from './Board';
+import Menu from './Menu';
 import GameManager from '../GameManager';
+import Swipe from 'react-easy-swipe';
 
 class Game extends Component {
     constructor(props) {
@@ -13,9 +15,9 @@ class Game extends Component {
             cells: [],
             savedGame: false,
             turnCount: 0,
-            lastDirection: null,
             score: 0,
             bestScore: 0,
+            menuVisible: false,
             undo: false,
             canUndo: false,
             undoScore: 0,
@@ -37,7 +39,8 @@ class Game extends Component {
         }
         this.initGame = this.initGame.bind(this);
         this.handleInput = this.handleInput.bind(this);
-        this.handleClick = this.handleClick.bind(this);
+        this.direction = this.direction.bind(this);
+        this.openMenu = this.openMenu.bind(this);
         this.undoMove = this.undoMove.bind(this);
         this.newGame = this.newGame.bind(this);
         this.actuate = this.actuate.bind(this);
@@ -50,9 +53,110 @@ class Game extends Component {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleInput);
     }
+    
+    
+    // Input Handles
+    handleInput(event) {
+        if (event.keyCode === 13) {
+          console.log('enter pressed');
+        }
+
+        if (event.keyCode === 38) {
+            // up arrow
+            console.log("up arrow pressed");
+            this.setState({
+                direction: 0
+            });
+            this.move();
+        }
+        else if (event.keyCode === 40) {
+            // down arrow
+            console.log("down");
+            this.setState({
+                direction: 2
+            });
+            this.move();
+        }
+        else if (event.keyCode === 37) {
+            // left arrow
+            console.log("left");
+            this.setState({
+                direction: 3
+            });
+            this.move();
+        }
+        else if (event.keyCode === 39) {
+            // right arrow
+            console.log("right");
+            this.setState({
+                direction: 1
+            });
+            this.move();
+        }
+    }
+
+    onSwipeStart(event) {
+        console.log('Start swiping...', event);
+    }
+    onSwipeMove(position, event) {
+        console.log(`Moved ${position.x} pixels horizontally`, event);
+        console.log(`Moved ${position.y} pixels vertically`, event);
+    }
+    onSwipeEnd(event) {
+        console.log('End swiping...', event);
+    }
+    onSwipeUp(event){
+        console.log(event);
+    }
+    onSwipeDown(event){
+        console.log(event);
+    }
+    onSwipeLeft(event){
+        console.log(event);
+    }
+    onSwipeRight(event){
+        console.log(event);
+    }
+    direction(dir){
+        var d;
+        if (dir){
+            switch(dir){
+                case 'up':
+                    this.setState({
+                        direction: 0
+                    });
+                    break;
+                case 'down':
+                    this.setState({
+                        direction: 2
+                    });
+                    break;
+                case 'right':
+                    this.setState({
+                        direction: 1
+                    });
+                    break;
+                case 'left':
+                    this.setState({
+                        direction: 3
+                    });
+                    break;
+            }
+
+            this.move();
+        }
+
+        console.log('direction:', dir, this.state.direction);
+    }
+
+
+
+
+
+    // Initialize Game
     initGame() {
         this.getBoard(null);
-        this.startTime();        
+        this.startTime();    
     }
     getBoard(data) {
         var board = [];
@@ -116,26 +220,6 @@ class Game extends Component {
             });            
         }
     }
-    /*prevBoards(board) {
-        var prevBoards = [];
-        
-        if (this.state.previousBoards.length > 0) {
-            for (var a = 0; a < this.state.previousBoards.length; a++){
-                prevBoards.push(this.state.previousBoards[a]);  
-            }
-        }
-
-        //is grid is different than before add
-        if (prevBoards[prevBoards.length] !== board) {
-            prevBoards.push(board);
-        }
-
-        console.log('prev boards', prevBoards);
-
-        this.setState({
-            previousBoards: prevBoards
-        });
-    }*/
     startTime(type){
         if (this.state.timeBegan === null) {
             this.setState({
@@ -171,116 +255,7 @@ class Game extends Component {
             ms: timeElapsed.getUTCMilliseconds()
         });   
     }
-    actuate(){
-        if (GameManager.startNewGame === true){
-            this.getBoard(null);
 
-            this.stopTime();
-
-            this.setState({
-                hr: 0,
-                min: 0,
-                sec: 0,
-                ms: 0,
-                timeBegan: new Date()
-            });
-            
-            this.startTime();
-            GameManager.startNewGame = false;
-        }
-
-        if (GameManager.undo === true && this.state.canUndo === true) {
-            // Get previous board list, remove most recent, update grid to previous board
-            if (this.state.previousBoards.length >= 2){
-                var boards = [];
-
-                for (var i = 0; i < this.state.previousBoards.length; i++){
-                    boards.push(this.state.previousBoards[i]);
-                }
-
-                boards.pop();
-
-                //var board = boards[boards.length-1];
-                var board = this.state.previousBoard;
-
-                this.setState({
-                    board: board,
-                    previousBoards: boards,
-                    cells: this.grid(board),
-                    canUndo: false,
-                    score: this.state.undoScore
-                });
-            }
-
-            GameManager.undo = false;
-        }
-    }
-    newGame(){
-        console.log('New Game!!!');
-
-        if (GameManager.startNewGame !== true){
-            GameManager.startNewGame = true;
-        }
-        
-        this.actuate();
-    }
-    undoMove(){
-        console.log("UNDO!!");
-
-        if (GameManager.undo  !== true){
-            GameManager.undo = true;
-        }
-
-        this.actuate();
-    }
-    handleClick(event){
-        event.preventDefault();
-        if (event){
-            //console.log('e', event);
-        }
-    }
-    handleInput(event) {
-        this.setState({
-            lastDirection: this.state.direction
-        });
-
-        if (event.keyCode === 13) {
-          console.log('enter pressed');
-        }
-
-        if (event.keyCode === 38) {
-            // up arrow
-            console.log("up arrow pressed");
-            this.setState({
-                direction: 0
-            });
-            this.move(this.state.direction);
-        }
-        else if (event.keyCode === 40) {
-            // down arrow
-            console.log("down");
-            this.setState({
-                direction: 2
-            });
-            this.move(this.state.direction);
-        }
-        else if (event.keyCode === 37) {
-            // left arrow
-            console.log("left");
-            this.setState({
-                direction: 3
-            });
-            this.move(this.state.direction);
-        }
-        else if (event.keyCode === 39) {
-            // right arrow
-            console.log("right");
-            this.setState({
-                direction: 1
-            });
-            this.move(this.state.direction);
-        }
-    }
     newTile (x, y, type, num, mergedFrom, previousPosition) {
         var randomNum = Math.floor(Math.random() * 100 + 1);  
         var tile = {
@@ -304,42 +279,27 @@ class Game extends Component {
 
         return tile;
     }
-    prepareTiles(){
-        var data = this.state.cells;
-        var board = [];
-        var cells = []
+    
 
-        for (var x = 0; x < this.props.size; x++){
-            var row = [];
-            for (var y = 0; y < this.props.size; y++){ 
-                //Add tile to board
-                board.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
-                row.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
-            }
-            cells.push(row);
-        }
-        
-        this.setState({
-            board: board,
-            cells: cells,
-            
-            //for undo
-            previousBoard: board, 
-            canUndo: true
-        });            
-    }
+
+
+
+    // Move Tiles
     move () {
         //Move start
-        var moved;
+        var moved = false;
+        var lastBoard = this.state.board;
 
         this.setState({
             vector: this.getVector(this.state.direction)
         });
 
         var traversals = this.traversals(this.state.vector); 
+
         this.setState({
             traversals: traversals,
-            undoScore: this.state.score
+            undoScore: this.state.score, 
+            canUndo: true
         });
 
          //traverse grid
@@ -378,23 +338,22 @@ class Game extends Component {
                         // Update the score
                         this.setState({ score: this.state.score + newNum });
                     } else {
-                        if (this.cellAvailable(positions.farthest)){
-                            this.moveTile(tile, positions.farthest); 
-                        }   
+                        //if (this.cellAvailable(positions.farthest)){
+                        this.moveTile(tile, positions.farthest); 
+                        //}   
                         
                         this.setState({
-                            cells:this.grid(this.state.board)
-                        })
+                            cells: this.grid(this.state.board)
+                        });
                     } 
                 } 
-                
-                if (!this.positionsEqual(cell, positions.farthest)) {
-                    moved = true;
-                    //console.log (cell, positions.farthest, moved);
+
+                if (!this.positionsEqual(cell, positions.farthest) && tile.num !== null) {
+                    moved = true;  
                 }
             });
         });
-        
+
         console.log(moved);
         if (moved) {
             //add randomm tile if possible
@@ -411,7 +370,10 @@ class Game extends Component {
             for (var m = 0; m < this.state.previousBoards.length; m++) {
                 prevBoards.push(this.state.previousBoards[m]);
             }
-            prevBoards.push(this.state.board);
+            if (prevBoards[prevBoards.length -1] !== this.state.board){
+                prevBoards.push(this.state.board);
+            }
+
             this.setState({
                 previousBoards: prevBoards
             });
@@ -421,10 +383,34 @@ class Game extends Component {
             canUndo: true,
             moveCounter: !this.state.counter ? 1 : this.state.counter + 1
         })
+
         /*console.log('++++++++++++ move ', this.state.moveCounter,' +++++++++++++')
         console.log('moves available', this.movesAvailable());
         console.log('board after move', this.state.board);
         console.log('prev boards', this.state.previousBoards);*/ 
+    }
+    prepareTiles(){
+        var data = this.state.cells;
+        var board = [];
+        var cells = []
+
+        for (var x = 0; x < this.props.size; x++){
+            var row = [];
+            for (var y = 0; y < this.props.size; y++){ 
+                //Add tile to board
+                board.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
+                row.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
+            }
+            cells.push(row);
+        }
+        
+        this.setState({
+            board: board,
+            cells: cells,
+            
+            //for undo
+            previousBoard: board
+        });            
     }
     getVector(direction) {
         var map = {
@@ -452,7 +438,6 @@ class Game extends Component {
             next: cell
         }
     }
-        
     withinBounds(position) {
         return position.x >= 0 && position.x < this.props.size &&
                 position.y >= 0 && position.y < this.props.size;
@@ -466,7 +451,8 @@ class Game extends Component {
         }
     }
     cellOccupied(cell) { 
-        return !!this.cellContent(cell);
+        //return !!this.cellContent(cell);
+        return this.cellAvailable(cell);
     }
       
     cellContent(coordinate) {
@@ -684,6 +670,99 @@ class Game extends Component {
         return (!!this.tileMatchesAvailable() && !!this.availableCells())
     }
 
+
+    
+    // Actuate Game
+    actuate(){
+        // New Game
+        if (GameManager.startNewGame === true){
+            this.getBoard(null);
+
+            this.stopTime();
+
+            this.setState({
+                hr: 0,
+                min: 0,
+                sec: 0,
+                ms: 0,
+                timeBegan: new Date(),
+                moveCounter: 0
+            });
+            
+            this.startTime();
+            GameManager.startNewGame = false;
+        }
+
+        //Undo Move
+        if (GameManager.undo === true && this.state.canUndo === true) {
+            // Get previous board list, remove most recent, update grid to previous board
+            if (this.state.previousBoards.length >= 2){
+                var boards = [];
+
+                for (var i = 0; i < this.state.previousBoards.length; i++){
+                    boards.push(this.state.previousBoards[i]);
+                }
+
+                boards.pop();
+
+                //var board = boards[boards.length-1];
+                var board = this.state.previousBoard;
+
+                this.setState({
+                    board: board,
+                    previousBoards: boards,
+                    cells: this.grid(board),
+                    canUndo: false,
+                    score: this.state.undoScore
+                });
+            }
+
+            GameManager.undo = false;
+        }
+
+        if (GameManager.showMenu === true) {
+            this.setState({
+                menuVisible: true
+            });
+
+            //GameManager.showMenu = false;
+        } else {
+            this.setState({
+                menuVisible: false
+            });
+        }
+    }
+    newGame(){
+        console.log('New Game!!!');
+
+        if (GameManager.startNewGame !== true){
+            GameManager.startNewGame = true;
+        }
+        
+        this.actuate();
+    }
+    undoMove(){
+        console.log("UNDO!!");
+
+        if (GameManager.undo  !== true){
+            GameManager.undo = true;
+        }
+
+        this.actuate();
+    }
+    openMenu(){
+        if (GameManager.showMenu !== true) {
+            GameManager.showMenu = true;
+        } else {
+            GameManager.showMenu = false;
+        }
+        
+        console.log('Open menu');
+        
+        this.actuate();
+    }
+
+
     render() {
         let style = {
             fontFamily: 'Karla',   
@@ -696,11 +775,20 @@ class Game extends Component {
 
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
-                <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} />
-                <Board board={this.state.board} userID='user'/>
+                <Swipe 
+                    onSwipeLeft={() => {this.direction('left')}} 
+                    onSwipeRight={() => {this.direction('right')}}
+                    onSwipeUp={() => {this.direction('up')}} 
+                    onSwipeDown={() => {this.direction('down')}}
+                    //onSwipeEnd={this.onSwipeEnd}
+                    > 
+                    { GameManager.showMenu ? <Menu openMenu={this.openMenu}/> : null }
+                    <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
+                    <Board board={this.state.board} userID='user'/>
+                </Swipe>
             </div>
         );
-    }   
+    }
 }
 
 export default Game; 

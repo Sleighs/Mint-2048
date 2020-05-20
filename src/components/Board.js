@@ -37,6 +37,54 @@ class Tile extends Component {
         var backgroundColor = '#cdc1b4';
         var textColor = 'white';
 
+        /*
+        //Mint Colors
+        switch (this.props.number){
+            case null:
+                backgroundColor = '#cdc1b4';
+                textColor = '#cdc1b4';
+                break;
+            case 2:
+                backgroundColor = '#F7F7F7';
+                textColor = '#1C3B47 ';
+                break;
+            case 4:
+                backgroundColor = '#EFF9F5';
+                textColor = '#1C3B47 ';
+                break;
+            case 8:
+                backgroundColor = '#8DCB9F';
+                textColor = 'white';
+                break;
+            case 16:
+                backgroundColor = '#65AB79';
+                textColor = 'white';
+                break;
+            case 32:
+                backgroundColor = '#72C6CE ';
+                textColor = 'white';
+                break;
+            case 64:
+                backgroundColor = '#579CA5';
+                textColor = 'white';
+                break;
+            case 128:
+            case 256:
+            case 512:
+            case 1024:
+                backgroundColor = '#FC7F7F';
+                textColor = 'white';
+                break;
+            case 2048:
+                backgroundColor = '#385B78'; 
+                textColor = 'white';
+                break;
+            default:
+                backgroundColor = 'darkgrey';
+                textColor = '#cdc1b4';
+        }*/
+
+        //Original 2048 colors
         switch (this.props.number){
             case null:
                 backgroundColor = '#cdc1b4';
@@ -150,7 +198,7 @@ class Number extends Component {
                 fontSize = '3em';
                 
                 if (number > 64 && number < 1024) {
-                    fontSize = '2.5em';
+                    fontSize = '2.4em';
                 } else if (number > 1000 && number < 16000) {
                     fontSize = '2em';
                 }

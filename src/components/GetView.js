@@ -5,7 +5,7 @@ import GameManager from '../GameManager';
 class GetView extends Component {
     render() {
         return (
-            <Game size={GameManager.size}/>
+            <Game size={GameManager.size}/>            
         );
     }   
 }
