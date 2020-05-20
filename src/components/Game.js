@@ -288,7 +288,7 @@ class Game extends Component {
     move () {
         //Move start
         var moved = false;
-        var lastBoard = this.state.board;
+        GameManager.moved = false;
 
         this.setState({
             vector: this.getVector(this.state.direction)
@@ -298,7 +298,7 @@ class Game extends Component {
 
         this.setState({
             traversals: traversals,
-            undoScore: this.state.score, 
+            undoScore: this.state.score,
             canUndo: true
         });
 
@@ -337,10 +337,10 @@ class Game extends Component {
 
                         // Update the score
                         this.setState({ score: this.state.score + newNum });
+
+                        moved = true;
                     } else {
-                        //if (this.cellAvailable(positions.farthest)){
-                        this.moveTile(tile, positions.farthest); 
-                        //}   
+                        this.moveTile(tile, positions.farthest);   
                         
                         this.setState({
                             cells: this.grid(this.state.board)
@@ -375,19 +375,20 @@ class Game extends Component {
             }
 
             this.setState({
-                previousBoards: prevBoards
+                previousBoards: prevBoards,
+                canUndo: true
             });
+
+            GameManager.moved = true;
+            GameManager.undo = true;
+            if (GameManager.undoCount === 0) {
+                GameManager.undoCount = GameManager.undoCount + 1;
+            }
         }
 
         this.setState({
-            canUndo: true,
             moveCounter: !this.state.counter ? 1 : this.state.counter + 1
-        })
-
-        /*console.log('++++++++++++ move ', this.state.moveCounter,' +++++++++++++')
-        console.log('moves available', this.movesAvailable());
-        console.log('board after move', this.state.board);
-        console.log('prev boards', this.state.previousBoards);*/ 
+        });
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -694,7 +695,7 @@ class Game extends Component {
         }
 
         //Undo Move
-        if (GameManager.undo === true && this.state.canUndo === true) {
+        if (GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0) {
             // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
                 var boards = [];
@@ -702,11 +703,10 @@ class Game extends Component {
                 for (var i = 0; i < this.state.previousBoards.length; i++){
                     boards.push(this.state.previousBoards[i]);
                 }
-
+                
                 boards.pop();
 
-                //var board = boards[boards.length-1];
-                var board = this.state.previousBoard;
+                var board = boards[boards.length - 1];
 
                 this.setState({
                     board: board,
@@ -718,14 +718,13 @@ class Game extends Component {
             }
 
             GameManager.undo = false;
+            GameManager.undoCount = GameManager.undoCount - 1;
         }
 
         if (GameManager.showMenu === true) {
             this.setState({
                 menuVisible: true
             });
-
-            //GameManager.showMenu = false;
         } else {
             this.setState({
                 menuVisible: false
@@ -742,11 +741,11 @@ class Game extends Component {
         this.actuate();
     }
     undoMove(){
-        console.log("UNDO!!");
-
         if (GameManager.undo  !== true){
             GameManager.undo = true;
         }
+
+        console.log("Undo!", GameManager.undoCount);
 
         this.actuate();
     }
@@ -761,6 +760,7 @@ class Game extends Component {
         
         this.actuate();
     }
+
 
 
     render() {
