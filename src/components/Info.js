@@ -33,8 +33,6 @@ class Info extends Component {
             padding: '45px 10px',
             color: 'white',
             backgroundColor: '#98E7BD' //'#BFF0D6'//'#C3FAE4', //'#edcc61',
-            //background: 'rgb(237,224,200)',
-            //background: 'radial-gradient(circle, rgba(237,224,200,1) 0%, rgba(236,204,100,1) 61%, rgba(246,94,59,1) 68%)'
         }
         let titleStyle = {
             textAlign: 'center',

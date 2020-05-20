@@ -53,10 +53,9 @@ class Game extends Component {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleInput);
     }
-    
-    
     // Input Handles
     handleInput(event) {
+        
         if (event.keyCode === 13) {
           console.log('enter pressed');
         }
@@ -155,15 +154,17 @@ class Game extends Component {
 
     // Initialize Game
     initGame() {
-        this.getBoard(null);
-        this.startTime();    
+        //if no previous game
+        GameManager.startNewGame = true;
+        this.actuate('new game'); 
     }
     getBoard(data) {
         var board = [];
         var cells = [];
+        var prevBoards = [];
 
         //If no previous game is found, create new board
-        if ((!this.state.board.pop(-1) && this.state.board.length < (this.props.size * this.props.size) ) || GameManager.startNewGame === true) {
+        if ((!this.state.board.pop(-1) && this.state.board.length < (this.props.size * this.props.size) ) || GameManager.startNewGame === true || data == null) {
             var tileType;
             var startTile1 = Math.floor(Math.random() * 16 + 1);
             var startTile2 = Math.floor(Math.random() * 16 + 1);
@@ -191,13 +192,12 @@ class Game extends Component {
                 }
                 cells.push(row);
             }
-
-            var prevBoards = [];
+            
             prevBoards.push(board);
 
             this.setState({
                 board: board,
-                cells: cells,
+                cells: this.grid(board),
                 previousBoards: prevBoards,
                 score: 0
             }); 
@@ -219,8 +219,10 @@ class Game extends Component {
                 cells: cells
             });            
         }
+
+        console.log(this.state, cells);
     }
-    startTime(type){
+    startTime(){
         if (this.state.timeBegan === null) {
             this.setState({
                 timeBegan: new Date(),
@@ -261,13 +263,13 @@ class Game extends Component {
         var tile = {
             x: x,
             y: y,
-            type: !type ? false : type,
+            type: false,
             num: !num ? null : num,
             mergedFrom: !mergedFrom ? null : mergedFrom,
             previousPosition: !previousPosition ? null : previousPosition
         };
     
-        if (tile.type === true){
+        if (type === true){
             if (randomNum < 11){
                 tile.num = 4;
             } else {
@@ -275,7 +277,7 @@ class Game extends Component {
             }
         } 
 
-        tile.type = false;
+        type = false;
 
         return tile;
     }
@@ -305,7 +307,7 @@ class Game extends Component {
          //traverse grid
         var cell;
         var tile;
-   
+        
         this.prepareTiles();
 
         //console.log('Traversing grid');
