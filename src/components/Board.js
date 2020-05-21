@@ -35,9 +35,8 @@ class Tile extends Component {
 
     getColor(ele){
         var backgroundColor = '#cdc1b4';
-        var textColor = 'white';
+        var textColor = '#F4FEF9';
 
-        /*
         //Mint Colors
         switch (this.props.number){
             case null:
@@ -45,45 +44,52 @@ class Tile extends Component {
                 textColor = '#cdc1b4';
                 break;
             case 2:
-                backgroundColor = '#F7F7F7';
-                textColor = '#1C3B47 ';
+                backgroundColor = '#eee4da';//#ECEEEB';//'#E6EEDA';//'#EAEEDA';//'#EAF4F2';//'#EFF9F5';//'#DAEEE5';
+                textColor = '#646D64';//'#657468';//'#556C59';//'#5E7762';//'#626077';//#775E65 ';
                 break;
             case 4:
-                backgroundColor = '#EFF9F5';
-                textColor = '#1C3B47 ';
+                backgroundColor = '#FC7F7F';//'#F97676';//'#C9EABC';//'#CEEABC';//'#BEEEB8';//'#D3EDAC';//'#C2E58C';//'#CFF0C9';
+                textColor = '#F4FEF9';//'#556C59';//'#5E7762';//'#1C3B47 ';
                 break;
             case 8:
                 backgroundColor = '#8DCB9F';
-                textColor = 'white';
+                textColor = '#F4FEF9';
                 break;
             case 16:
-                backgroundColor = '#65AB79';
-                textColor = 'white';
+                backgroundColor = '#2EA075';//'#258F67';//'#68AD81';//'#65AB79';
+                textColor = '#F4FEF9';
                 break;
             case 32:
-                backgroundColor = '#72C6CE ';
-                textColor = 'white';
+                backgroundColor = '#43B19B'; //'#5CB2A6';//'#66CCB9';// '#67C8B6';//'#69B7C1';//'#066298';//'#72C6CE ';
+                textColor = '#F4FEF9';
                 break;
             case 64:
-                backgroundColor = '#579CA5';
-                textColor = 'white';
+                backgroundColor = '#248E78';//'#58AD9C';//'#43A4B1';//'#579CA5';
+                textColor = '#F4FEF9';
                 break;
             case 128:
             case 256:
             case 512:
             case 1024:
-                backgroundColor = '#FC7F7F';
-                textColor = 'white';
+                //backgroundColor = '#FC7F7F'; 
+                backgroundColor = '#98E7BD';
+                textColor = '#F4FEF9';
                 break;
             case 2048:
-                backgroundColor = '#385B78'; 
-                textColor = 'white';
+            case 4096:
+                backgroundColor = '#98E7BD'; 
+                textColor = '#F4FEF9';
+                break;
+            case 8192:
+                backgroundColor = '#385B78';
                 break;
             default:
                 backgroundColor = 'darkgrey';
                 textColor = '#cdc1b4';
-        }*/
+        }
 
+
+/*
         //Original 2048 colors
         switch (this.props.number){
             case null:
@@ -128,7 +134,7 @@ class Tile extends Component {
             default:
                 backgroundColor = 'darkgrey';
                 textColor = '#cdc1b4';
-        }
+        }*/
 
         if (ele === 'background') {
             return backgroundColor;
@@ -139,6 +145,7 @@ class Tile extends Component {
 
     getTileMargin(size){
         var margin = '1px';
+
         switch(size){
             case 4:
                 margin = '7px';
@@ -179,10 +186,7 @@ class Tile extends Component {
 
 class Number extends Component {
     constructor(props) {
-        super(props);
-        this.state = {
-
-        }   
+        super(props);  
     }
     
     getFontSize(size, number){
@@ -228,9 +232,9 @@ class Number extends Component {
         }
 
         return (
-        <div className='tile-num' style={numStyle}>
-            {this.props.number !== null ? this.props.number : '0'}
-        </div>
+            <div className='tile-num' style={numStyle}>
+                {this.props.number !== null ? this.props.number : '0'}
+            </div>
         )
     } 
 }

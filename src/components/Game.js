@@ -53,7 +53,8 @@ class Game extends Component {
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleInput);
     }
-    // Input Handles
+
+    //Keyboard Handles
     handleInput(event) {
         
         if (event.keyCode === 13) {
@@ -94,6 +95,7 @@ class Game extends Component {
         }
     }
 
+    //Swipe Handles
     onSwipeStart(event) {
         console.log('Start swiping...', event);
     }

@@ -37,7 +37,8 @@ class Info extends Component {
         let titleStyle = {
             textAlign: 'center',
             fontSize: '1.4em',
-            margin: '-8px 0 0 0'
+            margin: '-8px 0 0 0',
+            fontFamily: 'Cabin'
         }
         let infoContainerStyle = {
             display: 'block',
@@ -48,7 +49,6 @@ class Info extends Component {
             display: 'inline-block',
             width: 270,
             height: 170
-            
         }
 
         return (
@@ -56,7 +56,7 @@ class Info extends Component {
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
                 <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
-                    <div className='title' style={titleStyle}>{"2048"}</div>
+                    <div className='title' style={titleStyle}>{"mint"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
                     <Score score={this.props.score} bestScore={this.props.bestScore}/>
