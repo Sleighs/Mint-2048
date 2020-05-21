@@ -229,7 +229,7 @@ class Number extends Component {
             height: '60%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: this.props.number < 100 ? '11%' : '16%'
+            marginTop: this.props.number < 100 ? '11%' : '22%'
         }
 
         return (
