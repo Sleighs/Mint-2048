@@ -358,7 +358,6 @@ class Game extends Component {
             });
         });
 
-        console.log(moved);
         if (moved) {
             //add randomm tile if possible
             this.addRandomTile();
