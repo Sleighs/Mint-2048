@@ -18,7 +18,7 @@ class Menu extends Component {
         }
         return (
             <div className='menu-container' style={menuContainerStyle} onClick={this.props.openMenu}>
-                <Scores />
+                <MenuItem />
             </div>
         )
     }
