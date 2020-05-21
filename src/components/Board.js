@@ -13,6 +13,7 @@ class Board extends Component {
             borderRadius: 4,
             backgroundColor: '#bbada0'
         };
+
         return (
             <div className='board' style={boardStyle}>
                 {                    
@@ -82,14 +83,14 @@ class Tile extends Component {
                 break;
             case 8192:
                 backgroundColor = '#385B78';
-                break;
+                break;  
             default:
-                backgroundColor = 'darkgrey';
-                textColor = '#cdc1b4';
+                backgroundColor = '#385B78';
+                textColor = '#F4FEF9';
         }
 
 
-/*
+    /*
         //Original 2048 colors
         switch (this.props.number){
             case null:
@@ -228,7 +229,7 @@ class Number extends Component {
             height: '60%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: this.props.number < 100 ? '11%' : '21%'
+            marginTop: this.props.number < 100 ? '11%' : '16%'
         }
 
         return (
