@@ -178,11 +178,11 @@ class Tile extends Component {
         }
 
         return (
-        <div className='tile' style={tileStyle}>
-            <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>
-        </div>
+            <div className={'tile'} style={tileStyle}>
+                <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>
+            </div>
         )
-    } 
+    }
 }
 
 class Number extends Component {

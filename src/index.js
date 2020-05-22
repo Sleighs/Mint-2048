@@ -9,5 +9,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-console.log('2048+ is running on port 3000');
+console.log('2048 Mint is running on port 3000');
 

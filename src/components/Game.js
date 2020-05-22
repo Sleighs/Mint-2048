@@ -21,6 +21,7 @@ class Game extends Component {
             undo: false,
             canUndo: false,
             undoScore: 0,
+            margeAnim: false,
             
             //Timer
             hr: 0,
@@ -54,15 +55,16 @@ class Game extends Component {
         document.removeEventListener('keydown', this.handleInput);
     }
 
+
     //Keyboard Handles
     handleInput(event) {
-        
         if (event.keyCode === 13) {
-          console.log('enter pressed');
+           console.log('enter pressed');
         }
 
+        // Get Move Direction
         if (event.keyCode === 38) {
-            // up arrow
+            // Up arrow
             console.log("up arrow pressed");
             this.setState({
                 direction: 0
@@ -70,7 +72,7 @@ class Game extends Component {
             this.move();
         }
         else if (event.keyCode === 40) {
-            // down arrow
+            // Down arrow
             console.log("down");
             this.setState({
                 direction: 2
@@ -78,7 +80,7 @@ class Game extends Component {
             this.move();
         }
         else if (event.keyCode === 37) {
-            // left arrow
+            // Left arrow
             console.log("left");
             this.setState({
                 direction: 3
@@ -86,7 +88,7 @@ class Game extends Component {
             this.move();
         }
         else if (event.keyCode === 39) {
-            // right arrow
+            // Right arrow
             console.log("right");
             this.setState({
                 direction: 1
@@ -95,7 +97,8 @@ class Game extends Component {
         }
     }
 
-    //Swipe Handles
+
+    // Swipe Handles
     onSwipeStart(event) {
         console.log('Start swiping...', event);
     }
@@ -119,7 +122,6 @@ class Game extends Component {
         console.log(event);
     }
     direction(dir){
-        var d;
         if (dir){
             switch(dir){
                 case 'up':
@@ -146,17 +148,16 @@ class Game extends Component {
 
             this.move();
         }
+        
+        this.setState(prevState => ({ mergeAnim: !prevState.mergeAnim }));
 
         console.log('direction:', dir, this.state.direction);
     }
 
 
-
-
-
-    // Initialize Game
+    // Game Initializion
     initGame() {
-        //if no previous game
+        // If no previous game
         GameManager.startNewGame = true;
         this.actuate('new game'); 
     }
@@ -165,22 +166,22 @@ class Game extends Component {
         var cells = [];
         var prevBoards = [];
 
-        //If no previous game is found, create new board
+        // If no previous game is found, create new board
         if ((!this.state.board.pop(-1) && this.state.board.length < (this.props.size * this.props.size) ) || GameManager.startNewGame === true || data == null) {
             var tileType;
             var startTile1 = Math.floor(Math.random() * 16 + 1);
             var startTile2 = Math.floor(Math.random() * 16 + 1);
 
-            //Select two beginning tile locations at random
+            // Select two beginning tile locations at random
             while (startTile1 === startTile2) {
                 startTile2 = Math.floor(Math.random() * 16 + 1);
             }
-            //Create new board
+            // Create new board
             var counter = 0;
             for (var x = 0; x < this.props.size; x++){
                 var row = [];
                 for (var y = 0; y < this.props.size; y++){
-                    //Add random tiles
+                    // Add random tiles
                     counter++;
                     if (counter === startTile1 || counter === startTile2) {
                         tileType = true;
@@ -188,13 +189,12 @@ class Game extends Component {
                         tileType = false;
                     }   
 
-                    //Add tile to board
+                    // Add tile to board
                     board.push(this.newTile(x, y, tileType));
                     row.push(this.newTile(x, y, tileType));
                 }
                 cells.push(row);
             }
-            
             prevBoards.push(board);
 
             this.setState({
@@ -215,14 +215,11 @@ class Game extends Component {
                 }
                 cells.push(row);
             }
-
             this.setState({
                 board: board,
                 cells: cells
             });            
         }
-
-        console.log(this.state, cells);
     }
     startTime(){
         if (this.state.timeBegan === null) {
@@ -259,7 +256,6 @@ class Game extends Component {
             ms: timeElapsed.getUTCMilliseconds()
         });   
     }
-
     newTile (x, y, type, num, mergedFrom, previousPosition) {
         var randomNum = Math.floor(Math.random() * 100 + 1);  
         var tile = {
@@ -279,18 +275,12 @@ class Game extends Component {
             }
         } 
 
-        type = false;
-
         return tile;
     }
     
 
-
-
-
     // Move Tiles
     move () {
-        //Move start
         var moved = false;
         GameManager.moved = false;
 
@@ -305,14 +295,13 @@ class Game extends Component {
             undoScore: this.state.score,
             canUndo: true
         });
-
-         //traverse grid
+        
         var cell;
         var tile;
         
         this.prepareTiles();
 
-        //console.log('Traversing grid');
+        // Traverse Grid
         traversals.x.forEach((x) => {
             traversals.y.forEach((y) => {
                 var next;
@@ -321,10 +310,11 @@ class Game extends Component {
                 tile = this.cellContent(cell);
 
                 if (tile){
+                    // Get position of farthest empty cell
                     var positions = this.findFarthestPosition(cell, this.state.vector);
                     next = this.cellContent(positions.next);
                     
-                    //merge with next tile
+                    // Merge with next tile if number is alike
                     if (next && next.num === tile.num && next.mergedFrom === null && (next.x !== tile.x || next.y !== tile.y)){
                         var newNum = Math.round(tile.num * 2);
                         var merged = {
@@ -342,8 +332,11 @@ class Game extends Component {
                         // Update the score
                         this.setState({ score: this.state.score + newNum });
 
+                        // Animate
+
                         moved = true;
                     } else {
+                        // Move to farthest available position
                         this.moveTile(tile, positions.farthest);   
                         
                         this.setState({
@@ -352,6 +345,7 @@ class Game extends Component {
                     } 
                 } 
 
+                // Register move happened
                 if (!this.positionsEqual(cell, positions.farthest) && tile.num !== null) {
                     moved = true;  
                 }
@@ -359,16 +353,17 @@ class Game extends Component {
         });
 
         if (moved) {
-            //add randomm tile if possible
+            // Add randomm tile if possible
             this.addRandomTile();
 
-            //Update high score
+            // Update high score
             if (this.state.bestScore < this.state.score) {
                 this.setState({
                     bestScore: this.state.score
                 });
             }
 
+            // Update list of previous boards
             var prevBoards = [];
             for (var m = 0; m < this.state.previousBoards.length; m++) {
                 prevBoards.push(this.state.previousBoards[m]);
@@ -384,14 +379,15 @@ class Game extends Component {
 
             GameManager.moved = true;
             GameManager.undo = true;
+
+            // Make undo available
             if (GameManager.undoCount === 0) {
                 GameManager.undoCount = GameManager.undoCount + 1;
             }
         }
-
-        this.setState({
+        /*this.setState({
             moveCounter: !this.state.counter ? 1 : this.state.counter + 1
-        });
+        });*/
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -401,7 +397,7 @@ class Game extends Component {
         for (var x = 0; x < this.props.size; x++){
             var row = [];
             for (var y = 0; y < this.props.size; y++){ 
-                //Add tile to board
+                // Clear merged and store previous position
                 board.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
                 row.push(this.newTile(data[x][y].x, data[x][y].y, false, data[x][y].num, null, { x: data[x][y].x, y: data[x][y].y }));
             }
@@ -410,18 +406,15 @@ class Game extends Component {
         
         this.setState({
             board: board,
-            cells: cells,
-            
-            //for undo
-            previousBoard: board
+            cells: cells
         });            
     }
     getVector(direction) {
         var map = {
-            0: { x: -1, y: 0 }, // Up
+            0: { x: -1, y: 0 },  // Up
             1: { x: 0,  y: 1 },  // Right
             2: { x: 1,  y: 0 },  // Down
-            3: { x: 0,  y: -1 }   // Left
+            3: { x: 0,  y: -1 }  // Left
         };
 
         return map[direction];
@@ -433,7 +426,7 @@ class Game extends Component {
             previous = cell;
             cell = {x: previous.x + vector.x, y: previous.y + vector.y };
         } while (
-            //check to see if tile location exists in bounds and unoccupied
+            // Check if next tile location is in bounds and unoccupied
             this.withinBounds(cell) && this.cellAvailable(cell)
         );
 
@@ -454,11 +447,6 @@ class Game extends Component {
             return true;
         }
     }
-    cellOccupied(cell) { 
-        //return !!this.cellContent(cell);
-        return this.cellAvailable(cell);
-    }
-      
     cellContent(coordinate) {
         if (this.withinBounds(coordinate)) {
           return this.state.cells[coordinate.x][coordinate.y];
@@ -467,7 +455,7 @@ class Game extends Component {
         }
     }
     traversals (vector) {
-        //create object for each tile
+        // Create object for each tile
         var traversals = { x: [], y: [] };
 
         for (var pos = 0; pos < this.props.size; pos++) {
@@ -485,7 +473,7 @@ class Game extends Component {
         return traversals;
     }
     board(grid){
-        //get board array from current grid
+        // Get board array from current grid
         var board = [];
 
         if (grid && grid.length === this.props.size){
@@ -508,7 +496,7 @@ class Game extends Component {
         var cells = [];
 
         if ( board && board.length > this.props.size){
-            //create grid from board
+            // Create grid from board
             var index = 0;
             for (var x = 0; x < this.props.size; x++){
                 var row = [];
@@ -519,7 +507,7 @@ class Game extends Component {
                 cells.push(row);
             }
         } else if (board && board.length === this.props.size) {
-            //create grid from grid
+            // Create grid from grid
             for (var x = 0; x < this.props.size; x++){
                 var row = [];
                 for (var y = 0; y < this.props.size; y++){ 
@@ -528,7 +516,7 @@ class Game extends Component {
                 cells.push(row);
             }
         } else {
-            //create grid from state
+            // Create grid from state
             var data = this.state.cells;
 
             for (var x = 0; x < this.props.size; x++){
@@ -562,9 +550,9 @@ class Game extends Component {
         });
     }
     moveTile(tile, cell) {
-        //Remove previous tile
+        // Remove previous tile
         this.removeTile(tile);
-        //Add new tile
+        // Add new tile
         this.updatePosition(tile, cell);
     }
     insertTile(tile, cell){
@@ -651,8 +639,9 @@ class Game extends Component {
             cells.push(row);
         } 
 
+        //Check if next tile is mergeable
         var tile;
-
+        
         for (var a = 0; a < this.props.size; a++){
             for (var b = 0; b < this.props.size; b++){
                 tile = this.cellContent({x: a, y: b});
@@ -675,7 +664,6 @@ class Game extends Component {
     }
 
 
-    
     // Actuate Game
     actuate(type){
         // New Game
@@ -697,7 +685,7 @@ class Game extends Component {
             GameManager.startNewGame = false;
         }
 
-        //Undo Move
+        // Undo Move
         if (type === 'undo' && GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0) {
             // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
@@ -765,7 +753,7 @@ class Game extends Component {
     }
 
 
-
+    // Render Game
     render() {
         let style = {
             fontFamily: 'Karla',   
@@ -783,14 +771,13 @@ class Game extends Component {
                     onSwipeRight={() => {this.direction('right')}}
                     onSwipeUp={() => {this.direction('up')}} 
                     onSwipeDown={() => {this.direction('down')}}
-                    //onSwipeEnd={this.onSwipeEnd}
-                    > 
+                > 
                     { GameManager.showMenu ? <Menu openMenu={this.openMenu}/> : null }
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
                     <Board board={this.state.board} userID='user'/>
                 </Swipe>
             </div>
-        );
+        )
     }
 }
 

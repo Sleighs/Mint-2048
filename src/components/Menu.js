@@ -43,7 +43,7 @@ class MenuItem extends Component {
             <div>
                 <p></p>
             </div>
-        );
+        )
     }
    
 }
