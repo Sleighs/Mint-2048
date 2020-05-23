@@ -46,7 +46,7 @@ class Tile extends Component {
                 break;
             case 2:
                 backgroundColor = '#eee4da';//#ECEEEB';//'#E6EEDA';//'#EAEEDA';//'#EAF4F2';//'#EFF9F5';//'#DAEEE5';
-                textColor = '#646D64';//'#657468';//'#556C59';//'#5E7762';//'#626077';//#775E65 ';
+                textColor = '#775e65';//'#646D64';//'#657468';//'#556C59';//'#5E7762';//'#626077';//#775E65 ';
                 break;
             case 4:
                 backgroundColor = '#FC7F7F';//'#F97676';//'#C9EABC';//'#CEEABC';//'#BEEEB8';//'#D3EDAC';//'#C2E58C';//'#CFF0C9';
@@ -83,6 +83,9 @@ class Tile extends Component {
                 break;
             case 8192:
                 backgroundColor = '#385B78';
+                break;
+            case 16384:
+                backgroundColor = 'gold'
                 break;  
             default:
                 backgroundColor = '#385B78';
@@ -202,10 +205,14 @@ class Number extends Component {
             case 4:
                 fontSize = '3em';
                 
-                if (number > 64 && number < 1024) {
+                if (number > 100 && number < 1000) {
                     fontSize = '2.4em';
-                } else if (number > 1000 && number < 16000) {
-                    fontSize = '2em';
+                } else if (number > 1000 && number < 10000) {
+                    fontSize = '2.2em';
+                } else if (number > 10000 && number < 100000) {
+                    fontSize = '1.66em';
+                } else if (number > 100000 && number < 1000000) {
+                    fontSize = '1.25em';
                 }
                 break;
             case 5:
@@ -218,18 +225,46 @@ class Number extends Component {
 
         return fontSize;
     }
+    getMargin(num){
+        var margin = '11%';
+        switch(num){
+            case 16:
+            case 32:
+            case 64:
+                margin = '11%';
+                break;
+            case 128:
+            case 256:
+            case 512:
+                margin = '21.1%';
+                break;
+            case 1024:
+            case 2048:
+            case 4096:
+            case 8192:
+                margin = '20%';
+            case 16384:
+            case 32768:
+            case 65536:
+                margin = '20%';
+            case 131072:
+                margin = '24%';
+        }
+        return margin;
+    }
 
     render (){
         let numStyle = {
             fontFamily: 'arial',
             fontSize: this.getFontSize(GameManager.size, this.props.number),
             fontWeight: 'bold',
-            textShadow: this.props.number !== null ? '.6px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
-            width: '95%',
-            height: '60%',
+            textShadow: this.props.number !== null ? '.5px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
+            width: '90%',
+            height: '50%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: this.props.number < 100 ? '11%' : '22%'
+            marginTop: this.getMargin(this.props.number),// this.props.number < 100 ? '11%' : '22%'
+            marginBottom: 0
         }
 
         return (
