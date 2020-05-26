@@ -53,7 +53,7 @@ class Tile extends Component {
                 textColor = '#F4FEF9';//'#556C59';//'#5E7762';//'#1C3B47 ';
                 break;
             case 8:
-                backgroundColor = '#8DCB9F';
+                backgroundColor = '#B9F5B8';//'#8DCB9F';
                 textColor = '#F4FEF9';
                 break;
             case 16:
@@ -77,12 +77,15 @@ class Tile extends Component {
                 textColor = '#F4FEF9';
                 break;
             case 2048:
+                backgroundColor = '#98E7BD';
+                textColor = '#F4FEF9';
+                break;
             case 4096:
-                backgroundColor = '#98E7BD'; 
+                backgroundColor = '#66CCB9';
                 textColor = '#F4FEF9';
                 break;
             case 8192:
-                backgroundColor = '#385B78';
+                backgroundColor = '#58AD9C';//'#385B78';
                 break;
             case 16384:
                 backgroundColor = 'gold'
@@ -208,7 +211,7 @@ class Number extends Component {
                 if (number > 100 && number < 1000) {
                     fontSize = '2.4em';
                 } else if (number > 1000 && number < 10000) {
-                    fontSize = '2.2em';
+                    fontSize = '2.1em';
                 } else if (number > 10000 && number < 100000) {
                     fontSize = '1.3em';
                 } else if (number > 100000 && number < 1000000) {
@@ -242,12 +245,12 @@ class Number extends Component {
             case 2048:
             case 4096:
             case 8192:
-                margin = '26%';
+                margin = '30%';
                 break;
             case 16384:
             case 32768:
             case 65536:
-                margin = '42%';
+                margin = '45%';
                 break;
             case 131072:
                 margin = '30%';
@@ -263,7 +266,7 @@ class Number extends Component {
             fontWeight: 'bold',
             textShadow: this.props.number !== null ? '.5px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
             width: '90%',
-            height: '50%',
+            height: '90%',
             margin: 'auto',
             textAlign: 'center',
             marginTop: this.getMargin(this.props.number),// this.props.number < 100 ? '11%' : '22%'

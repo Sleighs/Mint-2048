@@ -16,10 +16,14 @@ class EndGame extends Component {
             color: 'white'
         }
         let winTitle = {
-            fontSize: '3.5em'
+            fontSize: '3.5em',
+            fontWeight: 'bold'
         }
         let winTextStyle = {
-            fontSize: '2em'
+            fontSize: '1.8em',
+            padding: '5px',
+            width: 420,
+            height: 92
         }
 
         let loseStyle = {
@@ -36,12 +40,12 @@ class EndGame extends Component {
                     <div className='win-title' style={winTitle}>
                         {'You Win'}
                     </div>
-                    <div style={winTextStyle}>
+                    <p style={winTextStyle}>
                         {'You unlocked the 2048 tile with '}
                         {GameManager.moves}
                         {' moves in '}
                         {GameManager.winTime}
-                    </div>
+                    </p>
                 </div>
             )
         }
