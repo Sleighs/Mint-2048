@@ -6,7 +6,12 @@ var GameManager = {
   direction: '',
   showMenu: false,
   colorScheme: 'mint',
-  moved: false
+  moved: false,
+  winGame: false,
+  winCount: 0,
+  gameOver: false,
+  showWinScreen: false,
+  showLoseScreen: false
 };
 
 export default GameManager;

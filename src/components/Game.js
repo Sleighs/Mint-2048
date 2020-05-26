@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Info from './Info';
 import Board from './Board';
 import Menu from './Menu';
+import EndGame from './EndGame';
 import GameManager from '../GameManager';
 import Swipe from 'react-easy-swipe';
 
@@ -283,6 +284,12 @@ class Game extends Component {
     move () {
         var moved = false;
         GameManager.moved = false;
+        GameManager.winGame = false;
+        this.actuate();
+
+        if (GameManager.gameOver === true){
+            return;
+        }
 
         this.setState({
             vector: this.getVector(this.state.direction)
@@ -335,6 +342,14 @@ class Game extends Component {
                         // Animate
 
                         moved = true;
+
+                        if (newNum === 2048 && GameManager.winCount === 0){
+                            GameManager.winGame = true;
+                            GameManager.winTime = (this.state.hr !== 0 ? this.state.hr : '') + ' ' + (this.state.min < 10 ? '0' + this.state.min : this.state.min) + ':' + (this.state.sec < 10 ? '0' + this.state.sec : this.state.sec);
+                            GameManager.moves = this.state.moveCounter;
+
+                            this.actuate();
+                        }
                     } else {
                         // Move to farthest available position
                         this.moveTile(tile, positions.farthest);   
@@ -385,9 +400,15 @@ class Game extends Component {
                 GameManager.undoCount = GameManager.undoCount + 1;
             }
         }
-        /*this.setState({
+        this.setState({
             moveCounter: !this.state.counter ? 1 : this.state.counter + 1
-        });*/
+        });
+
+        if (!this.movesAvailable()){
+            console.log('no more moves');
+            GameManager.gameOver = true;
+            this.actuate();
+        }
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -607,7 +628,7 @@ class Game extends Component {
 
         this.eachCell(function (x, y, tile){
             if (tile.num === null){
-                cells.push({x: x, y: y });
+                cells.push({x: x, y: y});
             }
         });
 
@@ -646,26 +667,50 @@ class Game extends Component {
             for (var b = 0; b < this.props.size; b++){
                 tile = this.cellContent({x: a, y: b});
 
-                for (var direction = 0; direction < 4; direction++){
+                for (var direction = 0; direction < 3; direction++){
                     var vector = this.getVector(direction);
                     var cell = { x: a + vector.x, y: b + vector.y };
 
                     var otherTile = this.cellContent(cell);
 
                     if (otherTile && otherTile.num === tile.num) {
-                        return true
+                        return true;
                     }
                 }         
             }
         }    
     }
     movesAvailable() {
-        return (!!this.tileMatchesAvailable() && !!this.availableCells())
+        var a = this.availableCells();
+        console.log(!!this.tileMatchesAvailable() , a);
+
+        if (!this.tileMatchesAvailable() && a.length === 0){
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
     // Actuate Game
     actuate(type){
+        // if game over
+        if (GameManager.winGame === true){
+            //show win screen 
+            GameManager.showWinScreen = true;
+            GameManager.winCount += 1;
+        } else {
+            GameManager.showWinScreen = false;
+        }
+
+        // if lose game
+        if (GameManager.gameOver === true){
+            //show lose screen
+            GameManager.showLoseScreen = true;
+        } else {
+            GameManager.showLoseScreen = false;
+        }
+
         // New Game
         if (type === 'new game' && GameManager.startNewGame === true){
             this.getBoard(null);
@@ -678,11 +723,17 @@ class Game extends Component {
                 sec: 0,
                 ms: 0,
                 timeBegan: new Date(),
-                moveCounter: 0
+                moveCounter: 0,
+                counter: 0
             });
             
             this.startTime();
             GameManager.startNewGame = false;
+
+            GameManager.gameOver = false;
+            GameManager.winCount = 0;
+            GameManager.showWinScreen = false;
+            GameManager.showLoseScreen = false;
         }
 
         // Undo Move
@@ -710,12 +761,17 @@ class Game extends Component {
 
             GameManager.undo = false;
             GameManager.undoCount = GameManager.undoCount - 1;
+            
+            GameManager.gameOver = false;
+            GameManager.showWinScreen = false;
+            GameManager.showLoseScreen = false;
         }
 
         if (GameManager.showMenu === true) {
             this.setState({
                 menuVisible: true
             });
+            //pause time
         } else {
             this.setState({
                 menuVisible: false
@@ -727,6 +783,7 @@ class Game extends Component {
 
         if (GameManager.startNewGame !== true){
             GameManager.startNewGame = true;
+            GameManager.gameOver = false;
         }
         
         this.actuate('new game');
@@ -734,6 +791,7 @@ class Game extends Component {
     undoMove(){
         if (GameManager.undo  !== true){
             GameManager.undo = true;
+            GameManager.gameOver = false;
         }
 
         console.log("Undo!", GameManager.undoCount);
@@ -760,7 +818,6 @@ class Game extends Component {
             height: '620px',
             width: '440px',
             borderRadius: '9px',
-            padding: '12px',
             backgroundColor: '#faf8ef'
         }
 
@@ -773,6 +830,8 @@ class Game extends Component {
                     onSwipeDown={() => {this.direction('down')}}
                 > 
                     { GameManager.showMenu ? <Menu openMenu={this.openMenu}/> : null }
+                    { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
+                    {/* !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board}/> */}
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
                     <Board board={this.state.board} userID='user'/>
                 </Swipe>

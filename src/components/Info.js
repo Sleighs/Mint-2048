@@ -15,7 +15,7 @@ class Info extends Component {
         let infoStyle = {
             height: 170,
             width: 412,
-            padding: 5,
+            padding: 4,
             margin: 'auto',
             display: 'block',
             fontSize: '2em',
@@ -55,7 +55,7 @@ class Info extends Component {
         <div className='info' style={infoStyle}>
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle} /*onClick={this.props.openMenu}*/>
+                <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
                     <div className='title' style={titleStyle}>{"mint"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
@@ -75,7 +75,7 @@ class Time extends Component {
             fontFamily: 'arial',
             height: 35,
             width: 403,
-            margin: '-17px 0 0 0',
+            margin: '-5px 0 0 0',
             fontSize: '.7em',
             textShadow: '.3px .3px .3px silver',
             color: '#776e65'
@@ -126,7 +126,7 @@ class Score extends Component {
             borderRadius: 4,
             padding: '4px 15px',
             height: 60,
-            minWidth: 90,
+            minWidth: 100,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
             margin: 'auto'
@@ -136,7 +136,7 @@ class Score extends Component {
             borderRadius: 4,
             padding: '4px 15px',
             height: 60,
-            minWidth: 90,
+            minWidth: 100,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
             float: 'right'            
@@ -174,13 +174,13 @@ class Buttons extends Component {
     render (){
         let containerStyle = {
             height: 65,
-            width: 195,
+            width: 205,
             margin: 'auto',
             display: 'block',
             float: 'right',
         }
         let btnStyle = {
-            width: 90,
+            width: 100,
             height: 60,
             backgroundColor: '#775e65',
             color: 'white',

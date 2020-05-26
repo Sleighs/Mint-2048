@@ -24,6 +24,8 @@ completed
         - added movesAvailable check
     5/20
         - moved returns false if player moves and no tiles move
+    5/26
+        - added win screen
 
 
 todo
@@ -34,7 +36,7 @@ todo
     - lose game
     - swipe function 
     - resize game for different sizes
-    - 
+    - save time when game is won 
     
 
 misc

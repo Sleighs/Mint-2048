@@ -8,7 +8,7 @@ class Board extends Component {
         let boardStyle = {
             width: 410,
             height: 410,
-            margin: 'auto',
+            margin: '10px auto',
             padding: '2px',
             borderRadius: 4,
             backgroundColor: '#bbada0'
@@ -274,6 +274,7 @@ class Number extends Component {
         )
     } 
 }
+
 
 Board.propTypes = {
     board: PropTypes.array.isRequired
