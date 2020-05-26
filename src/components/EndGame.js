@@ -19,7 +19,7 @@ class EndGame extends Component {
             fontSize: '3.5em'
         }
         let winTextStyle = {
-            fontSize: '2.2em'
+            fontSize: '2em'
         }
 
         let loseStyle = {

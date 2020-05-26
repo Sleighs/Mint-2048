@@ -210,9 +210,9 @@ class Number extends Component {
                 } else if (number > 1000 && number < 10000) {
                     fontSize = '2.2em';
                 } else if (number > 10000 && number < 100000) {
-                    fontSize = '1.66em';
+                    fontSize = '1.3em';
                 } else if (number > 100000 && number < 1000000) {
-                    fontSize = '1.25em';
+                    fontSize = '1em';
                 }
                 break;
             case 5:
@@ -242,13 +242,16 @@ class Number extends Component {
             case 2048:
             case 4096:
             case 8192:
-                margin = '20%';
+                margin = '26%';
+                break;
             case 16384:
             case 32768:
             case 65536:
-                margin = '20%';
+                margin = '42%';
+                break;
             case 131072:
-                margin = '24%';
+                margin = '30%';
+                break;
         }
         return margin;
     }

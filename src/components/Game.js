@@ -272,7 +272,7 @@ class Game extends Component {
             if (randomNum < 11){
                 tile.num = 4;
             } else {
-                tile.num = 2;
+                tile.num = 1024;
             }
         } 
 
