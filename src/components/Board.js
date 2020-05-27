@@ -10,7 +10,7 @@ class Board extends Component {
             height: 410,
             margin: '10px auto',
             padding: '2px',
-            borderRadius: 4,
+            borderRadius: 5,
             backgroundColor: '#bbada0'
         };
 
@@ -45,50 +45,54 @@ class Tile extends Component {
                 textColor = '#cdc1b4';
                 break;
             case 2:
-                backgroundColor = '#eee4da';//#ECEEEB';//'#E6EEDA';//'#EAEEDA';//'#EAF4F2';//'#EFF9F5';//'#DAEEE5';
-                textColor = '#775e65';//'#646D64';//'#657468';//'#556C59';//'#5E7762';//'#626077';//#775E65 ';
+                backgroundColor = '#eee4da';
+                textColor = '#775e65';
                 break;
             case 4:
-                backgroundColor = '#FC7F7F';//'#F97676';//'#C9EABC';//'#CEEABC';//'#BEEEB8';//'#D3EDAC';//'#C2E58C';//'#CFF0C9';
-                textColor = '#F4FEF9';//'#556C59';//'#5E7762';//'#1C3B47 ';
+                backgroundColor = '#FC7F7F';
+                textColor = '#F4FEF9';
                 break;
             case 8:
-                backgroundColor = '#B9F5B8';//'#8DCB9F';
+                backgroundColor = '#8DCB9F';
                 textColor = '#F4FEF9';
                 break;
             case 16:
-                backgroundColor = '#2EA075';//'#258F67';//'#68AD81';//'#65AB79';
+                backgroundColor = '#5DB48F';
                 textColor = '#F4FEF9';
                 break;
             case 32:
-                backgroundColor = '#43B19B'; //'#5CB2A6';//'#66CCB9';// '#67C8B6';//'#69B7C1';//'#066298';//'#72C6CE ';
+                backgroundColor = '#43B19B';
                 textColor = '#F4FEF9';
                 break;
             case 64:
-                backgroundColor = '#248E78';//'#58AD9C';//'#43A4B1';//'#579CA5';
+                backgroundColor = '#248E78';
                 textColor = '#F4FEF9';
                 break;
             case 128:
-            case 256:
-            case 512:
-            case 1024:
-                //backgroundColor = '#FC7F7F'; 
-                backgroundColor = '#98E7BD';
-                textColor = '#F4FEF9';
-                break;
-            case 2048:
-                backgroundColor = '#98E7BD';
-                textColor = '#F4FEF9';
-                break;
-            case 4096:
                 backgroundColor = '#66CCB9';
                 textColor = '#F4FEF9';
                 break;
+            case 256:
+            case 512:
+            case 1024:
+                backgroundColor = '#92DAB4';
+                textColor = '#F4FEF9';
+                break;
+            case 2048:
+                backgroundColor = '#edcc61';//'#98E7BD';
+                textColor = '#F4FEF9';
+                break;
+            case 4096:
+                backgroundColor = '#385B78';
+                textColor = '#F4FEF9';
+                break;
             case 8192:
-                backgroundColor = '#58AD9C';//'#385B78';
+                backgroundColor = '#58AD9C';//'#58AD9C';//'#385B78';
+                textColor = '#F4FEF9';
                 break;
             case 16384:
-                backgroundColor = 'gold'
+                backgroundColor = '#58AD9C';//'#B9DCD5';//'#659DAB';
+                textColor = '#F4FEF9';
                 break;  
             default:
                 backgroundColor = '#385B78';
@@ -269,7 +273,7 @@ class Number extends Component {
             height: '90%',
             margin: 'auto',
             textAlign: 'center',
-            marginTop: this.getMargin(this.props.number),// this.props.number < 100 ? '11%' : '22%'
+            marginTop: this.getMargin(this.props.number),
             marginBottom: 0
         }
 
