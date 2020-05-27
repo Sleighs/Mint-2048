@@ -273,7 +273,7 @@ class Game extends Component {
             if (randomNum < 11){
                 tile.num = 4;
             } else {
-                tile.num = 512;
+                tile.num = 2;
             }
         } 
 
@@ -406,17 +406,11 @@ class Game extends Component {
             moveCounter: this.state.moveCounter + 1
         });
 
-        GameManager.moves = this.state.moveCounter;
-
-        console.log(this.state.moveCounter);
-
         if (!this.movesAvailable()){
-            //console.log('no more moves');
             GameManager.gameOver = true;
             GameManager.score = this.state.score;
             GameManager.time = (this.state.hr !== 0 ? this.state.hr : '') + ' ' + (this.state.min < 10 ? '0' + this.state.min : this.state.min) + ':' + (this.state.sec < 10 ? '0' + this.state.sec : this.state.sec);
             GameManager.moves = this.state.moveCounter;
-
             this.actuate();
         }
     }
