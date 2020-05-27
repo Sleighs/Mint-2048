@@ -28,7 +28,7 @@ class EndGame extends Component {
         let loseStyle = {
             textAlign: 'center',
             margin: 'auto',
-            color: 'white'
+            color: '#775e65'
         }
         let loseTitleStyle = {
             fontSize: '3.5em',
@@ -78,9 +78,9 @@ class EndGame extends Component {
 
     render (){
         let style = {
-            backgroundColor: !GameManager.gameOver ? '#edcc61' : '#eee4da',
+            backgroundColor: !GameManager.gameOver ? '#FAD250' : '#eee4da',
             height: 670,
-            width: 440,
+            width: 438,
             position: 'absolute',
             borderRadius: 4,
         }

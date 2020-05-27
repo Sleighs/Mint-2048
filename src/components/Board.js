@@ -53,7 +53,7 @@ class Tile extends Component {
                 textColor = '#F4FEF9';
                 break;
             case 8:
-                backgroundColor = '#8DCB9F';
+                backgroundColor = '#8DCB95';
                 textColor = '#F4FEF9';
                 break;
             case 16:
@@ -79,15 +79,12 @@ class Tile extends Component {
                 textColor = '#F4FEF9';
                 break;
             case 2048:
+            case 4096:
                 backgroundColor = '#edcc61';//'#98E7BD';
                 textColor = '#F4FEF9';
                 break;
-            case 4096:
-                backgroundColor = '#385B78';
-                textColor = '#F4FEF9';
-                break;
             case 8192:
-                backgroundColor = '#58AD9C';//'#58AD9C';//'#385B78';
+                backgroundColor = '#58AD9C';//'#385B78';
                 textColor = '#F4FEF9';
                 break;
             case 16384:
@@ -215,9 +212,9 @@ class Number extends Component {
                 if (number > 100 && number < 1000) {
                     fontSize = '2.4em';
                 } else if (number > 1000 && number < 10000) {
-                    fontSize = '2.1em';
+                    fontSize = '2em';
                 } else if (number > 10000 && number < 100000) {
-                    fontSize = '1.3em';
+                    fontSize = '1.35em';
                 } else if (number > 100000 && number < 1000000) {
                     fontSize = '1em';
                 }
@@ -243,24 +240,46 @@ class Number extends Component {
             case 128:
             case 256:
             case 512:
-                margin = '21.1%';
+                margin = '23%';
                 break;
             case 1024:
             case 2048:
             case 4096:
             case 8192:
-                margin = '30%';
+                margin = '-15%';
                 break;
             case 16384:
             case 32768:
             case 65536:
-                margin = '45%';
+                margin = '0%';
                 break;
             case 131072:
-                margin = '30%';
+            case 262144:
+                margin = '49%';
                 break;
         }
         return margin;
+    }
+    getPadding(num){
+        var padding = '';
+        switch(num){
+            case 1024:
+            case 2048:
+            case 4096:
+            case 8192:
+                padding = '45.5% 0px 0px 0px'
+                break;
+            case 16384:
+            case 32768:
+            case 65536:
+                padding = '43% 0px 0px 0px';
+                break;
+            default:
+                padding = '0 0 0 0';
+
+        }
+
+        return padding;
     }
 
     render (){
@@ -274,7 +293,8 @@ class Number extends Component {
             margin: 'auto',
             textAlign: 'center',
             marginTop: this.getMargin(this.props.number),
-            marginBottom: 0
+            padding: this.getPadding(this.props.number)
+
         }
 
         return (
