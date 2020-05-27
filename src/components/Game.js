@@ -23,6 +23,7 @@ class Game extends Component {
             canUndo: false,
             undoScore: 0,
             margeAnim: false,
+            moveCounter: 0,
             
             //Timer
             hr: 0,
@@ -272,7 +273,7 @@ class Game extends Component {
             if (randomNum < 11){
                 tile.num = 4;
             } else {
-                tile.num = 2;
+                tile.num = 512;
             }
         } 
 
@@ -402,8 +403,12 @@ class Game extends Component {
             }
         }
         this.setState({
-            moveCounter: !this.state.counter ? 1 : this.state.counter + 1
+            moveCounter: this.state.moveCounter + 1
         });
+
+        GameManager.moves = this.state.moveCounter;
+
+        console.log(this.state.moveCounter);
 
         if (!this.movesAvailable()){
             //console.log('no more moves');
@@ -411,6 +416,7 @@ class Game extends Component {
             GameManager.score = this.state.score;
             GameManager.time = (this.state.hr !== 0 ? this.state.hr : '') + ' ' + (this.state.min < 10 ? '0' + this.state.min : this.state.min) + ':' + (this.state.sec < 10 ? '0' + this.state.sec : this.state.sec);
             GameManager.moves = this.state.moveCounter;
+
             this.actuate();
         }
     }

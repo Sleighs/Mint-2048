@@ -80,15 +80,15 @@ class Tile extends Component {
                 break;
             case 2048:
             case 4096:
-                backgroundColor = '#edcc61';//'#98E7BD';
+                backgroundColor = '#edcc61';
                 textColor = '#F4FEF9';
                 break;
             case 8192:
-                backgroundColor = '#58AD9C';//'#385B78';
+                backgroundColor = '#58AD9C';
                 textColor = '#F4FEF9';
                 break;
             case 16384:
-                backgroundColor = '#58AD9C';//'#B9DCD5';//'#659DAB';
+                backgroundColor = '#58AD9C';
                 textColor = '#F4FEF9';
                 break;  
             default:
