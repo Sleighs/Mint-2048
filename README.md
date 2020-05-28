@@ -1,4 +1,4 @@
-Mint 2048
+# Mint 2048
 
 2048 Mint is a puzzle game based on Gabrielle Cirulli's 2048 made in React. Match, add tiles and use abilities to create the 2048 tile.
 
