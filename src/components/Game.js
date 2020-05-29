@@ -3,6 +3,7 @@ import Info from './Info';
 import Board from './Board';
 import Menu from './Menu';
 import EndGame from './EndGame';
+import Powers from './Powers';
 import GameManager from '../GameManager';
 import Swipe from 'react-easy-swipe';
 
@@ -61,7 +62,7 @@ class Game extends Component {
     //Keyboard Handles
     handleInput(event) {
         if (event.keyCode === 13) {
-           console.log('enter pressed');
+           //console.log('enter pressed');
         }
 
         // Get Move Direction
@@ -832,6 +833,7 @@ class Game extends Component {
                     { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
                     <Board board={this.state.board} userID='user'/>
+                    {/*<Powers />*/}
                 </Swipe>
             </div>
         )

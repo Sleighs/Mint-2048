@@ -1,18 +1,9 @@
-Overview for 2048+
+Overview for Mint 2048
 
-names ("2048...")
-	super
-	battle
-	blast
-	arena
-	royale
-	ultimate
-	mint
-
-Move tiles to add and create the 2049 tile.
+Move tiles to add and create the 2048 tile.
 
 Get powers from 
-	- Creating 2049 tiles
+	- Creating 2048 tiles
 	- Making high scoring moves
 	- Doubling highest tile
 
