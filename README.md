@@ -9,4 +9,4 @@
 
 ***
 
-In the project directory, run `npm start` to run the app in development mode at localhost:3000.
+In the project directory, run `npm start` after install to run the app in development mode at localhost:3000.
