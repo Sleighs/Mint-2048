@@ -17,7 +17,3 @@ Merge tiles with arrow keys to create the 2048 tile to win the game.
 - Shift - Bring up power selection, close power selection
 - Enter - Select power, use power 
 - Mouse - click power then tile to use power
-
-## Installation
-
-In the project directory, run `npm start` after install to run the app in development mode at localhost:3000.
