@@ -1,6 +1,6 @@
 # Mint 2048
 
-2048 Mint is a puzzle game based on Gabrielle Cirulli's 2048 made in React. Match tiles and use abilities to create the 2048 tile and win the game.
+A modded version of the puzzle game 2048 made with the React library. To win, match tiles and use abilities to create the 2048 tile and win the game.
 
 ### Play at https://plus-7ed02.firebaseapp.com/
  
