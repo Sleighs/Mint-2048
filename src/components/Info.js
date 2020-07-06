@@ -13,7 +13,7 @@ class Info extends Component {
 
     render (){
         let infoStyle = {
-            height: 190,
+            height: 170,
             width: 412,
             padding: 4,
             margin: 'auto',
@@ -188,7 +188,7 @@ class Buttons extends Component {
             margin: 'auto',
             display: 'inline-block',
             borderRadius: 4,
-            padding: '4px 10px',
+            padding: '4px 15px',
             textDecoration: 'none',
             border: 'none'
         }
@@ -199,67 +199,8 @@ class Buttons extends Component {
         return (
             <div className='btnContainer' style={containerStyle}>
                 <button className='info-btn info-btn-left newgame-btn' style={btnStyle} onClick={this.props.newGame}>{"New"} </button>
-                <button className='info-btn info-btn-right undo-btn' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}<UndoNodes /></button>
+                <button className='info-btn info-btn-right undo-btn' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}</button>
             </div>
-        )
-    }
-}
-
-class UndoNodes extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render (){
-        let containerStyle = {
-            height: 8,
-            width: 90,
-            marginTop: -7,
-            marginLeft: -4,
-            display: 'block',
-            position: 'fixed'
-        }
-
-        let nodeStyle = {
-            background: GameManager.undoCount < 3 ? '#eee4da' : '#edcc61',
-            width: 20,
-            height: 7,
-            margin: 3,
-            borderRadius: 2,
-            display: 'inline-block',
-            
-        }
-
-        return(
-            <div style={containerStyle}>
-                {
-                    GameManager.undoNodes.map((ele, i)=> {
-                        return (
-                            <Node style={nodeStyle} key={i}/>
-                        )
-                    })
-                }
-            </div>
-        )
-    }
-}
-
-class Node extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render (){
-        let containerStyle = {
-            height: 7,
-            width: 15,
-            margin: '5px 0',
-            display: 'inline-block'
-
-        }
-    
-        return(
-            <div style={this.props.style}></div>
         )
     }
 }

@@ -4,8 +4,11 @@ import Board from './Board';
 import Menu from './Menu';
 import EndGame from './EndGame';
 import Powers from './Powers';
+<<<<<<< HEAD
 import Combo from './Combo';
 import Details from './Details';
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 import GameManager from '../GameManager';
 import Swipe from 'react-easy-swipe';
 
@@ -63,6 +66,7 @@ class Game extends Component {
 
     //Keyboard Handles
     handleInput(event) {
+<<<<<<< HEAD
         //Undo/Open Power
         if (event.keyCode === 16) {
             this.undoMove();
@@ -93,6 +97,10 @@ class Game extends Component {
             } else if (GameManager.choosePowers === true && GameManager.navPowerTiles === true){
                 this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
             }
+=======
+        if (event.keyCode === 13) {
+           //console.log('enter pressed');
+>>>>>>> parent of 0097cc6... Added undo mode
         }
 
         // Get Move Direction
@@ -317,8 +325,11 @@ class Game extends Component {
         var moved = false;
         GameManager.moved = false;
         GameManager.winGame = false;
+<<<<<<< HEAD
         GameManager.choosePowers = false;
         
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         this.actuate();
 
         if (GameManager.gameOver === true){
@@ -439,6 +450,7 @@ class Game extends Component {
             moveCounter: this.state.moveCounter + 1
         });
 
+<<<<<<< HEAD
         //console.log('move', this.state.moveCounter);
 
         if (GameManager.abilities.length < 5){
@@ -452,6 +464,8 @@ class Game extends Component {
             }
         }
 
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         if (!this.movesAvailable()){
             GameManager.gameOver = true;
             GameManager.score = this.state.score;
@@ -459,6 +473,7 @@ class Game extends Component {
             GameManager.moves = this.state.moveCounter;
             this.actuate();
         }
+<<<<<<< HEAD
 
         GameManager.undoNodes = [];
         for (var i = 0; i < GameManager.undoCount; i++){
@@ -468,6 +483,8 @@ class Game extends Component {
 
         // check for grow tiles
         //this.growTiles();
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -674,6 +691,7 @@ class Game extends Component {
             board: this.board(cells)
         });
     }
+
     eachCell(callback){
         for(var x = 0; x < this.props.size; x++){
             for(var y = 0; y < this.props.size; y++){
@@ -812,8 +830,10 @@ class Game extends Component {
                     board: board,
                     previousBoards: boards,
                     cells: this.grid(board),
+                    canUndo: false,
                     score: this.state.undoScore
                 });
+<<<<<<< HEAD
 
                 if (GameManager.undoCount < 3){
                     GameManager.combo = 0;
@@ -827,27 +847,16 @@ class Game extends Component {
                 */
 
                 
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
             }
 
-            GameManager.undoCount = GameManager.undoCount - 1;
-            if (GameManager.undoCount === 0){
-                this.setState({
-                    canUndo: false
-                })
-                
-            }
-            
             GameManager.undo = false;
+            GameManager.undoCount = GameManager.undoCount - 1;
+            
             GameManager.gameOver = false;
             GameManager.showWinScreen = false;
-            GameManager.showLoseScreen = false;            
-            
-        }
-
-        GameManager.undoNodes = [];
-        for (var i = 0; i < GameManager.undoCount; i++){
-            GameManager.undoNodes.push(i);
-            //console.log(GameManager.undoNodes)
+            GameManager.showLoseScreen = false;
         }
 
         if (GameManager.showMenu === true) {
@@ -865,9 +874,12 @@ class Game extends Component {
         if (GameManager.startNewGame !== true){
             GameManager.startNewGame = true;
             GameManager.gameOver = false;
+<<<<<<< HEAD
             GameManager.navPowerTiles = false;
             GameManager.abilities = [];
             GameManager.tooltip = '';
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         }
 
         this.actuate('new game');
@@ -876,11 +888,14 @@ class Game extends Component {
         if (GameManager.undo  !== true){
             GameManager.undo = true;
             GameManager.gameOver = false;
+<<<<<<< HEAD
             GameManager.navPowerTiles = false;
             if (GameManager.undoCount !== 3){
                 GameManager.comboBlocks = [];
             }
             
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         }
 
         this.actuate('undo');
@@ -894,6 +909,7 @@ class Game extends Component {
         
         this.actuate();
     }
+<<<<<<< HEAD
     useAbility(type, id){
         GameManager.navPowerTiles = true;
         GameManager.currentAbility = type;
@@ -1225,19 +1241,29 @@ class Game extends Component {
         });
         //console.log('power tile: ', this.state.powerTile);
     }
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 
 
     // Render Game
     render() {
         let style = {
             fontFamily: 'Karla',   
+<<<<<<< HEAD
             height: '650px',
+=======
+            height: '620px',
+>>>>>>> parent of 0097cc6... Added undo mode
             width: '440px',
             borderRadius: '9px',
             backgroundColor: '#faf8ef'
         }
+<<<<<<< HEAD
         
         
+=======
+
+>>>>>>> parent of 0097cc6... Added undo mode
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
                 <Swipe 
@@ -1250,11 +1276,15 @@ class Game extends Component {
                     { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
                     { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
+<<<<<<< HEAD
                     <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
                     <Combo comboLength={GameManager.combo}/>
                     <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
+=======
+                    <Board board={this.state.board} userID='user'/>
+                    {/*<Powers />*/}
+>>>>>>> parent of 0097cc6... Added undo mode
                 </Swipe>
-                <Details tooltip={GameManager.tooltip}/>
             </div>
         )
     }

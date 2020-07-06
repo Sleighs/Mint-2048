@@ -172,6 +172,7 @@ class Tile extends Component {
         return margin;
     }
 
+<<<<<<< HEAD
     getPowerShadow(){
         var powerColor = '';
         var tile = this.props.board[GameManager.currentPowerTile];
@@ -185,11 +186,13 @@ class Tile extends Component {
         return powerColor;
     }
 
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
     render (){
         let tileStyle = {
             height: ((408 / GameManager.size) * .85),
             width: ((408 / GameManager.size) * .85),
-            borderRadius: 7,
+            borderRadius: 9,
             margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
             userSelect: 'none',
