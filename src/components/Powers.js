@@ -8,6 +8,7 @@ class Powers extends Component {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     getAbilityColor(type){
         var color;
 
@@ -35,6 +36,8 @@ class Powers extends Component {
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         }
     }
     componentDidMount(){
@@ -42,6 +45,7 @@ class Powers extends Component {
     }
 
     render(){
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         let powersWrapperStyle = {
@@ -55,6 +59,8 @@ class Powers extends Component {
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         let powersContainerStyle = {
             width: 410,
             height: 50,
@@ -63,6 +69,7 @@ class Powers extends Component {
             background: '#bbada0',
             padding: '7px 5px'
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
         let powersTooltip = {
@@ -152,6 +159,8 @@ class PowerItem extends Component {
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         let powerStyle = {
             display: 'inline-block',
             color: '#F4FEF9',
@@ -162,6 +171,7 @@ class PowerItem extends Component {
             textAlign: 'center',
             margin: '0 5px'
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -175,6 +185,8 @@ class PowerItem extends Component {
 =======
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         
         return(
             <div className={'powers'} style={powersContainerStyle}>
@@ -182,6 +194,9 @@ class PowerItem extends Component {
                 <div className={'power2'} style={powerStyle}>{''}</div>
                 <div className={'power3'} style={powerStyle}>{''}</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 0097cc6... Added undo mode
+=======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
