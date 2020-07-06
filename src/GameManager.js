@@ -12,9 +12,6 @@ var GameManager = {
   winCount: 0,
   gameOver: false,
   showWinScreen: false,
-<<<<<<< Updated upstream
-  showLoseScreen: false
-=======
   showLoseScreen: false,
   abilities: [
     /*
@@ -62,7 +59,6 @@ var GameManager = {
   currentPowerTile: 0,
   navPowerTiles: false,
   tooltip: ''
->>>>>>> Stashed changes
 };
 
 export default GameManager;
