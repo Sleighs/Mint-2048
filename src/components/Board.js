@@ -175,6 +175,7 @@ class Tile extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     getPowerShadow(){
         var powerColor = '';
         var tile = this.props.board[GameManager.currentPowerTile];
@@ -188,6 +189,8 @@ class Tile extends Component {
         return powerColor;
     }
 
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======

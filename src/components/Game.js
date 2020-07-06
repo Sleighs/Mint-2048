@@ -7,8 +7,11 @@ import Powers from './Powers';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import Combo from './Combo';
 import Details from './Details';
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -75,6 +78,7 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         //Undo/Open Power
         if (event.keyCode === 16) {
             this.undoMove();
@@ -105,6 +109,10 @@ class Game extends Component {
             } else if (GameManager.choosePowers === true && GameManager.navPowerTiles === true){
                 this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
             }
+=======
+        if (event.keyCode === 13) {
+           //console.log('enter pressed');
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
         if (event.keyCode === 13) {
            //console.log('enter pressed');
@@ -344,8 +352,11 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         GameManager.choosePowers = false;
         
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -475,6 +486,7 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         //console.log('move', this.state.moveCounter);
 
         if (GameManager.abilities.length < 5){
@@ -494,6 +506,8 @@ class Game extends Component {
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         if (!this.movesAvailable()){
             GameManager.gameOver = true;
             GameManager.score = this.state.score;
@@ -501,6 +515,7 @@ class Game extends Component {
             GameManager.moves = this.state.moveCounter;
             this.actuate();
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -513,6 +528,8 @@ class Game extends Component {
 
         // check for grow tiles
         //this.growTiles();
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -870,6 +887,7 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                 if (GameManager.undoCount < 3){
                     GameManager.combo = 0;
@@ -883,6 +901,8 @@ class Game extends Component {
                 */
 
                 
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -917,9 +937,12 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             GameManager.navPowerTiles = false;
             GameManager.abilities = [];
             GameManager.tooltip = '';
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -937,11 +960,14 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             GameManager.navPowerTiles = false;
             if (GameManager.undoCount !== 3){
                 GameManager.comboBlocks = [];
             }
             
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
@@ -961,6 +987,7 @@ class Game extends Component {
         
         this.actuate();
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1301,6 +1328,8 @@ class Game extends Component {
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 
 
     // Render Game
@@ -1310,7 +1339,11 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             height: '650px',
+=======
+            height: '620px',
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
             height: '620px',
 >>>>>>> parent of 0097cc6... Added undo mode
@@ -1327,8 +1360,12 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         
         
+=======
+
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 
 >>>>>>> parent of 0097cc6... Added undo mode
@@ -1353,9 +1390,14 @@ class Game extends Component {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
                     <Combo comboLength={GameManager.combo}/>
                     <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
+=======
+                    <Board board={this.state.board} userID='user'/>
+                    {/*<Powers />*/}
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
                     <Board board={this.state.board} userID='user'/>
                     {/*<Powers />*/}
