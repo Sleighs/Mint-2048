@@ -172,11 +172,27 @@ class Tile extends Component {
         return margin;
     }
 
+<<<<<<< Updated upstream
+=======
+    getPowerShadow(){
+        var powerColor = '';
+        var tile = this.props.board[GameManager.currentPowerTile];
+
+        if (GameManager.navPowerTiles === true){
+            if (tile.x === this.props.x && tile.y === this.props.y ){
+                powerColor = '1px 1px 5px 11px rgba(252, 127, 127, .4)'//238,87,67,0.2)';
+            } 
+        }
+
+        return powerColor;
+    }
+
+>>>>>>> Stashed changes
     render (){
         let tileStyle = {
             height: ((408 / GameManager.size) * .85),
             width: ((408 / GameManager.size) * .85),
-            borderRadius: 9,
+            borderRadius: 7,
             margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
             userSelect: 'none',

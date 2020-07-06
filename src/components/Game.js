@@ -4,6 +4,11 @@ import Board from './Board';
 import Menu from './Menu';
 import EndGame from './EndGame';
 import Powers from './Powers';
+<<<<<<< Updated upstream
+=======
+import Combo from './Combo';
+import Details from './Details';
+>>>>>>> Stashed changes
 import GameManager from '../GameManager';
 import Swipe from 'react-easy-swipe';
 
@@ -61,8 +66,41 @@ class Game extends Component {
 
     //Keyboard Handles
     handleInput(event) {
+<<<<<<< Updated upstream
         if (event.keyCode === 13) {
            //console.log('enter pressed');
+=======
+        //Undo/Open Power
+        if (event.keyCode === 16) {
+            this.undoMove();
+        /*
+           if (GameManager.choosePowers === true){
+                GameManager.choosePowers = false;
+                GameManager.navPowerTiles = false;
+                GameManager.currentPowerTile = 0;
+                GameManager.currentPower = 1;
+                GameManager.tooltip = '';
+                
+                console.log('shift pressed, power selection off');
+           } else if (GameManager.abilities.length > 0){
+                GameManager.choosePowers = true;
+                GameManager.tooltip = GameManager.abilities[GameManager.currentPower - 1].type;
+
+
+                console.log('shift pressed, power selection on');
+           } else {
+               return;
+           }*/
+        }
+
+        if (event.keyCode === 13) {
+            if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
+                
+                this.usePower();
+            } else if (GameManager.choosePowers === true && GameManager.navPowerTiles === true){
+                this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
+            }
+>>>>>>> Stashed changes
         }
 
         // Get Move Direction
@@ -287,6 +325,11 @@ class Game extends Component {
         var moved = false;
         GameManager.moved = false;
         GameManager.winGame = false;
+<<<<<<< Updated upstream
+=======
+        GameManager.choosePowers = false;
+        
+>>>>>>> Stashed changes
         this.actuate();
 
         if (GameManager.gameOver === true){
@@ -407,6 +450,22 @@ class Game extends Component {
             moveCounter: this.state.moveCounter + 1
         });
 
+<<<<<<< Updated upstream
+=======
+        //console.log('move', this.state.moveCounter);
+
+        if (GameManager.abilities.length < 5){
+            if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
+                //GameManager.abilities.push(this.newPower());
+
+                if (GameManager.undoCount < 3){
+                    GameManager.undoCount += 1;
+                }
+                
+            }
+        }
+
+>>>>>>> Stashed changes
         if (!this.movesAvailable()){
             GameManager.gameOver = true;
             GameManager.score = this.state.score;
@@ -414,6 +473,18 @@ class Game extends Component {
             GameManager.moves = this.state.moveCounter;
             this.actuate();
         }
+<<<<<<< Updated upstream
+=======
+
+        GameManager.undoNodes = [];
+        for (var i = 0; i < GameManager.undoCount; i++){
+            GameManager.undoNodes.push(i);
+            //console.log(GameManager.undoNodes)
+        }
+
+        // check for grow tiles
+        //this.growTiles();
+>>>>>>> Stashed changes
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -434,6 +505,12 @@ class Game extends Component {
             board: board,
             cells: cells
         });            
+<<<<<<< Updated upstream
+=======
+        if (this.state.frozenTile !== null){
+            this.insertTile(this.state.frozenTile, {x: this.state.frozenTile.x, y: this.state.frozenTile.y});
+        }
+>>>>>>> Stashed changes
     }
     getVector(direction) {
         var map = {
@@ -620,7 +697,6 @@ class Game extends Component {
             board: this.board(cells)
         });
     }
-
     eachCell(callback){
         for(var x = 0; x < this.props.size; x++){
             for(var y = 0; y < this.props.size; y++){
@@ -759,17 +835,45 @@ class Game extends Component {
                     board: board,
                     previousBoards: boards,
                     cells: this.grid(board),
-                    canUndo: false,
                     score: this.state.undoScore
                 });
+<<<<<<< Updated upstream
+=======
+
+                if (GameManager.undoCount < 3){
+                    GameManager.combo = 0;
+                    GameManager.comboBlocks = [];
+                } 
+
+                /* else {
+                    GameManager.combo -= 1;
+                    GameManager.comboBlocks.pop();
+                }
+                */
+
+                
+>>>>>>> Stashed changes
             }
 
-            GameManager.undo = false;
             GameManager.undoCount = GameManager.undoCount - 1;
+            if (GameManager.undoCount === 0){
+                this.setState({
+                    canUndo: false
+                })
+                
+            }
             
+            GameManager.undo = false;
             GameManager.gameOver = false;
             GameManager.showWinScreen = false;
-            GameManager.showLoseScreen = false;
+            GameManager.showLoseScreen = false;            
+            
+        }
+
+        GameManager.undoNodes = [];
+        for (var i = 0; i < GameManager.undoCount; i++){
+            GameManager.undoNodes.push(i);
+            //console.log(GameManager.undoNodes)
         }
 
         if (GameManager.showMenu === true) {
@@ -787,6 +891,12 @@ class Game extends Component {
         if (GameManager.startNewGame !== true){
             GameManager.startNewGame = true;
             GameManager.gameOver = false;
+<<<<<<< Updated upstream
+=======
+            GameManager.navPowerTiles = false;
+            GameManager.abilities = [];
+            GameManager.tooltip = '';
+>>>>>>> Stashed changes
         }
 
         this.actuate('new game');
@@ -795,6 +905,14 @@ class Game extends Component {
         if (GameManager.undo  !== true){
             GameManager.undo = true;
             GameManager.gameOver = false;
+<<<<<<< Updated upstream
+=======
+            GameManager.navPowerTiles = false;
+            if (GameManager.undoCount !== 3){
+                GameManager.comboBlocks = [];
+            }
+            
+>>>>>>> Stashed changes
         }
 
         this.actuate('undo');
@@ -808,18 +926,361 @@ class Game extends Component {
         
         this.actuate();
     }
+<<<<<<< Updated upstream
+=======
+    useAbility(type, id){
+        GameManager.navPowerTiles = true;
+        GameManager.currentAbility = type;
+        GameManager.currentAbilityId = id;
+        console.log(type, 'ability used');
+        
+    }
+    usePower(){
+        GameManager.navPowerTiles = true;
+        GameManager.currentAbility = GameManager.abilities[0].type;
+        GameManager.currentAbilityId = GameManager.abilities[0].id;
+    }
+    changeTile(power, x, y, id, clicked){
+        var cell = this.cellContent({x: x, y: y});
+        var newTile;
+        var powerUsed = false;
+        GameManager.currentAbility = power;
+        GameManager.currentAbilityId = id;
+
+        if (clicked && clicked === true){
+            GameManager.choosePowers = true;
+            GameManager.navPowerTiles = true;
+           // GameManager.currentAbility = power;
+           // GameManager.currentAbilityId = id;
+        }
+
+        // apply power
+        if (power === 'divide' && cell.num > 2){
+            newTile = {
+                x: x,
+                y: y,
+                type: false,
+                num: cell.num / 2,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score - newTile.num
+            });
+            powerUsed = true;
+        } else if (power === 'divide' && cell.num === 2) {
+            newTile = {
+                x: x,
+                y: y,
+                type: false,
+                num: null,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score - newTile.num
+            });
+            powerUsed = true;
+        }
+        
+        if (power === 'freeze' && cell.num !== null) {
+            newTile = {
+                x: x,
+                y: y,
+                type: 'frozen',
+                num: cell.num,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            //this.insertTile(newTile, {x: x, y: y});
+            this.freezeTile(newTile);
+            powerUsed = true;
+        }
+
+        if (power === 'multiply' && cell.num !== null) {
+            newTile = {
+                x: x,
+                y: y,
+                type: false,
+                num: cell.num * 2,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score + newTile.num
+            });
+            powerUsed = true;
+        } 
+
+        if (power === 'four tile' && cell.num === null) {
+            newTile = {
+                x: x,
+                y: y,
+                type: false,
+                num: 4,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score + newTile.num
+            });
+            powerUsed = true;
+        } 
+        
+        if (power === 'two tile' && cell.num === null) {
+            newTile = {
+                x: x,
+                y: y,
+                type: false,
+                num: 2,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score + newTile.num
+            });
+            powerUsed = true;
+        }
+
+        if (power === 'grow' && cell.num === null) {
+            newTile = {
+                x: x,
+                y: y,
+                type: 'grow',
+                num: 2,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            this.setState({
+                score: this.state.score +2
+            });
+            powerUsed = true;
+        } else if (power === 'grow' && cell.num !== null){
+            newTile = {
+                x: x,
+                y: y,
+                type: 'grow',
+                num: cell.num,
+                mergedFrom: cell.mergedFrom,
+                previousPosition: cell.previousPosition
+            };
+            this.insertTile(newTile, {x: x, y: y});
+            powerUsed = true;
+        }
+
+        if (power === 'spearmint' && cell.num !== null){
+            this.setState({
+                freeUndoCount: this.state.freeUndoCount + 1
+            });
+
+            powerUsed = true;
+        }
+
+        
+        if (powerUsed === true) {
+            GameManager.abilities.forEach((ele, i, obj)=>{
+                if (ele.id === id){
+                    obj.splice(i, 1);
+                }
+            });
+
+            GameManager.currentAbility = '';
+            GameManager.currentAbilityId = '';
+            
+            GameManager.currentPower = 1;
+            GameManager.currentPowerTile = 0;
+
+            this.setState({
+                powerTile: null
+            });
+        }
+
+        GameManager.navPowerTiles = false;
+        GameManager.choosePowers = false;    
+
+        var currentTile = this.cellContent({x: x, y: y});
+
+        if (currentTile.num === 2048 && GameManager.winCount === 0) {
+            GameManager.winGame = true;
+            GameManager.score = this.state.score;
+            GameManager.time = (this.state.hr !== 0 ? this.state.hr : '') + ' ' + (this.state.min < 10 ? '0' + this.state.min : this.state.min) + ':' + (this.state.sec < 10 ? '0' + this.state.sec : this.state.sec);
+            GameManager.moves = this.state.moveCounter;
+
+            this.actuate();
+        }
+    }
+    freezeTile(tile){
+        if (tile){
+            this.setState({
+                frozenTile: tile
+            });
+        }    
+    }
+    growTiles() {
+        var grid = [];
+        //tile.num = tile.num * 2;
+        //this.insertTile(tile, {x: tile.y, y: tile.y});
+    }
+    newPower(){
+        //generate random power
+        function getType(){
+            var randNum = Math.floor(Math.random() * 3) + 1;
+            var type;
+
+            switch(randNum){
+                case 1:
+                    type = 'divide';
+                    break;
+                case 2:
+                    type = 'four tile';
+                    break;
+                case 3:
+                    type = 'multiply';
+                    break;
+                case 4:
+                    type = 'freeze';
+                    break;
+                case 5:
+                    type = 'grow';
+                    break;
+                case 6:
+                    type = 'two tile';
+                    break;
+                default:
+                    type = 'two tile';
+            }
+            return type;
+        }
+
+        function getId(){
+            var id = [];
+            for (var i = 0; i < 8; i++){
+                id.push(Math.floor(Math.random() * 10));
+            }
+            return id.join('');
+        }
+
+        var ability = {
+            type: getType(),
+            id: getId(),
+            state: true
+        };
+
+        return ability;
+    }
+    switchPower(dir){
+        switch(dir){
+            case 'left':
+            case 'up':
+                if (GameManager.currentPower > 1){
+                    GameManager.currentPower = GameManager.currentPower - 1;
+                }
+                //console.log('current power', GameManager.currentPower);
+                break;
+            case 'right':
+            case 'down':
+                if (GameManager.abilities.length > 1 && GameManager.currentPower < GameManager.abilities.length){
+                    GameManager.currentPower = GameManager.currentPower + 1;
+                }
+                //console.log('current power', GameManager.currentPower);
+                break;
+        }
+
+        GameManager.currentAbility = GameManager.abilities[GameManager.currentPower - 1].type;
+        GameManager.currentAbilityId = GameManager.abilities[GameManager.currentPower - 1].id;
+
+        switch (GameManager.currentAbility) {
+            case 'divide':
+                GameManager.tooltip = 'Divide';
+                break;
+            case 'grow':
+                GameManager.tooltip = 'Grow';
+                break;
+            case 'four tile':
+                GameManager.tooltip = 'Add 4 Tile';
+                break;
+            case 'two tile':
+                GameManager.tooltip = 'Add 2 Tile';
+                break;
+            case 'freeze':
+                GameManager.tooltip = 'Freeze';
+                break;
+            case 'mutate':
+            case 'multiply':
+                GameManager.tooltip = 'Multiply';
+                break;
+        }
+
+        this.setState({
+           tooltip: GameManager.tooltip 
+        });
+
+    }
+    switchPowerTile(dir){
+        switch(dir){
+            case 'up':
+                if (GameManager.currentPowerTile - 4 >= 0 ){
+                   GameManager.currentPowerTile = GameManager.currentPowerTile - 4;
+                   GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
+                }
+                //console.log('current power', GameManager.currentPowerTile, this.state.board[GameManager.currentPowerTile]);
+                break;
+            case 'left':
+                if (GameManager.currentPowerTile > 0){
+                    GameManager.currentPowerTile = GameManager.currentPowerTile - 1;
+                    GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
+                }
+                //console.log('current power', GameManager.currentPowerTile, this.state.board[GameManager.currentPowerTile]);
+                break;
+            case 'down':
+                if (GameManager.currentPowerTile + 4 < 16){
+                    GameManager.currentPowerTile = GameManager.currentPowerTile + 4;
+                    GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
+                }
+                //console.log('current power', GameManager.currentPowerTile, this.state.board[GameManager.currentPowerTile]);
+                break;
+            case 'right':
+                if (GameManager.currentPowerTile + 1 < 16){
+                    GameManager.currentPowerTile = GameManager.currentPowerTile + 1;
+                    GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
+                }
+                //console.log('current power', GameManager.currentPowerTile, this.state.board[GameManager.currentPowerTile]);
+                break;
+        }
+
+        this.setState({
+            powerTile: this.state.board[GameManager.currentPowerTile]
+        });
+        //console.log('power tile: ', this.state.powerTile);
+    }
+>>>>>>> Stashed changes
 
 
     // Render Game
     render() {
         let style = {
             fontFamily: 'Karla',   
+<<<<<<< Updated upstream
             height: '620px',
+=======
+            height: '650px',
+>>>>>>> Stashed changes
             width: '440px',
             borderRadius: '9px',
             backgroundColor: '#faf8ef'
         }
+<<<<<<< Updated upstream
 
+=======
+        
+        
+>>>>>>> Stashed changes
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
                 <Swipe 
@@ -832,9 +1293,16 @@ class Game extends Component {
                     { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
                     { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
+<<<<<<< Updated upstream
                     <Board board={this.state.board} userID='user'/>
                     {/*<Powers />*/}
+=======
+                    <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
+                    <Combo comboLength={GameManager.combo}/>
+                    <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
+>>>>>>> Stashed changes
                 </Swipe>
+                <Details tooltip={GameManager.tooltip}/>
             </div>
         )
     }
