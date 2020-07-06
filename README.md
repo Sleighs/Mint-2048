@@ -2,7 +2,7 @@
 
 A modded version of the puzzle game 2048 made with the React library. To win, match tiles and use abilities to create the 2048 tile and win the game.
 
-### Play at https://plus-7ed02.firebaseapp.com/
+### [Play Mint 2048](https://plus-7ed02.firebaseapp.com/)
  
 
 ![](pics/2048mint-sample.PNG)
