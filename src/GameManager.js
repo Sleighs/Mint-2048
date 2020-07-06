@@ -12,6 +12,7 @@ var GameManager = {
   gameOver: false,
   showWinScreen: false,
 <<<<<<< HEAD
+<<<<<<< HEAD
   showLoseScreen: false,
   abilities: [
     /*
@@ -59,6 +60,9 @@ var GameManager = {
   currentPowerTile: 0,
   navPowerTiles: false,
   tooltip: ''
+=======
+  showLoseScreen: false
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
   showLoseScreen: false
 >>>>>>> parent of 0097cc6... Added undo mode

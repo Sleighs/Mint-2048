@@ -7,6 +7,7 @@ class Powers extends Component {
         this.state = {}
     }
 
+<<<<<<< HEAD
     getAbilityColor(type){
         var color;
 
@@ -32,6 +33,8 @@ class Powers extends Component {
                 color = '#bbada0';
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         }
     }
     componentDidMount(){
@@ -39,6 +42,7 @@ class Powers extends Component {
     }
 
     render(){
+<<<<<<< HEAD
 <<<<<<< HEAD
         let powersWrapperStyle = {
             display: 'none',
@@ -49,6 +53,8 @@ class Powers extends Component {
         }
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         let powersContainerStyle = {
             width: 410,
             height: 50,
@@ -57,6 +63,7 @@ class Powers extends Component {
             background: '#bbada0',
             padding: '7px 5px'
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
         let powersTooltip = {
             margin: 'auto',
@@ -143,6 +150,8 @@ class PowerItem extends Component {
     render() {
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         let powerStyle = {
             display: 'inline-block',
             color: '#F4FEF9',
@@ -154,6 +163,7 @@ class PowerItem extends Component {
             margin: '0 5px'
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
         return (
@@ -163,12 +173,17 @@ class PowerItem extends Component {
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >
 =======
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
         
         return(
             <div className={'powers'} style={powersContainerStyle}>
                 <div className={'power1'} style={powerStyle}>{''}</div>
                 <div className={'power2'} style={powerStyle}>{''}</div>
                 <div className={'power3'} style={powerStyle}>{''}</div>
+<<<<<<< HEAD
+>>>>>>> parent of 0097cc6... Added undo mode
+=======
 >>>>>>> parent of 0097cc6... Added undo mode
             </div>
         )
