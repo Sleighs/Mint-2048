@@ -4,17 +4,10 @@ import GameManager from '../GameManager';
 class Powers extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
-    }
+        this.state = {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    getAbilityColor(type){
-        var color;
-
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
         switch(type){
             case 'divide':
                 color = '#E26369';
@@ -34,16 +27,7 @@ class Powers extends Component {
                 break;
             default:
                 color = '#bbada0';
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
+>>>>>>> Stashed changes
         }
     }
     componentDidMount(){
@@ -51,11 +35,8 @@ class Powers extends Component {
     }
 
     render(){
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
         let powersWrapperStyle = {
             display: 'none',
             width: 410,
@@ -63,16 +44,7 @@ class Powers extends Component {
             margin: 'auto',
             borderRadius: 6
         }
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
+>>>>>>> Stashed changes
         let powersContainerStyle = {
             width: 410,
             height: 50,
@@ -81,11 +53,8 @@ class Powers extends Component {
             background: '#bbada0',
             padding: '7px 5px'
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
         let powersTooltip = {
             margin: 'auto',
             borderRadius: 5,
@@ -169,16 +138,7 @@ class PowerItem extends Component {
     }
     
     render() {
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
+>>>>>>> Stashed changes
         let powerStyle = {
             display: 'inline-block',
             color: '#F4FEF9',
@@ -189,11 +149,14 @@ class PowerItem extends Component {
             textAlign: 'center',
             margin: '0 5px'
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+        
+        return(
+            <div className={'powers'} style={powersContainerStyle}>
+                <div className={'power1'} style={powerStyle}>{''}</div>
+                <div className={'power2'} style={powerStyle}>{''}</div>
+                <div className={'power3'} style={powerStyle}>{''}</div>
+=======
 
 
         return (
@@ -202,34 +165,7 @@ class PowerItem extends Component {
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >
-=======
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-        
-        return(
-            <div className={'powers'} style={powersContainerStyle}>
-                <div className={'power1'} style={powerStyle}>{''}</div>
-                <div className={'power2'} style={powerStyle}>{''}</div>
-                <div className={'power3'} style={powerStyle}>{''}</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
-=======
->>>>>>> parent of 0097cc6... Added undo mode
+>>>>>>> Stashed changes
             </div>
         )
     }

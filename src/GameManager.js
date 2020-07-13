@@ -3,6 +3,7 @@ var GameManager = {
   startNewGame: false,
   undo: false,
   undoCount: 0,
+  undoNodes: [],
   direction: '',
   showMenu: false,
   colorScheme: 'mint',
@@ -11,11 +12,9 @@ var GameManager = {
   winCount: 0,
   gameOver: false,
   showWinScreen: false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+  showLoseScreen: false
+=======
   showLoseScreen: false,
   abilities: [
     /*
@@ -63,21 +62,7 @@ var GameManager = {
   currentPowerTile: 0,
   navPowerTiles: false,
   tooltip: ''
-=======
-  showLoseScreen: false
->>>>>>> parent of 0097cc6... Added undo mode
-=======
-  showLoseScreen: false
->>>>>>> parent of 0097cc6... Added undo mode
-=======
-  showLoseScreen: false
->>>>>>> parent of 0097cc6... Added undo mode
-=======
-  showLoseScreen: false
->>>>>>> parent of 0097cc6... Added undo mode
-=======
-  showLoseScreen: false
->>>>>>> parent of 0097cc6... Added undo mode
+>>>>>>> Stashed changes
 };
 
 export default GameManager;

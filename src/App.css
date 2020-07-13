@@ -53,3 +53,7 @@ a {
             transform: scale(1);
   }
 }
+
+.divide {
+  background-color: 'black'
+}

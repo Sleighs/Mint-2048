@@ -4,8 +4,11 @@ import Board from './Board';
 import Menu from './Menu';
 import EndGame from './EndGame';
 import Powers from './Powers';
+<<<<<<< Updated upstream
+=======
 import Combo from './Combo';
 import Details from './Details';
+>>>>>>> Stashed changes
 import GameManager from '../GameManager';
 import Swipe from 'react-easy-swipe';
 
@@ -63,6 +66,10 @@ class Game extends Component {
 
     //Keyboard Handles
     handleInput(event) {
+<<<<<<< Updated upstream
+        if (event.keyCode === 13) {
+           //console.log('enter pressed');
+=======
         //Undo/Open Power
         if (event.keyCode === 16) {
             this.undoMove();
@@ -87,14 +94,14 @@ class Game extends Component {
         }
 
         if (event.keyCode === 13) {
-            /*if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
+            if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 
                 this.usePower();
             } else if (GameManager.choosePowers === true && GameManager.navPowerTiles === true){
                 this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
-            }*/
+            }
+>>>>>>> Stashed changes
         }
-
 
         // Get Move Direction
         if (event.keyCode === 38) {
@@ -318,8 +325,11 @@ class Game extends Component {
         var moved = false;
         GameManager.moved = false;
         GameManager.winGame = false;
+<<<<<<< Updated upstream
+=======
         GameManager.choosePowers = false;
-    
+        
+>>>>>>> Stashed changes
         this.actuate();
 
         if (GameManager.gameOver === true){
@@ -440,6 +450,8 @@ class Game extends Component {
             moveCounter: this.state.moveCounter + 1
         });
 
+<<<<<<< Updated upstream
+=======
         //console.log('move', this.state.moveCounter);
 
         if (GameManager.abilities.length < 5){
@@ -453,6 +465,7 @@ class Game extends Component {
             }
         }
 
+>>>>>>> Stashed changes
         if (!this.movesAvailable()){
             GameManager.gameOver = true;
             GameManager.score = this.state.score;
@@ -460,6 +473,8 @@ class Game extends Component {
             GameManager.moves = this.state.moveCounter;
             this.actuate();
         }
+<<<<<<< Updated upstream
+=======
 
         GameManager.undoNodes = [];
         for (var i = 0; i < GameManager.undoCount; i++){
@@ -469,6 +484,7 @@ class Game extends Component {
 
         // check for grow tiles
         //this.growTiles();
+>>>>>>> Stashed changes
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -489,6 +505,12 @@ class Game extends Component {
             board: board,
             cells: cells
         });            
+<<<<<<< Updated upstream
+=======
+        if (this.state.frozenTile !== null){
+            this.insertTile(this.state.frozenTile, {x: this.state.frozenTile.x, y: this.state.frozenTile.y});
+        }
+>>>>>>> Stashed changes
     }
     getVector(direction) {
         var map = {
@@ -675,7 +697,6 @@ class Game extends Component {
             board: this.board(cells)
         });
     }
-
     eachCell(callback){
         for(var x = 0; x < this.props.size; x++){
             for(var y = 0; y < this.props.size; y++){
@@ -814,9 +835,10 @@ class Game extends Component {
                     board: board,
                     previousBoards: boards,
                     cells: this.grid(board),
-                    canUndo: false,
                     score: this.state.undoScore
                 });
+<<<<<<< Updated upstream
+=======
 
                 if (GameManager.undoCount < 3){
                     GameManager.combo = 0;
@@ -828,14 +850,30 @@ class Game extends Component {
                     GameManager.comboBlocks.pop();
                 }
                 */
+
+                
+>>>>>>> Stashed changes
             }
 
-            GameManager.undo = false;
             GameManager.undoCount = GameManager.undoCount - 1;
+            if (GameManager.undoCount === 0){
+                this.setState({
+                    canUndo: false
+                })
+                
+            }
             
+            GameManager.undo = false;
             GameManager.gameOver = false;
             GameManager.showWinScreen = false;
-            GameManager.showLoseScreen = false;
+            GameManager.showLoseScreen = false;            
+            
+        }
+
+        GameManager.undoNodes = [];
+        for (var i = 0; i < GameManager.undoCount; i++){
+            GameManager.undoNodes.push(i);
+            //console.log(GameManager.undoNodes)
         }
 
         if (GameManager.showMenu === true) {
@@ -853,9 +891,12 @@ class Game extends Component {
         if (GameManager.startNewGame !== true){
             GameManager.startNewGame = true;
             GameManager.gameOver = false;
+<<<<<<< Updated upstream
+=======
             GameManager.navPowerTiles = false;
             GameManager.abilities = [];
             GameManager.tooltip = '';
+>>>>>>> Stashed changes
         }
 
         this.actuate('new game');
@@ -864,10 +905,14 @@ class Game extends Component {
         if (GameManager.undo  !== true){
             GameManager.undo = true;
             GameManager.gameOver = false;
+<<<<<<< Updated upstream
+=======
             GameManager.navPowerTiles = false;
             if (GameManager.undoCount !== 3){
                 GameManager.comboBlocks = [];
             }
+            
+>>>>>>> Stashed changes
         }
 
         this.actuate('undo');
@@ -881,6 +926,8 @@ class Game extends Component {
         
         this.actuate();
     }
+<<<<<<< Updated upstream
+=======
     useAbility(type, id){
         GameManager.navPowerTiles = true;
         GameManager.currentAbility = type;
@@ -1212,17 +1259,28 @@ class Game extends Component {
         });
         //console.log('power tile: ', this.state.powerTile);
     }
+>>>>>>> Stashed changes
+
 
     // Render Game
     render() {
         let style = {
             fontFamily: 'Karla',   
+<<<<<<< Updated upstream
             height: '620px',
+=======
+            height: '650px',
+>>>>>>> Stashed changes
             width: '440px',
             borderRadius: '9px',
             backgroundColor: '#faf8ef'
         }
+<<<<<<< Updated upstream
 
+=======
+        
+        
+>>>>>>> Stashed changes
         return (
             <div className= 'game' style={style} onChange={this.handleInput}>
                 <Swipe 
@@ -1235,10 +1293,16 @@ class Game extends Component {
                     { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
                     { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
+<<<<<<< Updated upstream
+                    <Board board={this.state.board} userID='user'/>
+                    {/*<Powers />*/}
+=======
                     <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
                     <Combo comboLength={GameManager.combo}/>
-                    {/*<Powers useAbility={this.useAbility} powers={GameManager.abilities}/>*/}
+                    <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
+>>>>>>> Stashed changes
                 </Swipe>
+                <Details tooltip={GameManager.tooltip}/>
             </div>
         )
     }

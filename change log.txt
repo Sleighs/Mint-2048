@@ -26,21 +26,29 @@ completed
         - moved returns false if player moves and no tiles move
     5/26
         - added win screen
+    5/28
+        - lose game
+    6/4
+        - powers
 
 
 todo
     - menu
     - save progress
     - track stats
-    - powers
-    - lose game
+
     - swipe function 
     - resize game for different sizes
     - save time when game is won 
+    - animations
+    - show best combo
     
 
 misc
     - add onhover to timer, click to display on and off
+    - increase focus on allowing for quick mathematical thinking use in challenge
+        - combo 
+    - a game mode where powers are randomly used after a set time
 
 
 notes
