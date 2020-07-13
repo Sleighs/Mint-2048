@@ -817,8 +817,6 @@ class Game extends Component {
                     cells: this.grid(board),
                     score: this.state.undoScore
                 });
-<<<<<<< Updated upstream
-=======
 
                 if (GameManager.undoCount < 3){
                     GameManager.combo = 0;
@@ -832,7 +830,6 @@ class Game extends Component {
                 */
 
                 
->>>>>>> Stashed changes
             }
 
             GameManager.undoCount = GameManager.undoCount - 1;
