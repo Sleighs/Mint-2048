@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
 
@@ -5,9 +6,11 @@ class Powers extends Component {
     constructor(props) {
         super(props);
         this.state = {
+        }
+    }
+    getAbilityColor(type) {
+        var color;
 
-<<<<<<< Updated upstream
-=======
         switch(type){
             case 'divide':
                 color = '#E26369';
@@ -27,16 +30,15 @@ class Powers extends Component {
                 break;
             default:
                 color = '#bbada0';
->>>>>>> Stashed changes
         }
+
+        return color;
     }
     componentDidMount(){
 
     }
 
     render(){
-<<<<<<< Updated upstream
-=======
         let powersWrapperStyle = {
             display: 'none',
             width: 410,
@@ -44,7 +46,6 @@ class Powers extends Component {
             margin: 'auto',
             borderRadius: 6
         }
->>>>>>> Stashed changes
         let powersContainerStyle = {
             width: 410,
             height: 50,
@@ -53,8 +54,6 @@ class Powers extends Component {
             background: '#bbada0',
             padding: '7px 5px'
         }
-<<<<<<< Updated upstream
-=======
         let powersTooltip = {
             margin: 'auto',
             borderRadius: 5,
@@ -138,7 +137,6 @@ class PowerItem extends Component {
     }
     
     render() {
->>>>>>> Stashed changes
         let powerStyle = {
             display: 'inline-block',
             color: '#F4FEF9',
@@ -149,14 +147,6 @@ class PowerItem extends Component {
             textAlign: 'center',
             margin: '0 5px'
         }
-<<<<<<< Updated upstream
-        
-        return(
-            <div className={'powers'} style={powersContainerStyle}>
-                <div className={'power1'} style={powerStyle}>{''}</div>
-                <div className={'power2'} style={powerStyle}>{''}</div>
-                <div className={'power3'} style={powerStyle}>{''}</div>
-=======
 
 
         return (
@@ -165,7 +155,6 @@ class PowerItem extends Component {
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >
->>>>>>> Stashed changes
             </div>
         )
     }
