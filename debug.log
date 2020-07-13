@@ -218,6 +218,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
 [0601/150505.217:ERROR:crash_report_database_win.cc(469)] failed to stat report
@@ -470,6 +471,8 @@
 [0706/124401.107:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0706/124401.107:ERROR:crash_report_database_win.cc(469)] failed to stat report
 [0706/124401.107:ERROR:crash_report_database_win.cc(469)] failed to stat report
+=======
+>>>>>>> parent of 0097cc6... Added undo mode
 =======
 >>>>>>> parent of 0097cc6... Added undo mode
 =======
