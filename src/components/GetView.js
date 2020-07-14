@@ -24,7 +24,6 @@ class GetView extends Component {
                         <span>By Samuel Wright</span>
                         &nbsp; &nbsp; &nbsp;
                         <a href='https://github.com/Sleighs/Mint-2048' style={{color: '#C6BABD'}}>GitHub</a>
-                  
                     </p>
                 </div>
                 

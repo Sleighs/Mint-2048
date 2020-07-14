@@ -2,21 +2,11 @@ Overview for Mint 2048
 
 Move tiles to add and create the 2048 tile.
 
-<<<<<<< Updated upstream
 Get powers from 
-=======
-## Undo Version
-	- Merge consecutive turns to build combo
-	- After succeful combo streak earn an additional undo  
-
-## Powers Version
-	Get powers from 
->>>>>>> Stashed changes
 	- Creating 2048 tiles
 	- Making high scoring moves
 	- Doubling highest tile
 
-<<<<<<< Updated upstream
 Powers
 	Transmute
 		turn a 2 into a 4
@@ -24,27 +14,5 @@ Powers
 		halves a tiles number
 	Freeze
 		Prevent a tile from merging
-=======
-	### Power Types
-		Divide peppermint
-			- halves a tiles number
-		Freeze wintermint
-			- Prevent a tile from merging
-		Multiply spearmint
-			- double a tile
-			- change tile randomly
-		Mutate chocolate
-		Add tile cinnamon
-			- creates a new tile
-		Grow Bbubblegum 
-			- creates a tile that grows each turn (3x turns)
-		
-		bubblegum
-		berry
-		fruit
-		cinnamon
-		chocolate
-		
->>>>>>> Stashed changes
 
 Currency is the player's score

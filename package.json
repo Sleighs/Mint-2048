@@ -1,5 +1,5 @@
 {
-  "name": "mint-2048",
+  "name": "2049",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -31,24 +31,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "description": "A modded version of the puzzle game 2048 made with the React library. To win, match tiles and use abilities to create the 2048 tile and win the game.",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Sleighs/mint-2048.git"
-  },
-  "keywords": [
-    "javascript",
-    "react",
-    "game",
-    "puzzle",
-    "2048"
-  ],
-  "author": "Samuel Wright",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Sleighs/mint-2048/issues"
-  },
-  "homepage": "https://github.com/Sleighs/mint-2048#readme"
+  }
 }

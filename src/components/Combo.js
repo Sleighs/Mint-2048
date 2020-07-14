@@ -9,22 +9,6 @@ class Combo extends Component {
             blocks: []
         }
     }
-    getComboScore(length){
-        /*
-        Every tile type merged is recorded and used for current combo
-
-        the total numbers in the combo are merged 
-
-        
-       if (length <= 4){
-           return 2;
-
-       } else if (length <= 8 ){
-            return 4;
-       } else if (length <= 16) {
-           return 8;
-       }*/
-    }
 
     render (){
         let comboContainerStyle = {
@@ -60,17 +44,17 @@ class Combo extends Component {
                                 var color;
 
                                 if (GameManager.comboBlocks.length > 4){
-                                    color = 'yellow';
+                                    color = '#FAEA7E';//'#FFF29B';
 
-                                    if ((GameManager.comboBlocks.length + 1) % 5 === 0) {
+                                    /*if ((GameManager.comboBlocks.length + 1) % 5 === 0) {
                                         color = '#FC7F7F'
                                     } else if ((GameManager.comboBlocks.length + 2) % 5 === 0){
                                         color = 'orange'
                                     } else {
                                         color = 'yellow'
-                                    }
+                                    }*/
                                 } else {
-                                    color = '#cab212';
+                                    color = '#E3DCC8';//'#E4DCDE';//'#cab212';
                                 }
                                 
                                 return <Block key={i} color={color}/>;
@@ -95,7 +79,7 @@ class Block extends Component {
     render (){
         let style = {
             height: 10,
-            width: 55,
+            width: 57,
             margin: '0px 3px',
             display: 'inline-block',
             background: this.props.color,

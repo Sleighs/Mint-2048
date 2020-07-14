@@ -315,6 +315,7 @@ class Game extends Component {
     // Move Tiles
     move () {
         var moved = false;
+        var merge = false;
         GameManager.moved = false;
         GameManager.winGame = false;
         GameManager.choosePowers = false;
@@ -374,7 +375,7 @@ class Game extends Component {
                         this.setState({ score: this.state.score + newNum });
 
                         // Animate
-
+                        merge = true;
                         moved = true;
 
                         if (newNum === 2048 && GameManager.winCount === 0){
@@ -403,6 +404,11 @@ class Game extends Component {
         });
 
         if (moved) {
+            if (merge){
+                GameManager.combo = GameManager.combo + 1;
+            } else {
+                GameManager.combo = 0;
+            }
             // Add randomm tile if possible
             this.addRandomTile();
 
@@ -441,7 +447,7 @@ class Game extends Component {
 
         //console.log('move', this.state.moveCounter);
 
-        if (GameManager.abilities.length < 5){
+        //if (GameManager.abilities.length < 5){
             if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
                 //GameManager.abilities.push(this.newPower());
 
@@ -450,6 +456,14 @@ class Game extends Component {
                 }
                 
             }
+        //}
+
+        GameManager.comboBlocks = [];
+        for (var x = 0; x < GameManager.combo; x++){
+            if (x < 5){
+                GameManager.comboBlocks.push(x);
+            }
+            
         }
 
         if (!this.movesAvailable()){
@@ -827,9 +841,7 @@ class Game extends Component {
                     GameManager.combo -= 1;
                     GameManager.comboBlocks.pop();
                 }
-                */
-
-                
+                */ 
             }
 
             GameManager.undoCount = GameManager.undoCount - 1;
