@@ -447,16 +447,16 @@ class Game extends Component {
 
         //console.log('move', this.state.moveCounter);
 
-        //if (GameManager.abilities.length < 5){
+        if (GameManager.abilities.length < 5 || GameManager.undoCount < 3){
             if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
-                //GameManager.abilities.push(this.newPower());
+                GameManager.abilities.push(this.newPower());
 
                 if (GameManager.undoCount < 3){
                     GameManager.undoCount += 1;
                 }
                 
             }
-        //}
+        }
 
         GameManager.comboBlocks = [];
         for (var x = 0; x < GameManager.combo; x++){
@@ -479,9 +479,6 @@ class Game extends Component {
             GameManager.undoNodes.push(i);
             //console.log(GameManager.undoNodes)
         }
-
-        // check for grow tiles
-        //this.growTiles();
     }
     prepareTiles(){
         var data = this.state.cells;
@@ -502,9 +499,6 @@ class Game extends Component {
             board: board,
             cells: cells
         });            
-        if (this.state.frozenTile !== null){
-           // this.insertTile(this.state.frozenTile, {x: this.state.frozenTile.x, y: this.state.frozenTile.y});
-        }
     }
     getVector(direction) {
         var map = {
@@ -1267,7 +1261,7 @@ class Game extends Component {
                     <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
                     <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
                     <Combo comboLength={GameManager.combo}/>
-                    {/*<Powers useAbility={this.useAbility} powers={GameManager.abilities}/>*/}
+                    <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
                 </Swipe>
                 <Details tooltip={GameManager.tooltip}/>
             </div>
