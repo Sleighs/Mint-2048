@@ -217,7 +217,7 @@ class UndoNodes extends Component {
             marginTop: -7,
             marginLeft: -4,
             display: 'block',
-            position: 'fixed'
+            position: 'absolute'
         }
 
         let nodeStyle = {
