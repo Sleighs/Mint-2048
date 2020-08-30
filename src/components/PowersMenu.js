@@ -68,9 +68,7 @@ class Powers extends Component {
         this.state = {
             powersTooltipMsg: ''
         }
-    }
-
-    
+    }    
     
     render() {
         let powerStyle = {
