@@ -7,7 +7,7 @@ class Menu extends Component {
     render (){
         let menuContainerStyle = {
             width: 420,
-            height: 590,
+            height: 650,
             borderRadius: 4,
             //border: 'solid 1pt',
             position: 'absolute',
@@ -25,18 +25,6 @@ class Menu extends Component {
     }
 }
 
-class Scores extends Component {
-    render() {
-
-        return (
-            <div className='menu-scores'>
-                <ul>
-                    
-                </ul>
-            </div>
-        )
-    }
-}
 
 class MenuItem extends Component {
     render() {
@@ -68,6 +56,7 @@ class MenuItem extends Component {
             <div className='menu-container' style={containerStyle}>
                 <ul className={'menu-list'} style={menuListStyle}>
                     <li className={'menu-item', 'menu-item-scores'} style={scoreItemStyle}>Scores</li>
+                    <li className={'menu-item'}>Modes</li>
                 </ul>
             </div>
         )

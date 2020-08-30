@@ -192,6 +192,9 @@ class Game extends Component {
     initGame() {
         // If no previous game
         GameManager.startNewGame = true;
+        if (GameManager.mode !== 'speed' || 'power' || 'cash'){
+            GameManager.mode = 'speed';
+        }
         this.actuate('new game'); 
     }
     getBoard(data) {

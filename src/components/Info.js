@@ -55,7 +55,7 @@ class Info extends Component {
         <div className='info' style={infoStyle}>
             <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>
             <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle} /*onClick={this.props.openMenu}*/>
+                <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
                     <div className='title' style={titleStyle}>{"mint"}</div>
                 </div>
                 <div className='info-right' style={infoRightStyle}>
