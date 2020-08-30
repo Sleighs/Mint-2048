@@ -83,9 +83,9 @@ class Powers extends Component {
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}>Power 1</div>
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}>Power 2</div>
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}>Power 3</div>
+                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 1</div>
+                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 2</div>
+                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 3</div>
             </div>
         )
     }
