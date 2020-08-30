@@ -6,7 +6,7 @@ import { findRenderedComponentWithType } from 'react-dom/test-utils';
 class Menu extends Component {
     render (){
         let menuContainerStyle = {
-            width: 420,
+            width: 440,
             height: 650,
             borderRadius: 4,
             //border: 'solid 1pt',
@@ -39,7 +39,7 @@ class MenuItem extends Component {
             width: 280,
             height: 55,
             backgroundColor: '#FC7F7F',
-            margin: 'auto',
+            margin: '5px auto',
             borderRadius: 4,
             textAlign: 'center',
             color: 'white',
@@ -56,7 +56,7 @@ class MenuItem extends Component {
             <div className='menu-container' style={containerStyle}>
                 <ul className={'menu-list'} style={menuListStyle}>
                     <li className={'menu-item', 'menu-item-scores'} style={scoreItemStyle}>Scores</li>
-                    <li className={'menu-item'}>Modes</li>
+                    <li className={'menu-item'} style={scoreItemStyle}>Modes</li>
                 </ul>
             </div>
         )
