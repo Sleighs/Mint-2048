@@ -6,8 +6,8 @@ import GameManager from '../GameManager';
 class Board extends Component {
     render() {
         let boardStyle = {
-            width: 410,
-            height: 410,
+            width: 386,
+            height: 386,
             margin: '10px auto',
             padding: '2px',
             borderRadius: 5,
@@ -187,8 +187,8 @@ class Tile extends Component {
 
     render (){
         let tileStyle = {
-            height: ((408 / GameManager.size) * .85),
-            width: ((408 / GameManager.size) * .85),
+            height: ((380 / GameManager.size) * .85),
+            width: ((380 / GameManager.size) * .85),
             borderRadius: 7,
             margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
@@ -220,16 +220,16 @@ class Number extends Component {
                 fontSize = '3.5em';
                 break;
             case 4:
-                fontSize = '3em';
+                fontSize = '2.81em';
                 
                 if (number > 100 && number < 1000) {
-                    fontSize = '2.4em';
+                    fontSize = '2.15em';
                 } else if (number > 1000 && number < 10000) {
-                    fontSize = '2em';
+                    fontSize = '1.85em';
                 } else if (number > 10000 && number < 100000) {
-                    fontSize = '1.35em';
+                    fontSize = '1.05em';
                 } else if (number > 100000 && number < 1000000) {
-                    fontSize = '1em';
+                    fontSize = '0.8em';
                 }
                 break;
             case 5:
@@ -259,12 +259,12 @@ class Number extends Component {
             case 2048:
             case 4096:
             case 8192:
-                margin = '-15%';
+                margin = '-16%';
                 break;
             case 16384:
             case 32768:
             case 65536:
-                margin = '0%';
+                margin = '4.5%';
                 break;
             case 131072:
             case 262144:
@@ -300,7 +300,7 @@ class Number extends Component {
             fontFamily: 'arial',
             fontSize: this.getFontSize(GameManager.size, this.props.number),
             fontWeight: 'bold',
-            textShadow: this.props.number !== null ? '.5px .5px .5px #bbada0' : '0px 0px 0px #cdc1b4',
+            textShadow: this.props.number !== null ? '0px 0px 0px #bbada0' : '0px 0px 0px #cdc1b4',
             width: '90%',
             height: '90%',
             margin: 'auto',

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
-import Details from './Details';
 
 class Combo extends Component {
     constructor(props) {
@@ -12,16 +11,17 @@ class Combo extends Component {
 
     render (){
         let comboContainerStyle = {
-            height: 28,
-            width: 410,
-            margin: '5px auto'            
+            height: 25,
+            width: 385,
+            margin: '2px auto  0 auto'
         }
         let blocksContainerStyle = {
-            width: 380,
-            height: 32,
+            width: 350,
+            height: 25,
+            padding: '3px 0 0 0', 
             margin: 'auto',
             display: 'inline-block'
-        }
+        } 
         let textStyle = {
             width: 30,
             height: 20,
@@ -31,7 +31,8 @@ class Combo extends Component {
             display: 'inline-block',
             float: 'right',
             marginTop: '-9px',
-            color: '#E4DCDE' //dark text '#775e65'
+            opacity: .4,
+            color: '#775e65'//'#E4DCDE' //light text 
         }
 
 
@@ -41,7 +42,7 @@ class Combo extends Component {
                     {
                         GameManager.comboBlocks.map((ele, i)=> {
                             if (i < 5) {
-                                var color;
+                                var color = '#E3DCC8';
 
                                 if (GameManager.comboBlocks.length > 4){
                                     color = '#FAEA7E';//'#FFF29B';
@@ -53,9 +54,9 @@ class Combo extends Component {
                                     } else {
                                         color = 'yellow'
                                     }*/
-                                } else {
+                                } /*else {
                                     color = '#E3DCC8';//'#E4DCDE';//'#cab212';
-                                }
+                                }*/
                                 
                                 return <Block key={i} color={color}/>;
                             }
@@ -78,12 +79,12 @@ class Block extends Component {
     }
     render (){
         let style = {
-            height: 10,
-            width: 57,
-            margin: '0px 3px',
+            height: 14,
+            width: 50,
+            margin: '0px 6px 0px 0px',
             display: 'inline-block',
             background: this.props.color,
-            borderRadius: 4
+            borderRadius: 3
         }
 
         return (

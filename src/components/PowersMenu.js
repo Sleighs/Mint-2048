@@ -37,7 +37,6 @@ class PowersMenu extends Component {
 
     render(){
         let wrapperStyle = {
-            display: 'none',
             width: 410,
             height: 90,
             margin: 'auto',
@@ -71,19 +70,31 @@ class Powers extends Component {
     }    
     
     render() {
-        let powerStyle = {
+        let containerStyle = {
+            position: 'absolute',
+            zIndex: 3,
+            //display: 'none',
+            width: 400,
+            height: 400,
+            
+            
             
         }
+        let itemStyle = {
+            height: 100,
+            width: 100,
+            border: 'solid 1pt black'
+        }
+
+        let rightPowerStyle;
 
 
         return (
-            <div className={'power', this.props.type} style={powerStyle} 
-                onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
-                onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
-            >
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 1</div>
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 2</div>
-                <div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 3</div>
+            <div className={'power', this.props.type} style={containerStyle}>
+                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 1</div>
+                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 2</div>
+                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 3</div>
+                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 4</div>
             </div>
         )
     }

@@ -39,7 +39,7 @@ class Details extends Component {
                         </tr>
                         <tr>
                             <td style={{fontWeight: 'bold'}}>{'Shift'}</td>
-                            <td>{'Undo'}</td>
+                            <td>{GameManager.powersModeOn ? 'Open Powers' : 'Undo'}</td>
                         </tr>
                         <tr>
                             <td>{}</td>

@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Info from './Info';
 import Board from './Board';
 import Menu from './Menu';
+import PowersMenu from './PowersMenu';
 import EndGame from './EndGame';
 import Powers from './Powers';
 import Combo from './Combo';
 import Details from './Details';
 import GameManager from '../GameManager';
-import Swipe from 'react-easy-swipe';
+import { useSwipeable, Swipeable } from 'react-swipeable'
 
 class Game extends Component {
     constructor(props) {
@@ -53,6 +54,7 @@ class Game extends Component {
     }
     componentDidMount() {
         document.addEventListener('keyup', this.handleInput);
+        document.addEventListener('keydown', (e)=>{e.preventDefault()});
         
         this.initGame();
     }
@@ -65,25 +67,48 @@ class Game extends Component {
     handleInput(event) {
         //Undo/Open Power
         if (event.keyCode === 16) {
-            this.undoMove();
-        /*
-           if (GameManager.choosePowers === true){
-                GameManager.choosePowers = false;
-                GameManager.navPowerTiles = false;
-                GameManager.currentPowerTile = 0;
-                GameManager.currentPower = 1;
-                GameManager.tooltip = '';
-                
-                console.log('shift pressed, power selection off');
-           } else if (GameManager.abilities.length > 0){
-                GameManager.choosePowers = true;
-                GameManager.tooltip = GameManager.abilities[GameManager.currentPower - 1].type;
+            if (GameManager.powersModeOn === true){  
+                var powerCount = 0;
+                for (var i = 1; i < GameManager.powers.length; i++){
+                    if (GameManager.powers[i].count > 0){
+                       powerCount += GameManager.powers[i].count;
+                    }
+                }
+                console.log('handleInput powerCount', powerCount);
+                //shift brings up power menu
 
 
-                console.log('shift pressed, power selection on');
+
+                //turn menu off if already on, else show power menu
+                if (GameManager.choosePowers === true){
+                    GameManager.choosePowers = false;
+                    console.log('shift pressed - powers off');
+                } else {
+                    GameManager.choosePowers = true;
+                    console.log('shift pressed - powers on');
+                }
+
+
+                /*if (GameManager.choosePowers === true){
+                        GameManager.choosePowers = false;
+                        GameManager.navPowerTiles = false;
+                        GameManager.currentPowerTile = 0;
+                        GameManager.currentPower = 1;
+                        GameManager.tooltip = '';
+                        
+                        console.log('shift pressed, power selection off');
+                } else if (GameManager.abilities.length > 0){
+                        GameManager.choosePowers = true;
+                        GameManager.tooltip = GameManager.abilities[GameManager.currentPower - 1].type;
+
+
+                        console.log('shift pressed, power selection on');
+                } else {
+                    return;
+                }*/
            } else {
-               return;
-           }*/
+               this.undoMove();
+           }
         }
 
         if (event.keyCode === 13) {
@@ -95,8 +120,21 @@ class Game extends Component {
             }
         }
 
+        //Escape Button
+        if (event.keyCode === 27) {
+            if (!GameManager.showMenu){
+                GameManager.showMenu = true;
+            } else {
+                GameManager.showMenu = false;
+            }
+            
+        }
+
+        
+
         // Get Move Direction
         if (event.keyCode === 38) {
+            
             // Up arrow
             console.log("up arrow pressed");
             this.setState({
@@ -128,6 +166,7 @@ class Game extends Component {
             });
             this.move();
         }
+        event.preventDefault();
     }
 
 
@@ -407,8 +446,28 @@ class Game extends Component {
         });
 
         if (moved) {
+            // Add combo point if tiles merged else reset combo
             if (merge){
                 GameManager.combo = GameManager.combo + 1;
+
+            /*    var comboLength = GameManager.combo;
+                console.log('moved');
+            switch (comboLength) {
+                case (comboLength < 6):
+                    GameManager.cash += 1;
+                    console.log(GameManager.cash);
+                    break;
+                case (comboLength > 5 && comboLength < 20):
+                    GameManager.cash += 5;
+                    console.log(GameManager.cash);
+                    break;
+                case (comboLength > 20 && comboLength < 50):
+                    GameManager.cash += 10;
+                    console.log(GameManager.cash);
+                    break;
+                default:
+                    break;
+            }*/
             } else {
                 GameManager.combo = 0;
             }
@@ -450,16 +509,25 @@ class Game extends Component {
 
         //console.log('move', this.state.moveCounter);
 
-        if (GameManager.abilities.length < 5 || GameManager.undoCount < 3){
+
+        //if (GameManager.abilities.length < 5 || GameManager.undoCount < 3){
             if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
-                GameManager.abilities.push(this.newPower());
+                if (GameManager.powersModeOn === true){
+                    //get random power , add count
+                    var randPower = Math.floor(Math.random() * 3);
+                    console.log('randPower', randPower);
+                    //GameManager.abilities.push(this.newPower());
+                    GameManager.powers[randPower].count += 1;
+                }
 
                 if (GameManager.undoCount < 3){
                     GameManager.undoCount += 1;
                 }
                 
             }
-        }
+
+            
+        //}
 
         GameManager.comboBlocks = [];
         for (var x = 0; x < GameManager.combo; x++){
@@ -808,7 +876,7 @@ class Game extends Component {
         }
 
         // Undo Move
-        if (type === 'undo' && GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0) {
+        if (type === 'undo' && GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0 && GameManager.canUndo === true) {
             GameManager.showLoseScreen = false;
             // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
@@ -862,7 +930,7 @@ class Game extends Component {
             //console.log(GameManager.undoNodes)
         }
 
-        if (GameManager.showMenu === true) {
+        /*if (GameManager.showMenu === true) {
             this.setState({
                 menuVisible: true
             });
@@ -871,7 +939,7 @@ class Game extends Component {
             this.setState({
                 menuVisible: false
             });
-        }
+        }*/
     }
     newGame(){
         if (GameManager.startNewGame !== true){
@@ -885,7 +953,7 @@ class Game extends Component {
         this.actuate('new game');
     }
     undoMove(){
-        if (GameManager.undo  !== true){
+        if (GameManager.undo  !== true && GameManager.canUndo === true){
             GameManager.undo = true;
             GameManager.gameOver = false;
             GameManager.navPowerTiles = false;
@@ -904,7 +972,7 @@ class Game extends Component {
             GameManager.showMenu = false;
         }
         
-        this.actuate();
+        //this.actuate();
     }
     useAbility(type, id){
         GameManager.navPowerTiles = true;
@@ -1062,11 +1130,13 @@ class Game extends Component {
 
         
         if (powerUsed === true) {
-            GameManager.abilities.forEach((ele, i, obj)=>{
+            /*GameManager.abilities.forEach((ele, i, obj)=>{
                 if (ele.id === id){
                     obj.splice(i, 1);
                 }
-            });
+            });*/
+
+            //get power that was used, subtract from total power count
 
             GameManager.currentAbility = '';
             GameManager.currentAbilityId = '';
@@ -1105,7 +1175,7 @@ class Game extends Component {
         //tile.num = tile.num * 2;
         //this.insertTile(tile, {x: tile.y, y: tile.y});
     }
-    newPower(){
+    /*newPower(){
         //generate random power
         function getType(){
             var randNum = Math.floor(Math.random() * 3) + 1;
@@ -1151,7 +1221,7 @@ class Game extends Component {
         };
 
         return ability;
-    }
+    }*/
     switchPower(dir){
         switch(dir){
             case 'left':
@@ -1241,31 +1311,37 @@ class Game extends Component {
 
     // Render Game
     render() {
+        function eventHandler(){
+            console.log('swiped');
+        }
+        
+        let config = {
+            delta: 10,                             // min distance(px) before a swipe starts
+            preventDefaultTouchmoveEvent: false,   // preventDefault on touchmove, *See Details*
+            trackTouch: true,                      // track touch input
+            trackMouse: false,                     // track mouse input
+            rotationAngle: 0,                      // set a rotation angle
+          };
+        //let handlers = useSwipeable({ onSwiped: (event) => eventHandler()})
+        
         let style = {
-            fontFamily: 'Karla',   
-            height: '650px',
-            width: '440px',
+            fontFamily: 'Karla',
+            height: '625px',
+            width: '404px',
             borderRadius: '9px',
             backgroundColor: '#faf8ef'
         }
         
-        
         return (
-            <div className= 'game' style={style} onChange={this.handleInput}>
-                <Swipe 
-                    onSwipeLeft={() => {this.direction('left')}} 
-                    onSwipeRight={() => {this.direction('right')}}
-                    onSwipeUp={() => {this.direction('up')}} 
-                    onSwipeDown={() => {this.direction('down')}}
-                > 
-                    { GameManager.showMenu ? <Menu openMenu={this.openMenu}/> : null }
-                    { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
-                    { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
-                    <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
-                    <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
-                    <Combo comboLength={GameManager.combo}/>
-                    <Powers useAbility={this.useAbility} powers={GameManager.abilities}/>
-                </Swipe>
+            <div className= 'game' style={style}>
+                { !GameManager.showMenu ? null : null/*<Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame}/>*/}
+                { !GameManager.choosePowers ? null : <PowersMenu /> }
+                { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
+                { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
+                <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
+                <Combo comboLength={GameManager.combo}/>
+                {!GameManager.powersModeOn ? null : <Powers useAbility={this.useAbility} powers={GameManager.abilities}/> }
+                <Board board={this.state.board} userID='user' changeTile={this.changeTile}/>
                 <Details tooltip={GameManager.tooltip}/>
             </div>
         )

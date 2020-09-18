@@ -40,19 +40,17 @@ class Powers extends Component {
 
     render(){
         let powersWrapperStyle = {
-            display: 'none',
-            width: 410,
-            height: 90,
-            margin: 'auto',
-            borderRadius: 6
+            display: 'block',
+            width: 386,
+            height: 12,
+            margin: '0 auto',
         }
         let powersContainerStyle = {
-            width: 410,
-            height: 50,
+            width: 386,
+            //height: 20,
             margin: 'auto',
-            borderRadius: 5,
-            background: '#bbada0',
-            padding: '7px 5px'
+            //background: '#bbada0',
+            padding: 1
         }
         let powersTooltip = {
             margin: 'auto',
@@ -66,10 +64,16 @@ class Powers extends Component {
             <div className='powers-wrapper' style={powersWrapperStyle}>
                 <div className='powers-container' style={powersContainerStyle}>
                     {
-                        this.props.powers.map((ele, i) => (
+                        /*this.props.powers.map((ele, i) => (
                             <PowerItem type={ele.type} id={ele.id} index={i} useAbility={this.props.useAbility} color={this.getAbilityColor(ele.type)} ele={ele} key={i}/>
-                        ))
+                        ))*/
                     }
+
+                    <PowerItem type={'multiply'} index={0} color={'green'} key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'divide'} index={1} color={'red'} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'four tile'} index={2} color={'white'} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'freeze'} index={3} color={'blue'} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
+                    
                 </div>
                 <div className="powers-tooltip" style={powersTooltip} >
                     {this.state.powersTooltipMsg}
@@ -85,6 +89,11 @@ class PowerItem extends Component {
         this.state = {
             powersTooltipMsg: ''
         }
+    }
+
+    showStats(key){
+        console.log('stats', key);
+        
     }
 
     tooltip(state, type){
@@ -135,17 +144,75 @@ class PowerItem extends Component {
         
         return shadow;
     }
+
+    getBackgroundColor(){
+        var color = '#F4FEF9';
+
+        switch(this.props.type){
+            case 'multiply':
+                color = '#6ED475';
+                break;
+            case 'divide':
+                color = '#E26369';
+                break;
+            case 'four tile':
+                color = '#58AD9C';
+                break;
+            case 'freeze':
+                color = '#92DAB4';
+                break;
+        }
+
+        return color;
+    }
+
+    getBoxShadow(){
+        var prop = '';
+
+        if (this.props.count > 0){  
+            prop = '2px 2px 2px 2px yellow'
+        }
+        return prop;
+    }
+    getOpacity(){
+        var level = .1;
+
+        if (this.props.count > 0 ){
+            level = 1;
+        }
+        return level;
+    }
+    getBorder(){
+        var prop = '';
+        if (this.props.count > 0){
+            prop = 'solid 2pt yellow'
+        }
+        return prop;
+    }
     
     render() {
         let powerStyle = {
             display: 'inline-block',
-            color: '#F4FEF9',
-            borderRadius: 4,
-            background: '#cdc1b4',
-            width: 123,
-            height: 36,
+            color: '#cdc1b4',
+            borderRadius: 2,
+            background: this.getBackgroundColor(),
+            width: (383 / GameManager.size),
+            height: 10,
             textAlign: 'center',
-            margin: '0 5px'
+            margin: '0 auto',
+            opacity: this.getOpacity(),
+            //boxShadow: this.getBoxShadow(),
+            //border: this.getBorder()
+        }
+
+        let numStyle = {
+            display: 'none',
+            borderRadius: '50%',
+            height: 15,
+            width: 15,
+            margin: 'auto',
+            border: 'solid 1pt blue',
+            fontSize: '.5em'
         }
 
 
@@ -155,6 +222,7 @@ class PowerItem extends Component {
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >
+                <div style={numStyle}>{this.props.count}</div>
             </div>
         )
     }

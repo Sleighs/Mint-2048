@@ -1,7 +1,9 @@
 var GameManager = {
   size: 4,
+  mode: '',
   startNewGame: false,
   undo: false,
+  canUndo: true,
   undoCount: 0,
   undoNodes: [],
   direction: '',
@@ -47,12 +49,31 @@ var GameManager = {
       id: 2636354
     }*/
   ],
+  powers: [
+    { 
+      type: 'multiply',
+      count: 1
+    },
+    { 
+      type: 'divide',
+      count: 0
+    },
+    { 
+      type: 'four tile',
+      count: 3
+    },
+    {
+      type: 'freeze',
+      count: 0
+    }
+  ],
   currentAbility: '',
   currentAbilityId: '',
   abilityTile: null,
   combo: 0,
   comboBlocks: [],
   bestCombo: 0,
+  powersModeOn: false,
   choosePowers: false,
   powerSelection: null,
   currentPower: 1,

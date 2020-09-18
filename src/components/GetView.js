@@ -6,11 +6,12 @@ import GameManager from '../GameManager';
 class GetView extends Component {
     render() {
         let viewStyle = {
-            margin: 5
+            height: 705,
+            margin: 3
         }
         let footerStyle = {
             textAlign: 'center',
-            width: 440,
+            width: 400,
             marginTop: 17,
             color: '#C6BABD '
         }

@@ -13,9 +13,9 @@ class Info extends Component {
 
     render (){
         let infoStyle = {
-            height: 190,
-            width: 412,
-            padding: 4,
+            height: 168,
+            width: 385,
+            padding: '4 0',
             margin: 'auto',
             display: 'block',
             fontSize: '2em',
@@ -28,27 +28,28 @@ class Info extends Component {
             float: 'left',
             fontWeight: 'bold',
             borderRadius: 4,
-            width: 135,
-            height: 135,
+            width: 127,
+            height: 127,
             padding: '45px 10px',
             color: 'white',
-            backgroundColor: '#98E7BD' //'#BFF0D6'//'#C3FAE4', //'#edcc61',
+            backgroundColor: '#98E7BD', //'#BFF0D6'//'#C3FAE4', //'#edcc61'
         }
         let titleStyle = {
             textAlign: 'center',
             fontSize: '1.4em',
-            margin: '-8px 0 0 0',
+            margin: '-11px 0 0 0',
             fontFamily: 'Cabin'
         }
         let infoContainerStyle = {
             display: 'block',
-            height: 170,
-            width: 405
+            height: 136,
+            width: 383
         }
         let infoRightStyle = {
             display: 'inline-block',
-            width: 270,
-            height: 170
+            width: 200,
+            height: 132,
+            float: 'right'
         }
 
         return (
@@ -72,18 +73,19 @@ class Time extends Component {
     render (){
         let timeStyle = {
             display: 'block',
-            fontFamily: 'arial',
-            height: 35,
-            width: 403,
-            margin: '-5px 0 0 0',
-            fontSize: '.7em',
+            fontFamily: 'Cabin',
+            height: 26,
+            width: 388,
+            margin: '-2px 0 0 0',
+            fontSize: '.52em',
             textShadow: '.3px .3px .3px silver',
+            letterSpacing: .5,
+            opacity: .5,
             color: '#776e65'
         }
         let digitStyle = {
-            textAlign: 'center',
-            width: '100%',
-            margin: 'auto'
+            width: 100,
+            margin: 'auto 125px auto auto'
         }
 
         return (
@@ -107,26 +109,28 @@ class Score extends Component {
             //textShadow: '.1px .1px .1px #776e65',
             float: 'right',
             minWidth: 210,
-            height: 77,
-            padding: '5px 0',
+            height: 69,
+            padding: '2px 0',
             margin: 'auto',
             color: 'white',
-            fontFamily: 'arial'
+            fontFamily: 'Cabin',
+            letterSpacing: .5,
+            zIndex: 2
         }
         let scoreStyle = {
-            fontSize: '.79em',
+            fontSize: '.69em',
             height: 25
         }
         let titleStyle = {
-            fontSize: '.58em',
+            fontSize: '.52em',
             height: 22
         }
         let scoreContainerStyle = {
             display: 'inline-block',
             borderRadius: 4,
-            padding: '4px 15px',
-            height: 60,
-            minWidth: 100,
+            padding: '4px 12px',
+            height: 56,
+            minWidth: 90,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
             margin: 'auto'
@@ -134,12 +138,12 @@ class Score extends Component {
         let bestScoreContainerStyle = {
             display: 'inline-block',
             borderRadius: 4,
-            padding: '4px 15px',
-            height: 60,
-            minWidth: 100,
+            padding: '4px 12px',
+            height: 56,
+            minWidth: 90,
             backgroundColor: '#bbada0',
             color: '#f5f6f5',
-            float: 'right'            
+            float: 'right'
         }
         
         return (
@@ -174,21 +178,23 @@ class Buttons extends Component {
     render (){
         let containerStyle = {
             height: 65,
-            width: 205,
+            width: 195,
             margin: 'auto',
             display: 'block',
-            float: 'right',
+            float: 'right'
         }
         let btnStyle = {
-            width: 100,
-            height: 60,
+            width: 90,
+            height: 56,
             backgroundColor: '#775e65',
             color: 'white',
-            fontSize: '.7em',
+            fontFamily: 'Cabin',
+            fontSize: '.6em',
+            letterSpacing: .7,
             margin: 'auto',
             display: 'inline-block',
             borderRadius: 4,
-            padding: '4px 10px',
+            padding: '4px 12px',
             textDecoration: 'none',
             border: 'none'
         }
@@ -213,20 +219,22 @@ class UndoNodes extends Component {
     render (){
         let containerStyle = {
             height: 8,
-            width: 90,
-            marginTop: -7,
+            width: 76,
+            marginTop: -1,
             marginLeft: -4,
             display: 'block',
-            position: 'absolute'
+            position: 'absolute',
+            fontSize: '.5em'
         }
 
         let nodeStyle = {
             background: GameManager.undoCount < 3 ? '#eee4da' : '#edcc61',
-            width: 20,
-            height: 7,
+            width: 15,
+            height: 5,
             margin: 3,
             borderRadius: 2,
-            display: 'inline-block',
+            display: !GameManager.canUndo ? 'none' : 'inline-block',
+            opacity: GameManager.undoCount < 3 ? .8 : .9
             
         }
 
@@ -239,6 +247,7 @@ class UndoNodes extends Component {
                         )
                     })
                 }
+                {!GameManager.canUndo ? 'OFF' : null}
             </div>
         )
     }
@@ -249,15 +258,7 @@ class Node extends Component {
         super(props);
     }
 
-    render (){
-        let containerStyle = {
-            height: 7,
-            width: 15,
-            margin: '5px 0',
-            display: 'inline-block'
-
-        }
-    
+    render (){    
         return(
             <div style={this.props.style}></div>
         )
