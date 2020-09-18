@@ -189,7 +189,7 @@ class Buttons extends Component {
             backgroundColor: '#775e65',
             color: 'white',
             fontFamily: 'Cabin',
-            fontSize: '.6em',
+            fontSize: '.62 em',
             letterSpacing: .7,
             margin: 'auto',
             display: 'inline-block',
