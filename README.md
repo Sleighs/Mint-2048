@@ -5,7 +5,7 @@ A modded version of the puzzle game 2048 made with the React library. To win, ma
 ### [Play Mint 2048](https://plus-7ed02.firebaseapp.com/)
  
 
-![](pics/2048mint-sample.PNG)
+![](pics/2048mint-sample2.PNG)
 
 ***
 ## Instructions
