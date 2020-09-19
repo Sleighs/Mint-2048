@@ -948,6 +948,8 @@ class Game extends Component {
             GameManager.navPowerTiles = false;
             GameManager.abilities = [];
             GameManager.tooltip = '';
+            GameManager.undoCount = 0;
+            GameManager.comboBlocks = [];
         }
 
         this.actuate('new game');
