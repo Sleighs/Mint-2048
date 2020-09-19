@@ -12,6 +12,8 @@ A modded version of the puzzle game 2048 made with the React library. To win, ma
 
 Merge tiles with arrow keys to create the 2048 tile to win the game. 
 
+Successful combos reward extra undos in regular mint and abilities in powers mode.
+
 Pull from powers branch to play Powers Mode, which includes special abilities.
 
 ## Controls
