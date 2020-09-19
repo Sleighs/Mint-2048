@@ -12,7 +12,7 @@ class Combo extends Component {
     render (){
         let comboContainerStyle = {
             height: 25,
-            width: 385,
+            width: 380,
             margin: '2px auto  0 auto'
         }
         let blocksContainerStyle = {
@@ -30,9 +30,9 @@ class Combo extends Component {
             fontWeight: 'bold',
             display: 'inline-block',
             float: 'right',
-            marginTop: '-9px',
+            marginTop: '-8px',
             opacity: .4,
-            color: '#775e65'//'#E4DCDE' //light text 
+            color: '#775e65'//'#E4DCDE' light text 
         }
 
 
@@ -79,12 +79,13 @@ class Block extends Component {
     }
     render (){
         let style = {
-            height: 14,
+            height: 15,
             width: 50,
             margin: '0px 6px 0px 0px',
             display: 'inline-block',
             background: this.props.color,
-            borderRadius: 3
+            borderRadius: 4,
+            opacity: .8
         }
 
         return (

@@ -74,13 +74,13 @@ class Time extends Component {
         let timeStyle = {
             display: 'block',
             fontFamily: 'Cabin',
-            height: 26,
+            height: 30,
             width: 388,
-            margin: '-2px 0 0 0',
-            fontSize: '.52em',
+            margin: '5px 0 0 0',
+            fontSize: '.58em',
             textShadow: '.3px .3px .3px silver',
-            letterSpacing: .5,
-            opacity: .5,
+            letterSpacing: .2,
+            opacity: .35,
             color: '#776e65'
         }
         let digitStyle = {
@@ -189,7 +189,7 @@ class Buttons extends Component {
             backgroundColor: '#775e65',
             color: 'white',
             fontFamily: 'Cabin',
-            fontSize: '.62 em',
+            fontSize: '.6em',
             letterSpacing: .7,
             margin: 'auto',
             display: 'inline-block',
@@ -221,7 +221,7 @@ class UndoNodes extends Component {
             height: 8,
             width: 76,
             marginTop: -1,
-            marginLeft: -4,
+            marginLeft: -5,
             display: 'block',
             position: 'absolute',
             fontSize: '.5em'
@@ -234,7 +234,7 @@ class UndoNodes extends Component {
             margin: 3,
             borderRadius: 2,
             display: !GameManager.canUndo ? 'none' : 'inline-block',
-            opacity: GameManager.undoCount < 3 ? .8 : .9
+            opacity: GameManager.undoCount < 3 ? .7 : .8
             
         }
 
