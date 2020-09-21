@@ -65,20 +65,18 @@ class Game extends Component {
 
     //Keyboard Handles
     handleInput(event) {
-        //Undo/Open Power
+        // Shift - Undo/Open Power
         if (event.keyCode === 16) {
             if (GameManager.powersModeOn === true){  
                 var powerCount = 0;
+                //Get total powers available
                 for (var i = 1; i < GameManager.powers.length; i++){
                     if (GameManager.powers[i].count > 0){
                        powerCount += GameManager.powers[i].count;
                     }
                 }
                 console.log('handleInput powerCount', powerCount);
-                //shift brings up power menu
-
-
-
+                
                 //turn menu off if already on, else show power menu
                 if (GameManager.choosePowers === true){
                     GameManager.choosePowers = false;
@@ -114,8 +112,8 @@ class Game extends Component {
         if (event.keyCode === 13) {
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 
-                this.usePower();
-            } else if (GameManager.choosePowers === true && GameManager.navPowerTiles === true){
+                //this.usePower();
+            } else if (/*GameManager.choosePowers === true && */ GameManager.navPowerTiles === true){
                 this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
             }
         }
@@ -126,6 +124,8 @@ class Game extends Component {
                 GameManager.showMenu = true;
             } else {
                 GameManager.showMenu = false;
+                GameManager.navPowerTiles = false;
+                GameManager.choosePowers = false;
             }
             
         }
@@ -140,7 +140,15 @@ class Game extends Component {
             this.setState({
                 direction: 0
             });
-            this.move();
+            if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
+                GameManager.activePower = {type: GameManager.powers[1].type, count: GameManager.powers[1].count}
+                this.useAbility(GameManager.powers[1].type, 1);
+            } else if (GameManager.navPowerTiles === true) {
+                this.switchPowerTile('up');
+            } else {
+                this.move();
+            }
+            
         }
         else if (event.keyCode === 40) {
             // Down arrow
@@ -1337,7 +1345,7 @@ class Game extends Component {
         return (
             <div className= 'game' style={style}>
                 { !GameManager.showMenu ? null : null/*<Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame}/>*/}
-                { !GameManager.choosePowers ? null : <PowersMenu /> }
+                { !GameManager.choosePowers || GameManager.navPowerTiles ? null : <PowersMenu useAbility={this.useAbility}/> }
                 { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
                 { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                 <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>

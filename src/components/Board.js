@@ -45,37 +45,37 @@ class Tile extends Component {
                 textColor = '#cdc1b4';
                 break;
             case 2:
-                backgroundColor = '#eee4da';
+                backgroundColor = 'rgb(238,228,218, .9)';//'#eee4da';
                 textColor = '#775e65';
                 break;
             case 4:
-                backgroundColor = '#FC7F7F';
+                backgroundColor = 'rgb(252, 127, 127, .9)';//'#FC7F7F';
                 textColor = '#F4FEF9';
                 break;
             case 8:
-                backgroundColor = '#8DCB95';
+                backgroundColor = 'rgb(141, 203, 149)'; //'#8DCB95';
                 textColor = '#F4FEF9';
                 break;
             case 16:
-                backgroundColor = '#5DB48F';
+                backgroundColor = 'rgb(93, 180, 143)';//'#5DB48F';
                 textColor = '#F4FEF9';
                 break;
             case 32:
-                backgroundColor = '#43B19B';
+                backgroundColor = 'rgb(67, 177, 155)';//'#43B19B';
                 textColor = '#F4FEF9';
                 break;
             case 64:
-                backgroundColor = '#248E78';
+                backgroundColor = 'rgb(36, 142, 120)';//'#248E78';
                 textColor = '#F4FEF9';
                 break;
             case 128:
-                backgroundColor = '#66CCB9';
+                backgroundColor = 'rgb(102, 204, 185)';//'#66CCB9';
                 textColor = '#F4FEF9';
                 break;
             case 256:
             case 512:
             case 1024:
-                backgroundColor = '#92DAB4';
+                backgroundColor = 'rgb(146, 218, 180)';//'#92DAB4';
                 textColor = '#F4FEF9';
                 break;
             case 2048:

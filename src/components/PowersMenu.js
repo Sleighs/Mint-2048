@@ -37,25 +37,24 @@ class PowersMenu extends Component {
 
     render(){
         let wrapperStyle = {
-            width: 410,
-            height: 90,
-            margin: 'auto',
-            borderRadius: 6
+            width: 250,
+            height: 250,
+            borderRadius: 4,
+            //border: 'solid 1pt',
+            position: 'absolute',
+            //display: 'none',
+            margin: '275px 75px',
+            //padding: '25px 0',
+            //background: '#FAF8EF',//'#eee4da', //'#BFF0D6', //'#ebcf8a',
+            //opacity: '90%',
+            padding: '0',
+            zIndex: 3
         }
-        let containerStyle = {
-            width: 410,
-            height: 50,
-            margin: 'auto',
-            borderRadius: 5,
-            background: '#bbada0',
-            padding: '7px 5px'
-        }
+        
 
         return(
             <div className='powers-wrapper' style={wrapperStyle}>
-                <div className='powers-container' style={containerStyle}>
-                    <Powers />
-                </div>
+                <Powers useAbility={this.props.useAbility}/>
             </div>
         )
     }
@@ -71,30 +70,69 @@ class Powers extends Component {
     
     render() {
         let containerStyle = {
-            position: 'absolute',
-            zIndex: 3,
+            /*width: 220,
+            height: 300,
+            borderRadius: 4,
+            border: 'solid 1pt',
+            //position: 'absolute',
             //display: 'none',
-            width: 400,
-            height: 400,
-            
-            
-            
+            margin: 'auto',
+            //padding: '25px 0',
+            background: '#FAF8EF',//'#eee4da', //'#BFF0D6', //'#ebcf8a',
+            //opacity: '90%',
+            padding: '0',
+            zIndex: 3*/
         }
+        let tableStyle = {
+            width: 250,
+            height: 250,
+            //border: 'solid 1pt green',
+            zIndex: 5
+        }
+    
         let itemStyle = {
-            height: 100,
-            width: 100,
-            border: 'solid 1pt black'
+            height: 65,
+            width: 65,
+            color: 'white',
+            background: 'rgba(155,155,174, .8',
+            margin: 5,
+            borderRadius: '50%',
+            textAlign: 'center'
         }
+        let emptyStyle = {
+            height: 60,
+            width: 60,
+            color: 'white',
+            margin: 5
+        }
+        
+        
+        /*
+            get list of powers in game
+            generate table
 
-        let rightPowerStyle;
+        */
 
 
         return (
             <div className={'power', this.props.type} style={containerStyle}>
-                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 1</div>
-                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 2</div>
-                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 3</div>
-                <div style={itemStyle} onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>Power 4</div>
+                <table style={tableStyle}>
+                    <tr>
+                        <td style={emptyStyle}></td>
+                        <td style={itemStyle}>{GameManager.powers[0].type} <br/>{GameManager.powers[0].count}</td>
+                        <td style={emptyStyle}></td>
+                    </tr>
+                    <tr>
+                        <td style={itemStyle}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
+                        <td style={emptyStyle}></td>
+                        <td style={itemStyle}>{GameManager.powers[2].type} <br/>{GameManager.powers[2].count}</td>
+                    </tr>
+                    <tr>
+                        <td style={emptyStyle}></td>
+                        <td style={itemStyle}><div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>{GameManager.powers[3].type} <br/>{GameManager.powers[3].count}</div></td>
+                        <td style={emptyStyle}></td>
+                    </tr>
+                </table>
             </div>
         )
     }

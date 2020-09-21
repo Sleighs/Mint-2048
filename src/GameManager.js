@@ -56,15 +56,15 @@ var GameManager = {
     },
     { 
       type: 'divide',
-      count: 0
+      count: 1
     },
     { 
       type: 'four tile',
       count: 3
     },
     {
-      type: 'freeze',
-      count: 0
+      type: 'two tile',
+      count: 2
     }
   ],
   currentAbility: '',
@@ -73,7 +73,7 @@ var GameManager = {
   combo: 0,
   comboBlocks: [],
   bestCombo: 0,
-  powersModeOn: false,
+  powersModeOn: true,
   choosePowers: false,
   powerSelection: null,
   currentPower: 1,
