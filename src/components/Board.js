@@ -11,14 +11,15 @@ class Board extends Component {
             margin: '10px auto',
             padding: '2px',
             borderRadius: 5,
-            backgroundColor: '#bbada0'
+            backgroundColor: '#bbada0',
+            boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
         };
 
         return (
             <div className='board' style={boardStyle}>
                 {                    
                     this.props.board.map((tile, i)=>{
-                        return <Tile number={!tile.num ? null : tile.num } key={i}/>
+                        return <Tile number={!tile.num ? null : tile.num } key={i} board={this.props.board} x={this.props.board[i].x} y={this.props.board[i].y} useAbility={this.props.useAbility} changeTile={this.props.changeTile}/>
                     })
                 }
             </div>
@@ -173,15 +174,15 @@ class Tile extends Component {
     }
 
     getPowerShadow(){
+        //
         var powerColor = '';
         var tile = this.props.board[GameManager.currentPowerTile];
 
         if (GameManager.navPowerTiles === true){
-            if (tile.x === this.props.x && tile.y === this.props.y ){
-                powerColor = '1px 1px 5px 11px rgba(252, 127, 127, .4)'//238,87,67,0.2)';
+            if (tile.x === this.props.x && tile.y === this.props.y){
+                powerColor = '1px 1px 5px 11px rgb(252, 127, 127, .5)'
             } 
         }
-
         return powerColor;
     }
 
@@ -194,11 +195,17 @@ class Tile extends Component {
             display: 'inline-block',
             userSelect: 'none',
             backgroundColor: this.getColor('background'),
-            color: this.getColor('text')
+            color: this.getColor('text'),
+            boxShadow: !GameManager.navPowerTiles ? '' : this.getPowerShadow()
         }
 
         return (
-            <div className={'tile'} style={tileStyle}>
+            <div className={'tile'} style={tileStyle} onClick={()=>{
+                if (GameManager.navPowerTiles){
+                    this.props.useAbility(GameManager.activePower.type, GameManager.activePower.count);
+                    this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
+                }
+            }}>
                 <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>
             </div>
         )
@@ -207,7 +214,7 @@ class Tile extends Component {
 
 class Number extends Component {
     constructor(props) {
-        super(props);  
+        super(props); 
     }
     
     getFontSize(size, number){

@@ -94,10 +94,50 @@ class Powers extends Component {
             height: 65,
             width: 65,
             color: 'white',
-            background: 'rgba(155,155,174, .8',
+            background: 'rgba(155,155,174, .8)',
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center'
+        }
+        let itemStyle1 = {
+            height: 75,
+            width: 75,
+            color: 'white',
+            background: GameManager.powers[1].color,
+            margin: 5,
+            borderRadius: '50%',
+            textAlign: 'center',
+            opacity: .8
+        }
+        let itemStyle2 = {
+            height: 75,
+            width: 75,
+            color: 'white',
+            background: GameManager.powers[0].color,
+            margin: 5,
+            borderRadius: '50%',
+            textAlign: 'center',
+            opacity: .8
+        }
+        let itemStyle3 = {
+            height: 75,
+            width: 75,
+            color: 'white',
+            background: GameManager.powers[2].color,
+            margin: 5,
+            borderRadius: '50%',
+            textAlign: 'center',
+            opacity: .8
+        }
+        let itemStyle4 = {
+            height: 75,
+            width: 75,
+            color: 'white',
+            background: GameManager.powers[4].color,
+            margin: 5,
+            borderRadius: '50%',
+            textAlign: 'center',
+            opacity: .8
         }
         let emptyStyle = {
             height: 60,
@@ -119,17 +159,23 @@ class Powers extends Component {
                 <table style={tableStyle}>
                     <tr>
                         <td style={emptyStyle}></td>
-                        <td style={itemStyle}>{GameManager.powers[0].type} <br/>{GameManager.powers[0].count}</td>
+                        <td style={itemStyle1}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
                         <td style={emptyStyle}></td>
                     </tr>
                     <tr>
-                        <td style={itemStyle}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
+                        <td style={itemStyle2}>{GameManager.powers[0].type} <br/>{GameManager.powers[0].count}</td>
                         <td style={emptyStyle}></td>
-                        <td style={itemStyle}>{GameManager.powers[2].type} <br/>{GameManager.powers[2].count}</td>
+                        <td style={itemStyle3}>{GameManager.powers[2].type} <br/>{GameManager.powers[2].count}</td>
                     </tr>
                     <tr>
                         <td style={emptyStyle}></td>
-                        <td style={itemStyle}><div onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}}>{GameManager.powers[3].type} <br/>{GameManager.powers[3].count}</div></td>
+                        <td style={itemStyle4}><div onClick={()=>{
+                            GameManager.navPowerTiles = false;
+                            GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count}
+                            this.props.useAbility(GameManager.powers[3].type, 3);
+                            }}>
+                                {GameManager.powers[3].type} <br/>{GameManager.powers[3].count}</div>
+                        </td>
                         <td style={emptyStyle}></td>
                     </tr>
                 </table>

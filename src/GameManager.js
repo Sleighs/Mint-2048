@@ -52,19 +52,33 @@ var GameManager = {
   powers: [
     { 
       type: 'multiply',
-      count: 1
+      count: 1,
+      color: '#6ED475'
     },
     { 
       type: 'divide',
-      count: 1
+      count: 1,
+      color:'#E26369'
     },
     { 
       type: 'four tile',
-      count: 3
+      count: 1,
+      color: '#e6eaf0'
     },
     {
       type: 'two tile',
-      count: 2
+      count: 2,
+      color: '#92DAB4'
+    },
+    {
+      type: 'freeze',
+      count: 0,
+      color: '#7AB5D5'
+    },
+    {
+      type: 'grow',
+      count: 0,
+      color: '#58AD9C'
     }
   ],
   currentAbility: '',
@@ -73,10 +87,11 @@ var GameManager = {
   combo: 0,
   comboBlocks: [],
   bestCombo: 0,
-  powersModeOn: true,
+  powersModeOn: false,
   choosePowers: false,
   powerSelection: null,
   currentPower: 1,
+  powersCount: 0,
   currentPowerTile: 0,
   navPowerTiles: false,
   tooltip: ''

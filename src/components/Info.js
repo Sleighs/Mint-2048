@@ -196,7 +196,8 @@ class Buttons extends Component {
             borderRadius: 4,
             padding: '4px 12px',
             textDecoration: 'none',
-            border: 'none'
+            border: 'none',
+            userSelect: 'none'
         }
         let undoStyle = {
             float: 'right'

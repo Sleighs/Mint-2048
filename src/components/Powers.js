@@ -69,10 +69,10 @@ class Powers extends Component {
                         ))*/
                     }
 
-                    <PowerItem type={'multiply'} index={0} color={'green'} key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'divide'} index={1} color={'red'} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'four tile'} index={2} color={'white'} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'freeze'} index={3} color={'blue'} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'multiply'} index={0}  key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'divide'} index={1} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'four tile'} index={2} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'freeze'} index={3} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
                     
                 </div>
                 <div className="powers-tooltip" style={powersTooltip} >
