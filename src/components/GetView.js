@@ -12,7 +12,7 @@ class GetView extends Component {
         let footerStyle = {
             textAlign: 'center',
             width: 400,
-            marginTop: 17,
+            marginTop: 25,
             color: '#C6BABD '
         }
 

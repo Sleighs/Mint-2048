@@ -21,14 +21,15 @@ class EndGame extends Component {
         let winTextStyle = {
             fontSize: '1.8em',
             padding: '5px',
-            width: 420,
+            width: 404,
             height: 92
         }
 
         let loseStyle = {
             textAlign: 'center',
             margin: 'auto',
-            color: '#775e65'
+            color: '#775e65',
+            zIndex: 9
         }
         let loseTitleStyle = {
             fontSize: '3.5em',
@@ -37,7 +38,7 @@ class EndGame extends Component {
         let loseTextStyle = {
             fontSize: '1.7em',
             padding: '5px',
-            width: 420,
+            width: 404,
             height: 92
         }
 
@@ -79,8 +80,8 @@ class EndGame extends Component {
     render (){
         let style = {
             backgroundColor: !GameManager.gameOver ? '#FAD250' : '#eee4da',
-            height: 670,
-            width: 438,
+            height: 625,
+            width: 404,
             position: 'absolute',
             borderRadius: 4,
         }
@@ -101,17 +102,17 @@ class EndGameButtons extends Component {
     render (){
         let containerStyle = {
             height: 65,
-            width: 360,
+            width: 330,
             margin: 'auto',
             display: 'block',
             fontSize: '2em'
         }
         let btnStyle = {
             width: 150,
-            height: 60,
+            height: 40,
             backgroundColor: '#775e65',
             color: 'white',
-            fontSize: '.8em',
+            fontSize: '.6em',
             display: 'inline-block',
             borderRadius: 5,
             padding: '4px 15px',

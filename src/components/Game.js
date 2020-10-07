@@ -49,6 +49,8 @@ class Game extends Component {
         this.openMenu = this.openMenu.bind(this);
         this.undoMove = this.undoMove.bind(this);
         this.newGame = this.newGame.bind(this);
+        this.noNewGame = this.noNewGame.bind(this);
+        this.yesNewGame = this.yesNewGame.bind(this);
         this.actuate = this.actuate.bind(this);
     }
     componentDidMount() {
@@ -66,6 +68,13 @@ class Game extends Component {
     handleInput(event) {
         // Shift - Undo/Open Power
         if (event.keyCode === 16) {
+            
+           
+           this.undoMove();
+        }
+
+        // Enter Button
+        if (event.keyCode === 13) {
             if (GameManager.powersModeOn === true){  
                 var powerCount = 0;
                 //Get total powers available
@@ -77,45 +86,20 @@ class Game extends Component {
                 GameManager.powersCount = powerCount;
                 //console.log('handleInput powerCount', powerCount);
                 
-                //turn menu off if already on, else show power menu
-                if (GameManager.choosePowers === true){
-                    GameManager.choosePowers = false;
-                    console.log('shift pressed - powers off');
+                if (GameManager.navPowerTiles === true){
+                    this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
                 } else {
-                    GameManager.choosePowers = true;
-                    console.log('shift pressed - powers on');
-                }
-
-
-                /*if (GameManager.choosePowers === true){
+                    //turn menu off if already on, else show power menu
+                    if (GameManager.choosePowers === true){
                         GameManager.choosePowers = false;
-                        GameManager.navPowerTiles = false;
-                        GameManager.currentPowerTile = 0;
-                        GameManager.currentPower = 1;
-                        GameManager.tooltip = '';
-                        
-                        console.log('shift pressed, power selection off');
-                } else if (GameManager.abilities.length > 0){
+                        console.log('enter pressed - powers off');
+                    } else {
                         GameManager.choosePowers = true;
-                        GameManager.tooltip = GameManager.abilities[GameManager.currentPower - 1].type;
-
-
-                        console.log('shift pressed, power selection on');
-                } else {
-                    return;
-                }*/
-           } else {
-               this.undoMove();
-           }
-        }
-
-        if (event.keyCode === 13) {
-            if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                
-                //this.usePower();
-            } else if (/*GameManager.choosePowers === true && */ GameManager.navPowerTiles === true){
-                this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
-            }
+                        console.log('enter pressed - powers on');
+                    }
+                }
+                GameManager.tooltip = '';
+           } 
         }
 
         //Escape Button
@@ -124,6 +108,7 @@ class Game extends Component {
                 GameManager.showMenu = true;
             } else {
                 GameManager.showMenu = false;
+                GameManager.newGame = false;
                 GameManager.navPowerTiles = false;
                 GameManager.choosePowers = false;
             }
@@ -141,12 +126,15 @@ class Game extends Component {
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 GameManager.activePower = {type: GameManager.powers[1].type, count: GameManager.powers[1].count}
-                this.useAbility(GameManager.powers[1].type, 1);
+                if (GameManager.activePower.count > 0){
+                    this.useAbility(GameManager.powers[1].type, 1);
+                }
+                
             } 
             if (GameManager.navPowerTiles === true) {
                 this.switchPowerTile('up');
             }
-            if (!GameManager.choosePowers && !GameManager.navPowerTiles){
+             if (!GameManager.choosePowers && !GameManager.navPowerTiles) {
                 this.move();
             }
             
@@ -159,12 +147,14 @@ class Game extends Component {
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count}
-                this.useAbility(GameManager.powers[3].type, 3);
+                if (GameManager.activePower.count > 0){
+                    this.useAbility(GameManager.powers[3].type, 3);
+                }
             } 
             if (GameManager.navPowerTiles === true) {
                 this.switchPowerTile('down');
             } 
-            if (!GameManager.choosePowers && GameManager.navPowerTiles === false) {
+            if (!GameManager.choosePowers && !GameManager.navPowerTiles) {
                 this.move();
             }
         }
@@ -176,7 +166,9 @@ class Game extends Component {
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 GameManager.activePower = {type: GameManager.powers[0].type, count: GameManager.powers[0].count}
-                this.useAbility(GameManager.powers[0].type, 0);
+                if (GameManager.activePower.count > 0){
+                    this.useAbility(GameManager.powers[0].type, 0);
+                }
             } 
             if (GameManager.navPowerTiles === true) {
                 this.switchPowerTile('left');
@@ -192,7 +184,9 @@ class Game extends Component {
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
                 GameManager.activePower = {type: GameManager.powers[2].type, count: GameManager.powers[2].count}
-                this.useAbility(GameManager.powers[2].type, 2);
+                if (GameManager.activePower.count > 0){
+                    this.useAbility(GameManager.powers[2].type, 2);
+                }
             } 
             if (GameManager.navPowerTiles === true) {
                 this.switchPowerTile('right');
@@ -842,6 +836,7 @@ class Game extends Component {
     }
 
 
+
     // Actuate Game
     actuate(type){
         // if game over
@@ -878,12 +873,12 @@ class Game extends Component {
             });
             
             this.startTime();
-            GameManager.startNewGame = false;
-
+        
             GameManager.gameOver = false;
             GameManager.winCount = 0;
             GameManager.showWinScreen = false;
             GameManager.showLoseScreen = false;
+            GameManager.startNewGame = false;
         }
 
         // Undo Move
@@ -940,19 +935,8 @@ class Game extends Component {
             GameManager.undoNodes.push(i);
             //console.log(GameManager.undoNodes)
         }
-
-        /*if (GameManager.showMenu === true) {
-            this.setState({
-                menuVisible: true
-            });
-            //pause time
-        } else {
-            this.setState({
-                menuVisible: false
-            });
-        }*/
     }
-    newGame(){
+    newGame(mode){
         if (GameManager.startNewGame !== true){
             GameManager.startNewGame = true;
             GameManager.gameOver = false;
@@ -963,7 +947,26 @@ class Game extends Component {
             GameManager.comboBlocks = [];
         }
 
+        if (mode === 'mint'){
+            GameManager.powersModeOn = true;
+        } else {
+            GameManager.powersModeOn = false;
+        }
+
+        /*if (GameManager.showMenu || GameManager.newGame){
+            GameManager.newGame = false;
+            GameManager.showMenu = false;
+        }*/
+       
         this.actuate('new game');
+    }
+    noNewGame(){
+        GameManager.newGame = false;
+        //GameManager.showMenu = true;
+        GameManager.gameType = '';
+    }
+    yesNewGame(){
+        this.newGame(GameManager.gameType);
     }
     undoMove(){
         if (GameManager.undo  !== true && GameManager.canUndo === true){
@@ -979,19 +982,30 @@ class Game extends Component {
         this.actuate('undo');
     }
     openMenu(){
-        if (GameManager.showMenu !== true) {
-            GameManager.showMenu = true;
-        } else {
+        if (GameManager.showMenu){
             GameManager.showMenu = false;
         }
+
+        if (!GameManager.showMenu) {
+            GameManager.showMenu = true;
+        }  
+
+        if (GameManager.showMenu && GameManager.newGame) {
+           // GameManager.newGame = false;
+           // GameManager.showMenu = false;
+        } 
+
         
         //this.actuate();
     }
+
+    //Mint Mode Functions
     useAbility(type, id){
         GameManager.navPowerTiles = true;
         GameManager.currentAbility = type;
         GameManager.currentAbilityId = id;
         GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
+        GameManager.tooltip = type;
         console.log(type, 'ability used');
         
     }
@@ -1330,17 +1344,17 @@ class Game extends Component {
             height: '625px',
             width: '404px',
             borderRadius: '9px',
-            backgroundColor: '#faf8ef'
+            backgroundColor: !GameManager.navPowerTiles ? '#faf8ef' : 'rgb(255,225,100)'
         }
         
         return (
             <div className= 'game' style={style}>
-                { !GameManager.showMenu ? null : <Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame}/>}
+                { !GameManager.showMenu ? null : <Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame} stopTime={this.stopTime} noNewGame={this.noNewGame} yesNewGame={this.yesNewGame}/>}
                 { !GameManager.choosePowers || GameManager.navPowerTiles ? null : <PowersMenu useAbility={this.useAbility}/> }
                 { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
                 { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                 <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
-                <Combo comboLength={GameManager.combo}/>
+                { (!GameManager.showWinScreen || !GameManager.showLoseScreen) ? <Combo comboLength={GameManager.combo}/> : null } 
                 {!GameManager.powersModeOn ? null : <Powers useAbility={this.useAbility} powers={GameManager.abilities}/> }
                 <Board board={this.state.board} userID='user' changeTile={this.changeTile} useAbility={this.useAbility}/>
                 <Details tooltip={GameManager.tooltip}/>

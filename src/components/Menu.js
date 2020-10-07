@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
-//import { findRenderedComponentWithType } from 'react-dom/test-utils';
+import Game from './Game';
 
 class Menu extends Component {
     constructor(props) {
@@ -9,11 +9,10 @@ class Menu extends Component {
         
     }
 
-
     render (){
         let menuContainerStyle = {
-            width: 440,
-            height: 650,
+            width: 409,
+            height: 635,
             borderRadius: 4,
             //border: 'solid 1pt',
             position: 'absolute',
@@ -26,8 +25,13 @@ class Menu extends Component {
             zIndex: 3
         }
         return (
-            <div className='menu-container' style={menuContainerStyle} onClick={this.props.openMenu}>
-                <MenuItems newGame={this.props.newGame}/>
+            <div className='menu-container' style={menuContainerStyle} onClick={(event)=>{
+                console.log(event.target);
+                if (event.target.className === 'menu-container'){
+                    GameManager.showMenu = false;
+                }
+            }}>
+                <MenuItems newGame={this.props.newGame} noNewGame={this.props.noNewGame} yesNewGame={this.props.yesNewGame}/>
             </div>
         )
     }
@@ -37,37 +41,22 @@ class Menu extends Component {
 class MenuItems extends Component {
     constructor(props){
         super(props);
-        this.playClassic = this.playClassic.bind(this);
-        this.playMint = this.playMint.bind(this);
+        this.state = {
+            
+        }
     }
     
     actuate(option){
         if (option === 'classic'){
-            this.playClassic()
+            GameManager.newGame = true;
+            GameManager.gameType = 'classic';
         }
         if (option === 'mint') {
-            this.playMint()
+            GameManager.newGame = true;
+            GameManager.gameType = 'mint';
         }
     }
 
-    playClassic(){
-        //ask to start new game
-        //return to game
-        /*
-            actuate game with
-                regular undo
-        
-        */
-        GameManager.powersModeOn = false;
-        this.props.newGame;
-
-        console.log('Classic Play clicked')
-    }
-    playMint(){
-        GameManager.powersModeOn = true;
-        this.props.newGame;
-        console.log('Mint Play clicked')
-    }
     toggleUndo(){
         //choose between on off extra
         if (!GameManager.canUndo){
@@ -76,6 +65,7 @@ class MenuItems extends Component {
             GameManager.canUndo = false;
         }
         
+
         console.log('toggle undo clicked')
     }
     showStats(){
@@ -100,21 +90,37 @@ class MenuItems extends Component {
             height: 55,
             backgroundColor: 'white',
             color: '#775e65',
-            margin: '5px auto',
+            margin: '7px auto',
             borderRadius: 4,
             textAlign: 'center',
             fontSize: '1.8em',
             fontFamily: 'Karla',
             //letterSpacing: 1,
             fontWeight: 'bold',
-            padding: 8
+            padding: 8,
+            userSelect: 'none'
+        }
+        let itemStyle = {
+            width: 280,
+            height: 65,
+            //backgroundColor: 'white',
+            color: '#775e65',
+            margin: '7px auto',
+            borderRadius: 4,
+            textAlign: 'center',
+            //fontSize: '1.8em',
+            fontFamily: 'Karla',
+            //letterSpacing: 1,
+            fontWeight: 'bold',
+            padding: 8,
+            userSelect: 'none'
         }
         let scoreItemStyle2 = {
             width: 280,
             height: 55,
             backgroundColor: 'white',
             color: '#775e65',
-            margin: '5px auto',
+            margin: '7px auto',
             borderRadius: 4,
             textAlign: 'center',
             fontSize: '1.8em',
@@ -124,22 +130,41 @@ class MenuItems extends Component {
             fontWeight: 'bold',
             display: 'none'
         }
+        let menuTitleStyle = {
+            textAlign: 'center',
+            opacity: .8,
+            margin: 'auto',
+            display: 'block'
+            
+        }
 
         
-
-        return (
-            <div className='menu-container' style={containerStyle}>
-                <ul className={'menu-list'} style={menuListStyle}>
-                    <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('classic')}}>Classic Play</li>
-                    <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('mint')}}>Mint</li>
-                    <li className={'menu-item'} style={scoreItemStyle2} onclick={()=>{this.showStats()}}>Statistics</li>
-                    <li className={'menu-item'} style={scoreItemStyle2}>Sounds OFF</li>
-                    <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.toggleUndo()}}>{!GameManager.canUndo ? 'Undo OFF' : 'Undo ON'} </li>
-                    <li className={'menu-item'} style={scoreItemStyle2}>How to play</li>
-                    <li className={'menu-item'} style={scoreItemStyle2}>About Mint 2048</li>
-                </ul>
-            </div>
-        )
+        if (GameManager.newGame){
+            return(
+                <div className='menu-list-container' style={containerStyle}>
+                    <ul className={'menu-list'} style={menuListStyle}>
+                        <li style={itemStyle}><h1 style={menuTitleStyle}>Start new game?</h1></li>
+                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{GameManager.newGame = false; GameManager.showMenu = false;  this.props.yesNewGame()}}>Yes</li>
+                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{GameManager.newGame = false ; this.props.noNewGame()}}>No</li>
+                    </ul>
+                </div>
+            )
+            
+        } else {
+            return(
+                <div className='menu-list-container' style={containerStyle}>
+                    <ul className={'menu-list'} style={menuListStyle}>
+                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('classic')}}>Classic Play</li>
+                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('mint')}}>Mint</li>
+                        <li className={'menu-item'} style={scoreItemStyle2} onclick={()=>{this.showStats()}}>Statistics</li>
+                        <li className={'menu-item'} style={scoreItemStyle2}>Sounds OFF</li>
+                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.toggleUndo()}}>{!GameManager.canUndo ? 'Undo OFF' : 'Undo ON'} </li>
+                        <li className={'menu-item'} style={scoreItemStyle2}>How to play</li>
+                        <li className={'menu-item'} style={scoreItemStyle2}>About Mint 2048</li>
+                    </ul>
+                </div>
+            )
+        }
     }
    
 }

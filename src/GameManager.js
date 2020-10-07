@@ -62,7 +62,7 @@ var GameManager = {
     },
     { 
       type: 'four tile',
-      count: 1,
+      count: 0,
       color: '#e6eaf0'
     },
     {
@@ -94,7 +94,9 @@ var GameManager = {
   powersCount: 0,
   currentPowerTile: 0,
   navPowerTiles: false,
-  tooltip: ''
+  tooltip: '',
+  newGame: false,
+  gameType: ''
 };
 
 export default GameManager;

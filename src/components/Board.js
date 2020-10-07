@@ -12,7 +12,7 @@ class Board extends Component {
             padding: '2px',
             borderRadius: 5,
             backgroundColor: '#bbada0',
-            boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
+            //boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
         };
 
         return (

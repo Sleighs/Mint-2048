@@ -157,6 +157,7 @@ class Powers extends Component {
         return (
             <div className={'power', this.props.type} style={containerStyle}>
                 <table style={tableStyle}>
+                    <tbody>
                     <tr>
                         <td style={emptyStyle}></td>
                         <td style={itemStyle1}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
@@ -169,15 +170,12 @@ class Powers extends Component {
                     </tr>
                     <tr>
                         <td style={emptyStyle}></td>
-                        <td style={itemStyle4}><div onClick={()=>{
-                            GameManager.navPowerTiles = false;
-                            GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count}
-                            this.props.useAbility(GameManager.powers[3].type, 3);
-                            }}>
-                                {GameManager.powers[3].type} <br/>{GameManager.powers[3].count}</div>
+                        <td style={itemStyle4}>
+                            <div>{GameManager.powers[3].type} <br/>{GameManager.powers[3].count}</div>
                         </td>
                         <td style={emptyStyle}></td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         )

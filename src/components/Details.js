@@ -5,7 +5,23 @@ import GameManager from '../GameManager';
 //render board
 class Details extends Component {
     getDetails() {
-        return (<div>{GameManager.tooltip}</div>)
+        let activeStyle = {
+            color: GameManager.abilities.forEach((item, i)=>{ 
+                if (item.type = GameManager.currentAbility){
+                    return item.color;
+                } else {
+                    return '';
+                }
+            }),
+            fontWeight: 500
+        }
+
+        if (GameManager.navPowerTiles === true){
+            return (<div><span style={activeStyle}>{GameManager.tooltip}</span> <span>Active</span></div>)
+        } else {
+            return (<div>{GameManager.tooltip}</div>)
+        }
+        
     }
     render() {
         let containerStyle = {
@@ -22,7 +38,8 @@ class Details extends Component {
         let tooltipStyle = {
             width: 200,
             height: 100,
-            marginTop: 0
+            marginTop: 25,
+            fontSize: '2em'
         }
             
 
@@ -39,11 +56,15 @@ class Details extends Component {
                         </tr>
                         <tr>
                             <td style={{fontWeight: 'bold'}}>{'Shift'}</td>
-                            <td>{GameManager.powersModeOn ? 'Open Powers' : 'Undo'}</td>
+                            <td>{'Undo'}</td>
+                        </tr>
+                        <tr style={{display: !GameManager.powersModeOn ? 'none' : ''}}>
+                            <td style={{fontWeight: 'bold'}}>{'Enter'}</td>
+                            <td>{GameManager.navPowerTiles ? 'Use Power' : 'Open Powers'}</td>
                         </tr>
                         <tr>
-                            <td>{}</td>
-                            <td>{}</td>
+                        <td style={{fontWeight: 'bold'}}>{'Esc'}</td>
+                            <td>{GameManager.powersModeOn ? 'Menu' : 'Menu'}</td>
                         </tr>
                     </table>
                 </div>
