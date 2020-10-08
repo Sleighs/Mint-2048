@@ -180,10 +180,29 @@ class Tile extends Component {
 
         if (GameManager.navPowerTiles === true){
             if (tile.x === this.props.x && tile.y === this.props.y){
-                powerColor = '1px 1px 5px 11px rgb(252, 127, 127, .5)'
+                switch(GameManager.activePower.type) {
+                    case 'multiply':
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(110, 212, 117, .6)';
+                        break;
+                    case 'divide':
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(226,99,105, .6)';
+                        break;
+                    case 'two tile':
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .6)';
+                        break;
+                    case 'four tile':
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(230,234,240, .6)';
+                        break;
+                    case 'freeze':
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .6)';
+                        break;
+                    default:
+                        powerColor = ''
+
+                }
             } 
         }
-        return powerColor;
+        return  powerColor;
     }
 
     render (){
@@ -202,8 +221,8 @@ class Tile extends Component {
         return (
             <div className={'tile'} style={tileStyle} onClick={()=>{
                 if (GameManager.navPowerTiles){
-                    this.props.useAbility(GameManager.activePower.type, GameManager.activePower.count);
-                    this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
+                    //this.props.useAbility(GameManager.activePower.type, GameManager.activePower.count);
+                    //this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
                 }
             }}>
                 <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>

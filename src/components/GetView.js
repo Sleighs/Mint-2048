@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Game from './Game';
-import Details from './Details';
 import GameManager from '../GameManager';
 
 class GetView extends Component {

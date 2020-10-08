@@ -15,60 +15,27 @@ var GameManager = {
   gameOver: false,
   showWinScreen: false,
   showLoseScreen: false,
-  abilities: [
-    /*
-    {
-      type: 'free',
-      state: true,
-      id: 10123
-    },
-    {
-      type: 'grow',
-      state: true,
-      id: 37193
-    },
-    {
-      type: 'four tile',
-      state: true,
-      id: 2123
-    },
-    {
-      type: 'four tile',
-      state: true,
-      id: 2123
-    },
-    
-    {
-      type: 'divide',
-      state: true,
-      id: 5365876
-    },
-    {
-      type: 'multiply',
-      state: true,
-      id: 2636354
-    }*/
-  ],
+  abilities: [],
   powers: [
     { 
       type: 'multiply',
-      count: 1,
-      color: '#6ED475'
+      count: 0,
+      color: 'rgb(110, 212, 117)'//''#6ED475'
     },
     { 
       type: 'divide',
-      count: 1,
-      color:'#E26369'
+      count: 0,
+      color:'#E26369' //rgb(226,99,105)
     },
     { 
       type: 'four tile',
       count: 0,
-      color: '#e6eaf0'
+      color: '#e6eaf0' //rgb(230,234,240)
     },
     {
       type: 'two tile',
-      count: 2,
-      color: '#92DAB4'
+      count: 0,
+      color: '#92DAB4' //rgb(146,218,180)
     },
     {
       type: 'freeze',
@@ -78,7 +45,7 @@ var GameManager = {
     {
       type: 'grow',
       count: 0,
-      color: '#58AD9C'
+      color: '#58AD9C' //rgb(88, 173, 156)
     }
   ],
   currentAbility: '',
@@ -87,12 +54,13 @@ var GameManager = {
   combo: 0,
   comboBlocks: [],
   bestCombo: 0,
-  powersModeOn: false,
+  powersModeOn: true,
   choosePowers: false,
   powerSelection: null,
   currentPower: 1,
   powersCount: 0,
   currentPowerTile: 0,
+  activePower: null,
   navPowerTiles: false,
   tooltip: '',
   newGame: false,

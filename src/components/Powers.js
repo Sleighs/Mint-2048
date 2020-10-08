@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
 
@@ -33,9 +32,6 @@ class Powers extends Component {
         }
 
         return color;
-    }
-    componentDidMount(){
-
     }
 
     render(){
@@ -72,7 +68,7 @@ class Powers extends Component {
                     <PowerItem type={'multiply'} index={0}  key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
                     <PowerItem type={'divide'} index={1} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
                     <PowerItem type={'four tile'} index={2} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'freeze'} index={3} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
+                    <PowerItem type={'two tile'} index={3} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
                     
                 </div>
                 <div className="powers-tooltip" style={powersTooltip} >
@@ -98,28 +94,25 @@ class PowerItem extends Component {
 
     tooltip(state, type){
         if (state === false){
-            //console.log('goodbye', type);
             GameManager.tooltip = '';
         } else 
         if (state === true) {
-            //console.log('hello', type);
-
             switch(type){
                 case 'divide':
-                    GameManager.tooltip = 'Divide';
-                    console.log('Use BOMB to split a tile\'s value in half');
+                    GameManager.tooltip = 'Divide');
+                    console.log('Splits a tile\'s value in half');
                     break;
                 case 'freeze':
                     GameManager.tooltip = 'Freeze';
-                    console.log('Use FREEZE to prevent a tile from merging');
+                    console.log('Prevents a tile from merging';
                     break;
                 case 'multiply':
                     GameManager.tooltip = 'Multiply';
-                    console.log('Use MUTATE to double a tile\'s value');
+                    console.log('Doubles a tile\'s value');
                     break;
                 case 'four tile':
                     GameManager.tooltip = '4 Tile';
-                    console.log('Use NEW TILE to create a new 4 tile');
+                    console.log('Creates new tile');
                     break;
                 case 'two tile':
                     GameManager.tooltip = '2 Tile';
@@ -158,7 +151,7 @@ class PowerItem extends Component {
             case 'four tile':
                 color = '#58AD9C';
                 break;
-            case 'freeze':
+            case 'two tile':
                 color = '#92DAB4';
                 break;
         }
@@ -218,7 +211,7 @@ class PowerItem extends Component {
 
         return (
             <div className={'power', this.props.type} style={powerStyle} 
-                onClick={()=>{this.props.useAbility(this.props.type, this.props.id)}} 
+                onClick={()=>{/*this.props.useAbility(this.props.type, this.props.id)*/}} 
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}
             >

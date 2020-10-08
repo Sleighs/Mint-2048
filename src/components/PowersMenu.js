@@ -37,13 +37,13 @@ class PowersMenu extends Component {
 
     render(){
         let wrapperStyle = {
-            width: 250,
-            height: 250,
+            width: 350,
+            height: 350,
             borderRadius: 4,
             //border: 'solid 1pt',
             position: 'absolute',
             //display: 'none',
-            margin: '275px 75px',
+            margin: '235px 42px',
             //padding: '25px 0',
             //background: '#FAF8EF',//'#eee4da', //'#BFF0D6', //'#ebcf8a',
             //opacity: '90%',
@@ -84,64 +84,60 @@ class Powers extends Component {
             zIndex: 3*/
         }
         let tableStyle = {
-            width: 250,
-            height: 250,
+            width: 315,
+            height: 315,
             //border: 'solid 1pt green',
-            zIndex: 5
+            zIndex: 5,
+            fontSize: '1.2em'
         }
     
-        let itemStyle = {
-            height: 65,
-            width: 65,
-            color: 'white',
-            background: 'rgba(155,155,174, .8)',
-            margin: 5,
-            borderRadius: '50%',
-            textAlign: 'center'
-        }
         let itemStyle1 = {
-            height: 75,
-            width: 75,
+            height: 100,
+            width: 100,
             color: 'white',
             background: GameManager.powers[1].color,
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .8
+            opacity: .9,
+            border: '10px inset rgba(156,181,166,0.58)'
         }
         let itemStyle2 = {
-            height: 75,
-            width: 75,
+            height: 100,
+            width: 100,
             color: 'white',
             background: GameManager.powers[0].color,
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .8
+            opacity: .9,
+            border: '10px inset rgba(156,181,166,0.58)'
         }
         let itemStyle3 = {
-            height: 75,
-            width: 75,
+            height: 100,
+            width: 100,
             color: 'white',
             background: GameManager.powers[2].color,
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .8
+            opacity: .9,
+            border: '10px inset rgba(156,181,166,0.58)'
         }
         let itemStyle4 = {
-            height: 75,
-            width: 75,
+            height: 100,
+            width: 100,
             color: 'white',
             background: GameManager.powers[4].color,
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .8
+            opacity: .9,
+            border: '10px inset rgba(156,181,166,0.58)'
         }
         let emptyStyle = {
-            height: 60,
-            width: 60,
+            height: 100,
+            width: 100,
             color: 'white',
             margin: 5
         }

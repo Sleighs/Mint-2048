@@ -26,7 +26,6 @@ class Menu extends Component {
         }
         return (
             <div className='menu-container' style={menuContainerStyle} onClick={(event)=>{
-                console.log(event.target);
                 if (event.target.className === 'menu-container'){
                     GameManager.showMenu = false;
                 }
@@ -156,7 +155,7 @@ class MenuItems extends Component {
                     <ul className={'menu-list'} style={menuListStyle}>
                         <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('classic')}}>Classic Play</li>
                         <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('mint')}}>Mint</li>
-                        <li className={'menu-item'} style={scoreItemStyle2} onclick={()=>{this.showStats()}}>Statistics</li>
+                        <li className={'menu-item'} style={scoreItemStyle2} onClick={()=>{this.showStats()}}>Statistics</li>
                         <li className={'menu-item'} style={scoreItemStyle2}>Sounds OFF</li>
                         <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.toggleUndo()}}>{!GameManager.canUndo ? 'Undo OFF' : 'Undo ON'} </li>
                         <li className={'menu-item'} style={scoreItemStyle2}>How to play</li>

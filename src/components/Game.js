@@ -125,7 +125,7 @@ class Game extends Component {
                 direction: 0
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[1].type, count: GameManager.powers[1].count}
+                GameManager.activePower = {type: GameManager.powers[1].type, count: GameManager.powers[1].count, color: GameManager.powers[1].color}
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[1].type, 1);
                 }
@@ -146,7 +146,7 @@ class Game extends Component {
                 direction: 2
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count}
+                GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count, color: GameManager.powers[3].color}
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[3].type, 3);
                 }
@@ -165,7 +165,7 @@ class Game extends Component {
                 direction: 3
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[0].type, count: GameManager.powers[0].count}
+                GameManager.activePower = {type: GameManager.powers[0].type, count: GameManager.powers[0].count, color: GameManager.powers[0].color}
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[0].type, 0);
                 }
@@ -183,7 +183,7 @@ class Game extends Component {
                 direction: 1
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[2].type, count: GameManager.powers[2].count}
+                GameManager.activePower = {type: GameManager.powers[2].type, count: GameManager.powers[2].count, color: GameManager.powers[2].color}
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[2].type, 2);
                 }
@@ -514,25 +514,19 @@ class Game extends Component {
 
         //console.log('move', this.state.moveCounter);
 
-
-        //if (GameManager.abilities.length < 5 || GameManager.undoCount < 3){
-            if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
-                if (GameManager.powersModeOn === true){
-                    //get random power , add count
-                    var randPower = Math.floor(Math.random() * 3);
-                    console.log('randPower', randPower);
-                    //GameManager.abilities.push(this.newPower());
-                    GameManager.powers[randPower].count += 1;
-                }
-
-                if (GameManager.undoCount < 3){
-                    GameManager.undoCount += 1;
-                }
-                
+        if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
+            if (GameManager.powersModeOn === true){
+                //get random power , add count
+                var randPower = Math.floor(Math.random() * 3);
+                //console.log('randPower', randPower);
+                GameManager.powers[randPower].count += 1;
             }
 
+            if (GameManager.undoCount < 3){
+                GameManager.undoCount += 1;
+            }
             
-        //}
+        }
 
         GameManager.comboBlocks = [];
         for (var x = 0; x < GameManager.combo; x++){
@@ -941,7 +935,6 @@ class Game extends Component {
             GameManager.startNewGame = true;
             GameManager.gameOver = false;
             GameManager.navPowerTiles = false;
-            GameManager.abilities = [];
             GameManager.tooltip = '';
             GameManager.undoCount = 0;
             GameManager.comboBlocks = [];
@@ -1250,54 +1243,6 @@ class Game extends Component {
 
         return ability;
     }*/
-    switchPower(dir){
-        switch(dir){
-            case 'left':
-            case 'up':
-                if (GameManager.currentPower > 1){
-                    GameManager.currentPower = GameManager.currentPower - 1;
-                }
-                //console.log('current power', GameManager.currentPower);
-                break;
-            case 'right':
-            case 'down':
-                if (GameManager.abilities.length > 1 && GameManager.currentPower < GameManager.abilities.length){
-                    GameManager.currentPower = GameManager.currentPower + 1;
-                }
-                //console.log('current power', GameManager.currentPower);
-                break;
-        }
-
-        //GameManager.currentAbility = GameManager.abilities[GameManager.currentPower - 1].type;
-        //GameManager.currentAbilityId = GameManager.abilities[GameManager.currentPower - 1].id;
-        GameManager.tooltip = '';
-
-        switch (GameManager.currentAbility) {
-            case 'divide':
-                GameManager.tooltip = 'Divide';
-                break;
-            case 'grow':
-                GameManager.tooltip = 'Grow';
-                break;
-            case 'four tile':
-                GameManager.tooltip = 'Add 4 Tile';
-                break;
-            case 'two tile':
-                GameManager.tooltip = 'Add 2 Tile';
-                break;
-            case 'freeze':
-                GameManager.tooltip = 'Freeze';
-                break;
-            case 'mutate':
-            case 'multiply':
-                GameManager.tooltip = 'Multiply';
-                break;
-        }
-
-        this.setState({
-           tooltip: GameManager.tooltip 
-        });
-    }
     switchPowerTile(dir){
         switch(dir){
             case 'up':
@@ -1344,7 +1289,7 @@ class Game extends Component {
             height: '625px',
             width: '404px',
             borderRadius: '9px',
-            backgroundColor: !GameManager.navPowerTiles ? '#faf8ef' : 'rgb(255,225,100)'
+            backgroundColor: !GameManager.navPowerTiles ? '#faf8ef' : 'rgb(255,225,100, .4)'
         }
         
         return (
@@ -1355,7 +1300,7 @@ class Game extends Component {
                 { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
                 <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
                 { (!GameManager.showWinScreen || !GameManager.showLoseScreen) ? <Combo comboLength={GameManager.combo}/> : null } 
-                {!GameManager.powersModeOn ? null : <Powers useAbility={this.useAbility} powers={GameManager.abilities}/> }
+                {!GameManager.powersModeOn ? null : <Powers useAbility={this.useAbility} powers={GameManager.powers}/> }
                 <Board board={this.state.board} userID='user' changeTile={this.changeTile} useAbility={this.useAbility}/>
                 <Details tooltip={GameManager.tooltip}/>
             </div>

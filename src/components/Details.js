@@ -6,18 +6,12 @@ import GameManager from '../GameManager';
 class Details extends Component {
     getDetails() {
         let activeStyle = {
-            color: GameManager.abilities.forEach((item, i)=>{ 
-                if (item.type = GameManager.currentAbility){
-                    return item.color;
-                } else {
-                    return '';
-                }
-            }),
-            fontWeight: 500
+            color: !GameManager.navPowerTiles ? '' : GameManager.activePower.color,
+            fontWeight: 'bold'
         }
 
         if (GameManager.navPowerTiles === true){
-            return (<div><span style={activeStyle}>{GameManager.tooltip}</span> <span>Active</span></div>)
+            return (<div><span style={activeStyle}>{GameManager.tooltip + ' '}</span><span>active</span></div>)
         } else {
             return (<div>{GameManager.tooltip}</div>)
         }
@@ -39,7 +33,7 @@ class Details extends Component {
             width: 200,
             height: 100,
             marginTop: 25,
-            fontSize: '2em'
+            fontSize: '1.5em'
         }
             
 
@@ -47,12 +41,13 @@ class Details extends Component {
             <div className='details-container' style={containerStyle}>
                 <div style={instructionsStyle}>
                     <table>
+                        <tbody>
                         <tr>
                             <th style={{fontSize: '.82em'}}><h2>{'Controls'}</h2></th>
                         </tr>
                         <tr>
                             <td style={{fontWeight: 'bold'}}>{'Arrows'}</td>
-                            <td>{'Move tiles'}</td>
+                            <td>{!GameManager.choosePowers ? 'Move tiles' : 'Select Power'}</td>
                         </tr>
                         <tr>
                             <td style={{fontWeight: 'bold'}}>{'Shift'}</td>
@@ -60,12 +55,13 @@ class Details extends Component {
                         </tr>
                         <tr style={{display: !GameManager.powersModeOn ? 'none' : ''}}>
                             <td style={{fontWeight: 'bold'}}>{'Enter'}</td>
-                            <td>{GameManager.navPowerTiles ? 'Use Power' : 'Open Powers'}</td>
+                            <td>{GameManager.navPowerTiles ? 'Use Power' : (!GameManager.choosePowers ? 'Open Powers' : 'Close Powers' )}</td>
                         </tr>
                         <tr>
                         <td style={{fontWeight: 'bold'}}>{'Esc'}</td>
                             <td>{GameManager.powersModeOn ? 'Menu' : 'Menu'}</td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 
