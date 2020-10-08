@@ -182,19 +182,19 @@ class Tile extends Component {
             if (tile.x === this.props.x && tile.y === this.props.y){
                 switch(GameManager.activePower.type) {
                     case 'multiply':
-                        powerColor = '1px 1px 5px 11px ' + 'rgb(110, 212, 117, .6)';
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(110, 212, 117, .5)';
                         break;
                     case 'divide':
-                        powerColor = '1px 1px 5px 11px ' + 'rgb(226,99,105, .6)';
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(226,99,105, .5)';
                         break;
                     case 'two tile':
-                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .6)';
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .5)';
                         break;
                     case 'four tile':
-                        powerColor = '1px 1px 5px 11px ' + 'rgb(230,234,240, .6)';
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(230,234,240, .5)';
                         break;
                     case 'freeze':
-                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .6)';
+                        powerColor = '1px 1px 5px 11px ' + 'rgb(146,218,180, .5)';
                         break;
                     default:
                         powerColor = ''

@@ -99,6 +99,7 @@ class Game extends Component {
                     }
                 }
                 GameManager.tooltip = '';
+                GameManager.tooltip2 = '';
            } 
         }
 
@@ -936,6 +937,7 @@ class Game extends Component {
             GameManager.gameOver = false;
             GameManager.navPowerTiles = false;
             GameManager.tooltip = '';
+            GameManager.tooltip2 = '';
             GameManager.undoCount = 0;
             GameManager.comboBlocks = [];
         }
@@ -998,7 +1000,34 @@ class Game extends Component {
         GameManager.currentAbility = type;
         GameManager.currentAbilityId = id;
         GameManager.abilityTile = this.state.board[GameManager.currentPowerTile];
-        GameManager.tooltip = type;
+        
+        switch(type){
+            case 'divide':
+                GameManager.tooltip = 'Divide';
+                GameManager.tooltip2 = 'Split a tile\'s value in half';
+                break;
+            case 'freeze':
+                GameManager.tooltip = 'Freeze';
+                GameManager.tooltip2 ='Prevent a tile from merging';
+                break;
+            case 'multiply':
+                GameManager.tooltip = 'Multiply';
+                GameManager.tooltip2 = 'Double a tile\'s value';
+                break;
+            case 'four tile':
+                GameManager.tooltip = '4 Tile';
+                GameManager.tooltip2 = 'Create new 4 tile';
+                break;
+            case 'two tile':
+                GameManager.tooltip = '2 Tile';
+                GameManager.tooltip2 = 'Create new 2 tile';
+                break;
+            case 'grow':
+                GameManager.tooltip = 'Growth';
+                GameManager.tooltip2 = 'Set a tile to grow';
+                break;
+        }
+        
         console.log(type, 'ability used');
         
     }
@@ -1036,6 +1065,9 @@ class Game extends Component {
                 score: this.state.score - newTile.num
             });
             powerUsed = true;
+
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = 'Split at ' + x + y;
         } else if (power === 'divide' && cell.num === 2) {
             newTile = {
                 x: x,
@@ -1050,6 +1082,8 @@ class Game extends Component {
                 score: this.state.score - newTile.num
             });
             powerUsed = true;
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = '2 tile removed';
         }
         
         if (power === 'freeze' && cell.num !== null) {
@@ -1064,6 +1098,9 @@ class Game extends Component {
             //this.insertTile(newTile, {x: x, y: y});
             this.freezeTile(newTile);
             powerUsed = true;
+
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = 'Tile frozen at ' + x + y;
         }
 
         if (power === 'multiply' && cell.num !== null) {
@@ -1080,6 +1117,9 @@ class Game extends Component {
                 score: this.state.score + newTile.num
             });
             powerUsed = true;
+
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = 'Multiply successful at ' + '{' + String(x) + String(y) + '}';
         } 
 
         if (power === 'four tile' && cell.num === null) {
@@ -1096,6 +1136,9 @@ class Game extends Component {
                 score: this.state.score + newTile.num
             });
             powerUsed = true;
+
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = '4 tile created';
         } 
         
         if (power === 'two tile' && cell.num === null) {
@@ -1112,6 +1155,8 @@ class Game extends Component {
                 score: this.state.score + newTile.num
             });
             powerUsed = true;
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = '2 tile created';
         }
 
         if (power === 'grow' && cell.num === null) {
@@ -1164,6 +1209,8 @@ class Game extends Component {
             
             GameManager.currentPower = 1;
             GameManager.currentPowerTile = 0;
+
+            
 
             this.setState({
                 powerTile: null

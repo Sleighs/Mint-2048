@@ -99,8 +99,9 @@ class Powers extends Component {
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .9,
-            border: '10px inset rgba(156,181,166,0.58)'
+            opacity: .91,
+            border: '10px inset rgba(156,181,166,0.58)',
+            textShadow: '1px 1px 2px rgba(156,181,166,0.8)'
         }
         let itemStyle2 = {
             height: 100,
@@ -110,8 +111,9 @@ class Powers extends Component {
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .9,
-            border: '10px inset rgba(156,181,166,0.58)'
+            opacity:.91,
+            border: '10px inset rgba(156,181,166,0.58)',
+            textShadow: '1px 1px 2px rgba(156,181,166,0.8)'
         }
         let itemStyle3 = {
             height: 100,
@@ -121,8 +123,9 @@ class Powers extends Component {
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .9,
-            border: '10px inset rgba(156,181,166,0.58)'
+            opacity: .91,
+            border: '10px inset rgba(156,181,166,0.58)',
+            textShadow: '1px 1px 2px rgba(156,181,166,0.8)'
         }
         let itemStyle4 = {
             height: 100,
@@ -132,8 +135,9 @@ class Powers extends Component {
             margin: 5,
             borderRadius: '50%',
             textAlign: 'center',
-            opacity: .9,
-            border: '10px inset rgba(156,181,166,0.58)'
+            opacity: .91,
+            border: '10px inset rgba(156,181,166,0.58)',
+            textShadow: '1px 1px 2px rgba(156,181,166,0.8)'
         }
         let emptyStyle = {
             height: 100,

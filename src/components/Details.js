@@ -13,7 +13,13 @@ class Details extends Component {
         if (GameManager.navPowerTiles === true){
             return (<div><span style={activeStyle}>{GameManager.tooltip + ' '}</span><span>active</span></div>)
         } else {
-            return (<div>{GameManager.tooltip}</div>)
+            return (<div>
+                <div>{GameManager.tooltip}</div>
+                <div style={{
+                    fontSize: '.8em',
+                    opacity: .8
+                }}>{GameManager.tooltip2}</div>
+            </div>)
         }
         
     }
@@ -28,6 +34,7 @@ class Details extends Component {
         }
         let instructionsStyle = {
             margin: 'auto',
+            opacity: .9
         }
         let tooltipStyle = {
             width: 200,

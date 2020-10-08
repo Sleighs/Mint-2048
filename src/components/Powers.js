@@ -95,32 +95,33 @@ class PowerItem extends Component {
     tooltip(state, type){
         if (state === false){
             GameManager.tooltip = '';
+            GameManager.tooltip2 = '';
         } else 
         if (state === true) {
             switch(type){
                 case 'divide':
-                    GameManager.tooltip = 'Divide');
-                    console.log('Splits a tile\'s value in half');
+                    GameManager.tooltip = 'Divide';
+                    GameManager.tooltip2 = 'Split a tile\'s value in half';
                     break;
                 case 'freeze':
                     GameManager.tooltip = 'Freeze';
-                    console.log('Prevents a tile from merging';
+                    GameManager.tooltip2 ='Prevent a tile from merging';
                     break;
                 case 'multiply':
                     GameManager.tooltip = 'Multiply';
-                    console.log('Doubles a tile\'s value');
+                    GameManager.tooltip2 = 'Double a tile\'s value';
                     break;
                 case 'four tile':
                     GameManager.tooltip = '4 Tile';
-                    console.log('Creates new tile');
+                    GameManager.tooltip2 = 'Create new 4 tile';
                     break;
                 case 'two tile':
                     GameManager.tooltip = '2 Tile';
-                    console.log('Use NEW TILE to create a new 4 tile');
+                    GameManager.tooltip2 = 'Create new 2 tile';
                     break;
                 case 'grow':
-                    GameManager.tooltip = 'Add growthto  a tile';
-                    console.log('Use GROW to set a tile to grow');
+                    GameManager.tooltip = 'Growth';
+                    GameManager.tooltip2 = 'Set a tile to grow';
                     break;
             }
         }
