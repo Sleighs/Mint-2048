@@ -18,10 +18,6 @@ Pull from powers branch to play Powers Mode, which includes special abilities.
 
 ## Controls
 - Arrows - Move tiles
-- Shift - Undo last move
-
-## Controls (Powers Mode)
-- Arrows - Move tiles, navigate tiles to use powers
-- Shift - Bring up power selection, close power selection
-- Enter - Select power, use power 
-- Mouse - click power then tile to use power
+- Shift - Undo
+- Enter - Powers Menu
+- Esc - Menu
