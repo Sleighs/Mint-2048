@@ -1,18 +1,21 @@
-Overview for Mint 2048
+Overview for Mint 2050
 
 Move tiles to add and create the 2048 tile.
 
 Get powers from 
-	- Creating 2048 tiles
-	- Making high scoring moves
-	- Doubling highest tile
+- Creating 2048 tiles
+- Making high scoring moves
+- Doubling highest tile
 
-Powers
-	Transmute
+Mint (powers mode)
+	Multiply
 		turn a 2 into a 4
-	Bomb
+	Split
 		halves a tiles number
+	New Tile
+		create new tile
 	Freeze
 		Prevent a tile from merging
 
-Currency is the player's score
+Cash Mode
+	Currency is the player's score
