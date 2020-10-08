@@ -26,16 +26,18 @@ completed
         - moved returns false if player moves and no tiles move
     5/26
         - added win screen
-
+    9
+        - resized
+        - switch powers controls and functionality. changed to using one object per power type from each creating a new object for each power
+    10/7
+        - menu with new game and undo off
 
 todo
-    - menu
     - save progress
     - track stats
     - powers
     - lose game
     - swipe function 
-    - resize game for different sizes
     - save time when game is won 
     
 
