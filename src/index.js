@@ -6,6 +6,7 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
 /*
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
@@ -30,6 +31,7 @@ exports.makeUppercase = functions.firestore.document('/messages/{documentId}')
       return snap.ref.set({uppercase}, {merge: true});
     });
 
-    */
+*/
+
 console.log('Mint 2048 is running');
 

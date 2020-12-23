@@ -198,7 +198,6 @@ class Game extends Component {
         }
         event.preventDefault();
     }
-
     direction(dir){
         if (dir){
             switch(dir){
@@ -942,11 +941,18 @@ class Game extends Component {
             GameManager.comboBlocks = [];
         }
 
-        if (mode === 'mint'){
+        if (GameManager.gameType === 'mint'){
             GameManager.powersModeOn = true;
-        } else {
+            
+
+        } else if (GameManager.gameType === 'classic' || GameManager.gameType === 'normal'){
             GameManager.powersModeOn = false;
         }
+
+        GameManager.powers.forEach((ele)=> {
+            ele.count = 0;
+            console.log(ele.name)
+        })
 
         /*if (GameManager.showMenu || GameManager.newGame){
             GameManager.newGame = false;

@@ -16,6 +16,7 @@ var GameManager = {
   showWinScreen: false,
   showLoseScreen: false,
   abilities: [],
+  gameType: 'mint',
   powers: [
     { 
       type: 'multiply',
@@ -63,8 +64,7 @@ var GameManager = {
   activePower: null,
   navPowerTiles: false,
   tooltip: '',
-  newGame: false,
-  gameType: ''
+  newGame: false
 };
 
 export default GameManager;
