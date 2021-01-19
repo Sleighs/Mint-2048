@@ -1346,7 +1346,7 @@ class Game extends Component {
         }
         
         return (
-            <div className= 'game' style={style}>
+            <div className='game' style={style}>
                 { !GameManager.showMenu ? null : <Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame} stopTime={this.stopTime} noNewGame={this.noNewGame} yesNewGame={this.yesNewGame}/>}
                 { !GameManager.choosePowers || GameManager.navPowerTiles ? null : <PowersMenu useAbility={this.useAbility}/> }
                 { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }

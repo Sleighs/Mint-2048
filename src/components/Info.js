@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Menu from './Menu';
 import GameManager from '../GameManager';
 
 //Render game info
