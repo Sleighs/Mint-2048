@@ -1,4 +1,4 @@
-# Mint 2048
+# 2048 Mint
 
 A modded version of the puzzle game 2048 made with React. To win, match tiles and use abilities to create the 2048 tile and win the game.
 
