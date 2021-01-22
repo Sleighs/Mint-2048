@@ -77,7 +77,7 @@ class Game extends Component {
         if (event.keyCode === 13) {
             if (GameManager.powersModeOn === true){  
                 var powerCount = 0;
-                //Get total powers available
+                // Get total powers available
                 for (var i = 1; i < GameManager.powers.length; i++){
                     if (GameManager.powers[i].count > 0){
                        powerCount += GameManager.powers[i].count;
@@ -89,7 +89,7 @@ class Game extends Component {
                 if (GameManager.navPowerTiles === true){
                     this.changeTile(GameManager.currentAbility, this.state.board[GameManager.currentPowerTile].x, this.state.board[GameManager.currentPowerTile].y, GameManager.currentAbilityId);
                 } else {
-                    //turn menu off if already on, else show power menu
+                    // Turn menu off if on, else show abilities menu
                     if (GameManager.choosePowers === true){
                         GameManager.choosePowers = false;
                         console.log('enter pressed - powers off');
@@ -103,7 +103,7 @@ class Game extends Component {
            } 
         }
 
-        //Escape Button
+        // Escape Button
         if (event.keyCode === 27) {
             if (!GameManager.showMenu){
                 GameManager.showMenu = true;
@@ -289,7 +289,7 @@ class Game extends Component {
             for (var a = 0; a < this.props.size; a++){
                 var row = [];
                 for (var b = 0; b < this.props.size; b++){ 
-                    //Add tile to board
+                    // Add tile to board
                     board.push(data[a][b]);
                     row.push(data[a][b]);
                 }
@@ -516,16 +516,14 @@ class Game extends Component {
 
         if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
             if (GameManager.powersModeOn === true){
-                //get random power , add count
+                // Get random power, add to total count
                 var randPower = Math.floor(Math.random() * 3);
-                //console.log('randPower', randPower);
                 GameManager.powers[randPower].count += 1;
             }
 
             if (GameManager.undoCount < 3){
                 GameManager.undoCount += 1;
             }
-            
         }
 
         GameManager.comboBlocks = [];
@@ -533,7 +531,6 @@ class Game extends Component {
             if (x < 5){
                 GameManager.comboBlocks.push(x);
             }
-            
         }
 
         if (!this.movesAvailable()){
@@ -547,7 +544,6 @@ class Game extends Component {
         GameManager.undoNodes = [];
         for (var i = 0; i < GameManager.undoCount; i++){
             GameManager.undoNodes.push(i);
-            //console.log(GameManager.undoNodes)
         }
     }
     prepareTiles(){
@@ -799,7 +795,7 @@ class Game extends Component {
             cells.push(row);
         } 
 
-        //Check if next tile is mergeable
+        // Check if next tile is mergeable
         var tile;
         
         for (var a = 0; a < this.props.size; a++){
@@ -828,7 +824,6 @@ class Game extends Component {
             return true;
         }
     }
-
 
 
     // Actuate Game
@@ -914,7 +909,6 @@ class Game extends Component {
                 this.setState({
                     canUndo: false
                 })
-                
             }
             
             GameManager.undo = false;
@@ -925,9 +919,8 @@ class Game extends Component {
         }
 
         GameManager.undoNodes = [];
-        for (var i = 0; i < GameManager.undoCount; i++){
-            GameManager.undoNodes.push(i);
-            //console.log(GameManager.undoNodes)
+        for (var a = 0; a < GameManager.undoCount; a++){
+            GameManager.undoNodes.push(a);
         }
     }
     newGame(mode){

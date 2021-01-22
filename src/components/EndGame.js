@@ -4,10 +4,6 @@ import GameManager from '../GameManager';
 
 
 class EndGame extends Component {
-    constructor(props){
-        super(props);
-    }
-
     getScreen(){
         let winStyle = {
             textAlign: 'center',
@@ -84,6 +80,7 @@ class EndGame extends Component {
             width: 404,
             position: 'absolute',
             borderRadius: 4,
+            zIndex: 100
         }
 
         return (
@@ -95,10 +92,6 @@ class EndGame extends Component {
 }
 
 class EndGameButtons extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render (){
         let containerStyle = {
             height: 65,
