@@ -1,6 +1,6 @@
 # Mint 2048
 
-A modded version of the puzzle game 2048 made with React. To win, match tiles and use abilities to create the 2048 tile and win the game.
+Mint is a fresh reimagining of the puzzle game 2048 made with new gameplay features. Match tiles, perform combos and use abilities to create the 2048 tile and win the game.
 
 ### [Play Mint 2048](https://plus-7ed02.firebaseapp.com/)
  
