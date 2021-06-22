@@ -64,7 +64,9 @@ var GameManager = {
   activePower: null,
   navPowerTiles: false,
   tooltip: '',
-  newGame: false
+  newGame: false,
+  swipeMove: false,
+  swipeDirection: null
 };
 
 export default GameManager;

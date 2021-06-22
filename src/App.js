@@ -6,6 +6,9 @@ class App extends Component {
   render() {
     return (
       <div id="touch-container">
+        <div id="statusdiv">
+          Status: 
+        </div>
         <GetView />
       </div>
     );

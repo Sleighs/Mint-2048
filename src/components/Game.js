@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import Info from './Info';
 import Board from './Board';
 import Menu from './Menu';
@@ -43,7 +43,9 @@ class Game extends Component {
             timeState: "new",
             interval: null
         }
+
         this.initGame = this.initGame.bind(this);
+        this.handleTouch = this.handleTouch.bind(this);
         this.handleInput = this.handleInput.bind(this);
         this.direction = this.direction.bind(this);
         this.openMenu = this.openMenu.bind(this);
@@ -53,23 +55,172 @@ class Game extends Component {
         this.yesNewGame = this.yesNewGame.bind(this);
         this.actuate = this.actuate.bind(this);
     }
+
+    useEffect() {
+        window.addEventListener('load', this.handleTouch);
+
+    }
+
+
     componentDidMount() {
         document.addEventListener('keyup', this.handleInput);
         document.addEventListener('keydown', (e)=>{e.preventDefault()});
+
+        window.addEventListener('load', this.handleTouch);
+        
+
+        if (GameManager.swipeDirection !== null) {
+            this.direction(GameManager.swipeDirection);
+            this.move();
+        }
         
         this.initGame();
     }
+
     componentWillUnmount() {
         document.removeEventListener('keyup', this.handleInput);
+        window.removeEventListener('load', this.handleTouch);
     }
 
+    handleTouch(event) {
+        var touchscreen = document.getElementById('touch-container'),
+        statusdiv = document.getElementById('statusdiv'),
+        startx = 0,
+        starty = 0,
+        distX = 0,
+        distY = 0,
+        direction = null,
+        move = false;
+
+        touchscreen.addEventListener('touchstart', (e) => {
+
+            GameManager.swipeMove = false;
+            GameManager.swipeDirection = null;
+
+            console.log('touch start event', e);
+            var touchobj = e.changedTouches[0]; // reference first touch point (ie: first finger)
+        
+            // Get touch start point x and y
+            startx = parseInt(touchobj.clientX);
+            starty = parseInt(touchobj.clientY); 
+        
+            statusdiv.innerHTML = 
+            'Status: touchstart' + 
+            '<br> ClientX: ' + startx + 'px' + 
+            '<br> ClientY: ' + starty + 'px';
+        
+            e.preventDefault();
+        }, false);
+        
+        touchscreen.addEventListener('touchmove', (e) => {
+            var touchobj = e.changedTouches[0]; // reference first touch point for this event
+        
+            // Get distance of swipe
+            distX = parseInt(touchobj.clientX) - startx;
+            distY = parseInt(touchobj.clientY) - starty;
+        
+            statusdiv.innerHTML = 
+            'Status: touchmove' +
+            '<br> Horizontal distance traveled: ' + distX + 'px' + 
+            '<br> Vertical distance traveled: ' + distY + 'px';
+            
+            // End event
+            e.preventDefault();
+        }, false);
+        
+        touchscreen.addEventListener('touchend', (e) => {
+            //console.log('touch end event', e);
+        
+            var touchobj = e.changedTouches[0]; // reference first touch point for this event
+        
+            statusdiv.innerHTML = (
+                'Status: touchend<br> Resting x coordinate: ' + touchobj.clientX + 'px' + 
+                '<br> Resting y coordinate: ' + touchobj.clientY + 'px'
+            );
+        
+            console.log({
+                distX: distX,
+                distY: distY,
+                totalX: Math.abs(distX),
+                totalY: Math.abs(distY)
+            });
+
+            // Get swipe direction, only register swipes longer than 50px
+            if ((50 < Math.abs(distX)) || (50 < Math.abs(distY))) {
+                GameManager.swipeMove = true;
+                if (!GameManager.choosePowers && !GameManager.navPowerTiles) {
+                    move = true;
+                }
+                
+                console.log('swipe is valid');
+
+                // Determine whether the horizontal or vertical difference is larger
+                if (Math.abs(distX) < Math.abs(distY)) {
+                    // Find out direction
+                    if (distY > 0 ) {
+                        direction = 'down';
+                    } else {
+                        direction = 'up';
+                    }
+                } else if (Math.abs(distX) > Math.abs(distY)){
+                    // Find out direction
+                    if (distX > 0 ) {
+                        direction = 'right';
+                    } else {
+                        direction = 'left';
+                    }
+                }
+
+                GameManager.swipeDirection = direction;
+
+                console.log(direction);
+
+            } else {
+                move = false;
+                console.log('swipe is invalid');
+            }
+
+            e.preventDefault();
+
+        }, false);
+
+       /* 
+        if (direction && move) {    
+            console.log(direction);
+
+            if (direction === 'up') {
+                this.setState({
+                    direction: 0
+                });
+            } else
+
+            if (direction === 'down') {
+                this.setState({
+                    direction: 2
+                });
+            } else
+
+            if (direction === 'left') {
+                this.setState({
+                    direction: 3
+                });
+            } else
+
+            if (direction === 'right') {
+                this.setState({
+                    direction: 1
+                });
+            }
+
+            this.move();
+        }*/
+        
+    }
 
     //Keyboard Handles
     handleInput(event) {
         // Shift - Undo/Open Power
         if (event.keyCode === 16) {
-            
-           
            this.undoMove();
         }
 
@@ -112,8 +263,7 @@ class Game extends Component {
                 GameManager.newGame = false;
                 GameManager.navPowerTiles = false;
                 GameManager.choosePowers = false;
-            }
-            
+            } 
         }
         
 

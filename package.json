@@ -1,6 +1,6 @@
 {
-  "name": "2049",
-  "version": "0.1.0",
+  "name": "Mint2048",
+  "version": "0.5.0",
   "private": true,
   "dependencies": {
     "@firebase/app": "^0.6.11",

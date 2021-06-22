@@ -1,6 +1,6 @@
 {
-  "short_name": "2049",
-  "name": "2049",
+  "short_name": "2048",
+  "name": "Mint 2048",
   "icons":[],
   "start_url": ".",
   "display": "standalone",
