@@ -1439,6 +1439,7 @@ class Game extends Component {
 
         return ability;
     }*/
+    
     switchPowerTile(dir){
         switch(dir){
             case 'up':
@@ -1490,14 +1491,59 @@ class Game extends Component {
         
         return (
             <div className='game' style={style}>
-                { !GameManager.showMenu ? null : <Menu openMenu={this.openMenu} actuate= {this.actuate} newGame={this.newGame} stopTime={this.stopTime} noNewGame={this.noNewGame} yesNewGame={this.yesNewGame}/>}
-                { !GameManager.choosePowers || GameManager.navPowerTiles ? null : <PowersMenu useAbility={this.useAbility}/> }
-                { !GameManager.showWinScreen ? null : <EndGame type={'win'} board={this.state.board}/> }
-                { !GameManager.showLoseScreen ? null : <EndGame type={'lose'} board={this.state.board} newGame={this.newGame} undo={this.undoMove}/> }
-                <Info newGame={this.newGame} undo={this.undoMove} hours={this.state.hr} minutes={this.state.min} seconds={this.state.sec} milisec={this.state.ms} score={this.state.score} bestScore={this.state.bestScore} openMenu={this.openMenu}/>
-                { (!GameManager.showWinScreen || !GameManager.showLoseScreen) ? <Combo comboLength={GameManager.combo}/> : null } 
-                {!GameManager.powersModeOn ? null : <Powers useAbility={this.useAbility} powers={GameManager.powers}/> }
-                <Board board={this.state.board} userID='user' changeTile={this.changeTile} useAbility={this.useAbility}/>
+                { !GameManager.showMenu 
+                    ? null 
+                    : <Menu 
+                        openMenu={this.openMenu} 
+                        actuate= {this.actuate} 
+                        newGame={this.newGame} 
+                        stopTime={this.stopTime} 
+                        noNewGame={this.noNewGame} 
+                        yesNewGame={this.yesNewGame}
+                    />
+                }
+                { !GameManager.choosePowers || GameManager.navPowerTiles 
+                    ? null 
+                    : <PowersMenu useAbility={this.useAbility}/> 
+                }
+                { !GameManager.showWinScreen 
+                    ? null 
+                    : <EndGame type={'win'} board={this.state.board}/> 
+                }
+                { !GameManager.showLoseScreen 
+                    ? null 
+                    : <EndGame 
+                        type={'lose'} 
+                        board={this.state.board} 
+                        newGame={this.newGame} 
+                        undo={this.undoMove}
+                    /> 
+                }
+                <Info 
+                    newGame={this.newGame} 
+                    undo={this.undoMove} 
+                    hours={this.state.hr} 
+                    minutes={this.state.min} 
+                    seconds={this.state.sec} 
+                    milisec={this.state.ms} 
+                    score={this.state.score} 
+                    bestScore={this.state.bestScore} 
+                    openMenu={this.openMenu}
+                />
+                { !GameManager.showWinScreen || !GameManager.showLoseScreen 
+                    ? <Combo comboLength={GameManager.combo}/> 
+                    : null 
+                } 
+                { !GameManager.powersModeOn 
+                    ? null 
+                    : <Powers useAbility={this.useAbility} powers={GameManager.powers}/> 
+                }
+                <Board 
+                    board={this.state.board} 
+                    userID='user' 
+                    changeTile={this.changeTile} 
+                    useAbility={this.useAbility}
+                />
                 <Details tooltip={GameManager.tooltip}/>
             </div>
         )
