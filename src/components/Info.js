@@ -52,18 +52,18 @@ class Info extends Component {
         }
 
         return (
-        <div className='info' style={infoStyle}>
-            {(GameManager.showWinScreen || GameManager.showLoseScreen) ? null :  <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>}
-            <div className="info-container" style={infoContainerStyle}>
-                <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
-                    <div className='title' style={titleStyle}>{"mint"}</div>
+            <div className='info' style={infoStyle}>
+                {(GameManager.showWinScreen || GameManager.showLoseScreen) ? null :  <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>}
+                <div className="info-container" style={infoContainerStyle}>
+                    <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
+                        <div className='title' style={titleStyle}>{"mint"}</div>
+                    </div>
+                    <div className='info-right' style={infoRightStyle}>
+                        <Score score={this.props.score} bestScore={this.props.bestScore}/>
+                        <Buttons pressed={false} newGame={this.props.newGame} undo={this.props.undo}/>
+                    </div>  
                 </div>
-                <div className='info-right' style={infoRightStyle}>
-                    <Score score={this.props.score} bestScore={this.props.bestScore}/>
-                    <Buttons pressed={false} newGame={this.props.newGame} undo={this.props.undo}/>
-                </div>  
             </div>
-        </div>
         )
     } 
 }
