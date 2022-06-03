@@ -1,22 +1,44 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
+import { useMediaQuery } from 'react-responsive';
+
 
 //render board
 class Board extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {}
+        this.boardRef = React.createRef()
+
+        this.getMediaQuery = this.getMediaQuery.bind(this)
+    }
+
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
+    }
+
+    componentDidMount(){
+        GameManager.boardRef = this.boardRef.current
+    }
+
     render() {
+    
+        //console.log('is mobile?', isMobile)
+
         let boardStyle = {
-            width: 386,
+            /*width: 386,
             height: 386,
             margin: '10px auto',
-            padding: '2px',
+            padding: '2px',*/
+
             borderRadius: 5,
             backgroundColor: '#bbada0',
             //boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
         };
 
         return (
-            <div className='board' style={boardStyle}>
+            <div className='board' ref={this.boardRef} style={boardStyle}>
                 {                    
                     this.props.board.map((tile, i)=>{
                         return <Tile number={!tile.num ? null : tile.num } key={i} board={this.props.board} x={this.props.board[i].x} y={this.props.board[i].y} useAbility={this.props.useAbility} changeTile={this.props.changeTile}/>
@@ -30,11 +52,15 @@ class Board extends Component {
 class Tile extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            
-        }   
+        this.state = {}
+        this.ref = React.createRef()
+        this.getMediaQuery = this.getMediaQuery.bind(this)
     }
-
+    
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
+    }
+    
     getColor(ele){
         var backgroundColor = '#cdc1b4';
         var textColor = '#F4FEF9';
@@ -207,10 +233,19 @@ class Tile extends Component {
 
     render (){
         let tileStyle = {
-            height: ((380 / GameManager.size) * .85),
-            width: ((380 / GameManager.size) * .85),
+            height: 
+                this.getMediaQuery 
+                    ? (( GameManager.boardRef.offsetWidth / GameManager.size) * .865)
+                    : (( 380 / GameManager.size) * .85),
+            width: 
+                this.getMediaQuery  
+                    ? ((GameManager.boardRef.offsetWidth / GameManager.size) * .865)
+                    : (( 380 / GameManager.size) * .85),
             borderRadius: 7,
-            margin: this.getTileMargin(GameManager.size),
+            margin: 
+                this.getMediaQuery
+                ? '6px'
+                : this.getTileMargin(GameManager.size),
             display: 'inline-block',
             userSelect: 'none',
             backgroundColor: this.getColor('background'),
@@ -219,12 +254,15 @@ class Tile extends Component {
         }
 
         return (
-            <div className={'tile'} style={tileStyle} onClick={()=>{
-                if (GameManager.navPowerTiles){
-                    //this.props.useAbility(GameManager.activePower.type, GameManager.activePower.count);
-                    //this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
-                }
-            }}>
+            <div className={'tile'} 
+                ref={this.ref}
+                style={tileStyle} 
+                onClick={()=>{
+                    if (GameManager.navPowerTiles){
+                        //this.props.useAbility(GameManager.activePower.type, GameManager.activePower.count);
+                        //this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
+                    }
+                }}>
                 <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>
             </div>
         )

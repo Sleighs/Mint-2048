@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
+import { useMediaQuery } from 'react-responsive';
 
 class Combo extends Component {
     constructor(props) {
@@ -7,16 +8,21 @@ class Combo extends Component {
         this.state = {
             blocks: []
         }
+        this.getMediaQuery = this.getMediaQuery.bind(this)
+    }
+
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
     }
 
     render (){
         let comboContainerStyle = {
             height: 25,
-            width: 380,
+            width: this.getMediaQuery ? '90%' : 380,
             margin: '2px auto  0 auto'
         }
         let blocksContainerStyle = {
-            width: 350,
+            width: this.getMediaQuery ? '85%' : 350,
             height: 25,
             padding: '3px 0 0 0', 
             margin: 'auto',

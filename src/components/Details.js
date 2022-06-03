@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
+import '../App.css'
 
 //render board
 class Details extends Component {

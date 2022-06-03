@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
+import { useMediaQuery } from 'react-responsive';
 
 class Powers extends Component {
     constructor(props) {
         super(props);
         this.state = {
         }
+        this.getMediaQuery = this.getMediaQuery.bind(this)
     }
+
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
+    }
+
     getAbilityColor(type) {
         var color;
 
@@ -37,16 +44,17 @@ class Powers extends Component {
     render(){
         let powersWrapperStyle = {
             display: 'block',
-            width: 386,
+            width: this.getMediaQuery ? '100%' : 386,
+            //maxWidth: this.getMediaQuery ? '85vw' : '100%',
             height: 12,
             margin: '0 auto',
         }
         let powersContainerStyle = {
-            width: 386,
+            width: this.getMediaQuery ? '95%' : 390,
             //height: 20,
             margin: 'auto',
             //background: '#bbada0',
-            padding: 1
+            padding: 0,
         }
         let powersTooltip = {
             margin: 'auto',
@@ -190,7 +198,7 @@ class PowerItem extends Component {
             color: '#cdc1b4',
             borderRadius: 2,
             background: this.getBackgroundColor(),
-            width: (383 / GameManager.size),
+            width: '25%',
             height: 10,
             textAlign: 'center',
             margin: '0 auto',
@@ -211,7 +219,7 @@ class PowerItem extends Component {
 
 
         return (
-            <div className={'power', this.props.type} style={powerStyle} 
+            <div className={'power ' + String(this.props.type)} style={powerStyle} 
                 onClick={()=>{/*this.props.useAbility(this.props.type, this.props.id)*/}} 
                 onMouseEnter={()=>{this.tooltip(true, this.props.type)}} 
                 onMouseLeave={()=>{this.tooltip(false, this.props.type)}}

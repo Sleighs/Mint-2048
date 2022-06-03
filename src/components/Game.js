@@ -8,6 +8,8 @@ import Powers from './Powers';
 import Combo from './Combo';
 import Details from './Details';
 import GameManager from '../GameManager';
+import '../App.css'
+import { useMediaQuery } from 'react-responsive';
 
 class Game extends Component {
     constructor(props) {
@@ -54,26 +56,34 @@ class Game extends Component {
         this.noNewGame = this.noNewGame.bind(this);
         this.yesNewGame = this.yesNewGame.bind(this);
         this.actuate = this.actuate.bind(this);
+        this.getMediaQuery = this.getMediaQuery.bind(this)
     }
 
-    useEffect() {
-        window.addEventListener('load', this.handleTouch);
+    getMediaQuery(){
+        const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
+        
+        const isDesktopOrLaptop = useMediaQuery(
+            { minDeviceWidth: 1224 },
+            { deviceWidth: 1600 } // `device` prop
+        )
 
+        return useMediaQuery({ maxWidth: 760 })
     }
-
 
     componentDidMount() {
         document.addEventListener('keyup', this.handleInput);
         document.addEventListener('keydown', (e)=>{e.preventDefault()});
 
         window.addEventListener('load', this.handleTouch);
-        
 
         if (GameManager.swipeDirection !== null) {
             this.direction(GameManager.swipeDirection);
             this.move();
         }
-        
+
+        //console.log('media query')
+        console.log('ref', this.props.viewRef)
+
         this.initGame();
     }
 
@@ -81,6 +91,7 @@ class Game extends Component {
         document.removeEventListener('keyup', this.handleInput);
         window.removeEventListener('load', this.handleTouch);
     }
+
 
     handleTouch(event) {
         var touchscreen = document.getElementById('touch-container'),
@@ -104,10 +115,10 @@ class Game extends Component {
             startx = parseInt(touchobj.clientX);
             starty = parseInt(touchobj.clientY); 
         
-            statusdiv.innerHTML = 
+            /*statusdiv.innerHTML = 
             'Status: touchstart' + 
             '<br> ClientX: ' + startx + 'px' + 
-            '<br> ClientY: ' + starty + 'px';
+            '<br> ClientY: ' + starty + 'px';*/
         
             e.preventDefault();
         }, false);
@@ -119,24 +130,24 @@ class Game extends Component {
             distX = parseInt(touchobj.clientX) - startx;
             distY = parseInt(touchobj.clientY) - starty;
         
-            statusdiv.innerHTML = 
+            /*statusdiv.innerHTML = 
             'Status: touchmove' +
             '<br> Horizontal distance traveled: ' + distX + 'px' + 
-            '<br> Vertical distance traveled: ' + distY + 'px';
+            '<br> Vertical distance traveled: ' + distY + 'px';*/
             
             // End event
             e.preventDefault();
         }, false);
         
         touchscreen.addEventListener('touchend', (e) => {
-            //console.log('touch end event', e);
+            console.log('touch end event', e);
         
             var touchobj = e.changedTouches[0]; // reference first touch point for this event
         
-            statusdiv.innerHTML = (
+            /*statusdiv.innerHTML = (
                 'Status: touchend<br> Resting x coordinate: ' + touchobj.clientX + 'px' + 
                 '<br> Resting y coordinate: ' + touchobj.clientY + 'px'
-            );
+            );*/
         
             console.log({
                 distX: distX,
@@ -173,7 +184,7 @@ class Game extends Component {
 
                 GameManager.swipeDirection = direction;
 
-                console.log(direction);
+                console.log('swipe dirrection', direction);
 
             } else {
                 move = false;
@@ -217,7 +228,7 @@ class Game extends Component {
         
     }
 
-    //Keyboard Handles
+    // Keyboard Handles
     handleInput(event) {
         // Shift - Undo/Open Power
         if (event.keyCode === 16) {
@@ -1482,10 +1493,12 @@ class Game extends Component {
     // Render Game
     render() {
         let style = {
-            fontFamily: 'Karla',
+            /*fontFamily: 'Karla',
             height: '625px',
             width: '404px',
-            borderRadius: '9px',
+            borderRadius: '9px',*/
+            //padding: this.getMediaQuery ? '4%' : '10px',
+            //maxWidth: this.getMediaQuery ? '100vw' : '420px',
             backgroundColor: !GameManager.navPowerTiles ? '#faf8ef' : 'rgb(255,225,100, .4)'
         }
         
@@ -1544,7 +1557,13 @@ class Game extends Component {
                     changeTile={this.changeTile} 
                     useAbility={this.useAbility}
                 />
-                <Details tooltip={GameManager.tooltip}/>
+                {
+                    this.getMediaQuery
+                    ? <></>
+                    : <Details tooltip={GameManager.tooltip}/> 
+                }
+                
+                
             </div>
         )
     }

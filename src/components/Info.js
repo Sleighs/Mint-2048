@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
+import { useMediaQuery } from 'react-responsive';
 
 //Render game info
 class Info extends Component {
@@ -8,12 +9,18 @@ class Info extends Component {
         super(props);
         this.state = {
         }
+
+        this.getMediaQuery = this.getMediaQuery.bind(this)
+    }
+
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
     }
 
     render (){
         let infoStyle = {
             height: 168,
-            width: 385,
+            width: this.getMediaQuery ? '100%' : 383,
             padding: '4 0',
             margin: 'auto',
             display: 'block',
@@ -42,7 +49,7 @@ class Info extends Component {
         let infoContainerStyle = {
             display: 'block',
             height: 136,
-            width: 383
+            width: this.getMediaQuery ? '100%' : 383,
         }
         let infoRightStyle = {
             display: 'inline-block',
@@ -69,18 +76,30 @@ class Info extends Component {
 }
 
 class Time extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+        }
+
+        this.getMediaQuery = this.getMediaQuery.bind(this)
+    }
+
+    getMediaQuery(){
+        return useMediaQuery({ query: `(max-width: 760px)` })
+    }
     render (){
         let timeStyle = {
             display: 'block',
             fontFamily: 'Cabin',
             height: 30,
-            width: 388,
-            margin: '5px 0 0 0',
+            width: this.getMediaQuery ? '90%' : 385,
+            margin: '3px auto',//margin: '5px 0 0 0',
             fontSize: '.58em',
             textShadow: '.3px .3px .3px silver',
             letterSpacing: .2,
             opacity: .35,
-            color: '#776e65'
+            color: '#776e65',
+            textAlign: 'center',
         }
         let digitStyle = {
             width: 100,

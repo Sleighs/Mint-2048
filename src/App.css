@@ -7,7 +7,6 @@ Original Colors
 
 Mint
   2 tile bg #eee4da
-  
 
 
 */
@@ -19,6 +18,8 @@ Mint
 }
 
 body {
+  width: 100%;
+  height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
 }
@@ -31,6 +32,10 @@ a {
 .scale-up-center {
 	-webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
 	        animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+}
+
+.touch-container {
+  margin: 0;
 }
 
 @-webkit-keyframes scale-up-center {
@@ -56,4 +61,55 @@ a {
 
 .divide {
   background-color: 'black'
+}
+
+.game {
+  font-family: 'Karla';
+  height: 650px;
+  width: 415px;
+  border-radius: 9px;
+  margin: auto;
+  padding: 10px;
+}
+.board {
+  width: 386;
+  height: 386;
+  margin: 10px auto;
+  padding: 2px;
+}
+
+@media only screen and (max-device-width: 640px) {
+
+}
+  
+@media only screen and (max-device-width: 768px) {
+  .view {
+    padding: 0;
+  }
+  .game {
+    height: fit-content;
+    /*width: 90%;*/
+    margin: 15% 0 0 0;
+    padding: 1%;
+  }
+  .details-container {
+    /*display: none;*/
+  }
+  .info-container {
+    padding: 1% 2%;
+  }
+  .board {
+    width: 95%;
+    height: 95%;
+    margin: 10px auto;
+    /*padding: 2px;*/
+  }
+  .tile {
+    
+  }
+  .touch-container {
+    width: 100vw;
+    padding: 0;
+  }
+  
 }
