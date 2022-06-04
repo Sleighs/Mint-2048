@@ -158,10 +158,10 @@ class PowerItem extends Component {
                 color = '#E26369';
                 break;
             case 'four tile':
-                color = '#58AD9C';
+                color = GameManager.powers[2].color;//'#58AD9C';
                 break;
             case 'two tile':
-                color = '#92DAB4';
+                color = GameManager.powers[3].color;//'#92DAB4';
                 break;
         }
 

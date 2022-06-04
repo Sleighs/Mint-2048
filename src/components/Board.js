@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
 import { useMediaQuery } from 'react-responsive';
 
 
 //render board
+/*
 class Board extends Component {
     constructor(props) {
         super(props);
@@ -27,11 +28,6 @@ class Board extends Component {
         //console.log('is mobile?', isMobile)
 
         let boardStyle = {
-            /*width: 386,
-            height: 386,
-            margin: '10px auto',
-            padding: '2px',*/
-
             borderRadius: 5,
             backgroundColor: '#bbada0',
             //boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
@@ -48,18 +44,56 @@ class Board extends Component {
         );
     }
 }
+*/
+const Board = (props) => {
+    const {
+        board,
+        useAbility,
+        changeTile,
+    } = props
+
+    const boardRef = React.createRef()
+    
+    useEffect(() => {
+        GameManager.boardRef = boardRef.current
+    })
+
+    let boardStyle = {
+        borderRadius: 5,
+        backgroundColor: '#bbada0',
+        //boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
+    };
+
+    return (
+        <div className='board' style={boardStyle} ref={boardRef}>
+            {                    
+                board.map((tile, i)=>{
+                    return (
+                        <Tile 
+                            number={!tile.num ? null : tile.num } 
+                            key={i} 
+                            board={board} 
+                            x={board[i].x} 
+                            y={board[i].y} 
+                            useAbility={useAbility} 
+                            changeTile={changeTile}
+                            boardRef={boardRef}
+                        />
+                    )   
+                })
+            }
+        </div>
+    )
+}
+
 
 class Tile extends Component {
     constructor(props) {
         super(props);
         this.state = {}
         this.ref = React.createRef()
-        this.getMediaQuery = this.getMediaQuery.bind(this)
     }
     
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
-    }
     
     getColor(ele){
         var backgroundColor = '#cdc1b4';
@@ -183,7 +217,7 @@ class Tile extends Component {
 
         switch(size){
             case 4:
-                margin = '7px';
+                margin = '6px';
                 break;
             case 5:
                 margin = '5.8px';
@@ -233,19 +267,14 @@ class Tile extends Component {
 
     render (){
         let tileStyle = {
-            height: 
-                this.getMediaQuery 
-                    ? (( GameManager.boardRef.offsetWidth / GameManager.size) * .865)
-                    : (( 380 / GameManager.size) * .85),
-            width: 
-                this.getMediaQuery  
-                    ? ((GameManager.boardRef.offsetWidth / GameManager.size) * .865)
-                    : (( 380 / GameManager.size) * .85),
+            height: (( GameManager.boardRef.offsetWidth / GameManager.size) * .865)
+                    //(( 380 / GameManager.size) * .85)
+                    ,
+            width: ((GameManager.boardRef.offsetWidth / GameManager.size) * .865)
+                    //(( 380 / GameManager.size) * .85)
+                    ,
             borderRadius: 7,
-            margin: 
-                this.getMediaQuery
-                ? '6px'
-                : this.getTileMargin(GameManager.size),
+            margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
             userSelect: 'none',
             backgroundColor: this.getColor('background'),

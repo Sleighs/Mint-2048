@@ -5,25 +5,6 @@ import '../App.css'
 
 //render board
 class Details extends Component {
-    getDetails() {
-        let activeStyle = {
-            color: !GameManager.navPowerTiles ? '' : GameManager.activePower.color,
-            fontWeight: 'bold'
-        }
-
-        if (GameManager.navPowerTiles === true){
-            return (<div><span style={activeStyle}>{GameManager.tooltip + ' '}</span><span>active</span></div>)
-        } else {
-            return (<div>
-                <div>{GameManager.tooltip}</div>
-                <div style={{
-                    fontSize: '.8em',
-                    opacity: .8
-                }}>{GameManager.tooltip2}</div>
-            </div>)
-        }
-        
-    }
     render() {
         let containerStyle = {
             position: 'absolute',
@@ -74,7 +55,7 @@ class Details extends Component {
                 </div>
                 
                 <div className='tooltip-container' style={tooltipStyle}>
-                    {this.getDetails()}
+                    
                 </div>
                 
             </div>

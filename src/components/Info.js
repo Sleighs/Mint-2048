@@ -10,17 +10,49 @@ class Info extends Component {
         this.state = {
         }
 
-        this.getMediaQuery = this.getMediaQuery.bind(this)
+        this.getDetails = this.getDetails.bind(this)
     }
 
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
+    getDetails() {
+        let activeStyle = {
+            //color: !GameManager.navPowerTiles ? '' : GameManager.activePower.color,
+            fontWeight: 'bold',
+            fontSize: '.8em',
+            fontFamily: 'Cabin',
+            textAlign: 'center',
+        }
+        let active2Style = {
+            //color: !GameManager.navPowerTiles ? '' : GameManager.activePower.color,
+            fontWeight: 'bold',
+            fontSize: '.75em',
+            fontFamily: 'Cabin',
+
+            textAlign: 'center',
+        }
+
+        if (GameManager.navPowerTiles === true){
+            return (
+                <div style={{marginTop: -12,}}>
+                    <div style={activeStyle}>{GameManager.tooltip + ' '}</div>
+                    <div style={active2Style}>active</div>
+                </div>)
+        } /*else {
+            return (
+                <div>
+                    <div>{GameManager.tooltip}</div>
+                    <div style={{
+                        fontSize: '.6em',
+                        opacity: .8
+                    }}>{GameManager.tooltip2}</div>
+                </div>
+            )
+        }*/
     }
 
     render (){
         let infoStyle = {
             height: 168,
-            width: this.getMediaQuery ? '100%' : 383,
+            width: '100%',
             padding: '4 0',
             margin: 'auto',
             display: 'block',
@@ -36,9 +68,12 @@ class Info extends Component {
             borderRadius: 4,
             width: 127,
             height: 127,
-            padding: '45px 10px',
+            padding: '40px 10px',
             color: 'white',
-            backgroundColor: '#98E7BD', //'#BFF0D6'//'#C3FAE4', //'#edcc61'
+            backgroundColor: 
+                GameManager.navPowerTiles
+                ? GameManager.activePower.color 
+                : '#98E7BD', //'#BFF0D6'//'#C3FAE4', //'#edcc61'
         }
         let titleStyle = {
             textAlign: 'center',
@@ -49,7 +84,7 @@ class Info extends Component {
         let infoContainerStyle = {
             display: 'block',
             height: 136,
-            width: this.getMediaQuery ? '100%' : 383,
+            width: '100%',
         }
         let infoRightStyle = {
             display: 'inline-block',
@@ -63,7 +98,11 @@ class Info extends Component {
                 {(GameManager.showWinScreen || GameManager.showLoseScreen) ? null :  <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>}
                 <div className="info-container" style={infoContainerStyle}>
                     <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
-                        <div className='title' style={titleStyle}>{"mint"}</div>
+                        {
+                            GameManager.navPowerTiles 
+                            ? this.getDetails()
+                            : <div className='title' style={titleStyle}>{"mint"}</div>
+                        }
                     </div>
                     <div className='info-right' style={infoRightStyle}>
                         <Score score={this.props.score} bestScore={this.props.bestScore}/>

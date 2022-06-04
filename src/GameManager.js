@@ -20,7 +20,7 @@ var GameManager = {
   powers: [
     { 
       type: 'multiply',
-      count: 0,
+      count: 0, //test
       color: 'rgb(110, 212, 117)'//''#6ED475'
     },
     { 
@@ -36,7 +36,7 @@ var GameManager = {
     {
       type: 'two tile',
       count: 0,
-      color: '#92DAB4' //rgb(146,218,180)
+      color: '#7AB5D5',//'#92DAB4' //rgb(146,218,180)
     },
     {
       type: 'freeze',

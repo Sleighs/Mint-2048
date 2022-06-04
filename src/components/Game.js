@@ -56,18 +56,6 @@ class Game extends Component {
         this.noNewGame = this.noNewGame.bind(this);
         this.yesNewGame = this.yesNewGame.bind(this);
         this.actuate = this.actuate.bind(this);
-        this.getMediaQuery = this.getMediaQuery.bind(this)
-    }
-
-    getMediaQuery(){
-        const isMobile = useMediaQuery({ query: `(max-width: 760px)` })
-        
-        const isDesktopOrLaptop = useMediaQuery(
-            { minDeviceWidth: 1224 },
-            { deviceWidth: 1600 } // `device` prop
-        )
-
-        return useMediaQuery({ maxWidth: 760 })
     }
 
     componentDidMount() {
@@ -1497,8 +1485,6 @@ class Game extends Component {
             height: '625px',
             width: '404px',
             borderRadius: '9px',*/
-            //padding: this.getMediaQuery ? '4%' : '10px',
-            //maxWidth: this.getMediaQuery ? '100vw' : '420px',
             backgroundColor: !GameManager.navPowerTiles ? '#faf8ef' : 'rgb(255,225,100, .4)'
         }
         
@@ -1542,6 +1528,8 @@ class Game extends Component {
                     score={this.state.score} 
                     bestScore={this.state.bestScore} 
                     openMenu={this.openMenu}
+                    windowHeight={this.props.windowHeight}
+                    windowWidth={this.props.windowWidth}
                 />
                 { !GameManager.showWinScreen || !GameManager.showLoseScreen 
                     ? <Combo comboLength={GameManager.combo}/> 
@@ -1556,9 +1544,11 @@ class Game extends Component {
                     userID='user' 
                     changeTile={this.changeTile} 
                     useAbility={this.useAbility}
+                    windowHeight={this.props.windowHeight}
+                    windowWidth={this.props.windowWidth}
                 />
                 {
-                    this.getMediaQuery
+                    this.props.windowWidth <= 760
                     ? <></>
                     : <Details tooltip={GameManager.tooltip}/> 
                 }

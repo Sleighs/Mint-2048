@@ -8,21 +8,16 @@ class Combo extends Component {
         this.state = {
             blocks: []
         }
-        this.getMediaQuery = this.getMediaQuery.bind(this)
-    }
-
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
     }
 
     render (){
         let comboContainerStyle = {
             height: 25,
-            width: this.getMediaQuery ? '90%' : 380,
+            width:  '90%',
             margin: '2px auto  0 auto'
         }
         let blocksContainerStyle = {
-            width: this.getMediaQuery ? '85%' : 350,
+            width: '85%',
             height: 25,
             padding: '3px 0 0 0', 
             margin: 'auto',
