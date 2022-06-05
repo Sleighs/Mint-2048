@@ -5,6 +5,7 @@ var GameManager = {
   undo: false,
   canUndo: true,
   undoCount: 0,
+  totalUndoCount: 0,
   undoNodes: [],
   direction: '',
   showMenu: false,
@@ -55,7 +56,7 @@ var GameManager = {
   combo: 0,
   comboBlocks: [],
   bestCombo: 0,
-  powersModeOn: true,
+  powersModeOn: false,
   choosePowers: false,
   powerSelection: null,
   currentPower: 1,
@@ -66,7 +67,8 @@ var GameManager = {
   tooltip: '',
   newGame: false,
   swipeMove: false,
-  swipeDirection: null
+  swipeDirection: null,
+  bestScore: 0,
 };
 
 export default GameManager;

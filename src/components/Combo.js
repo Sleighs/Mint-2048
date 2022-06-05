@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
-import { useMediaQuery } from 'react-responsive';
 
 class Combo extends Component {
     constructor(props) {
@@ -13,14 +12,14 @@ class Combo extends Component {
     render (){
         let comboContainerStyle = {
             height: 25,
-            width:  '90%',
-            margin: '2px auto  0 auto'
+            width:  '95%',
+            margin: '2px auto 0 auto'
         }
         let blocksContainerStyle = {
             width: '85%',
             height: 25,
             padding: '3px 0 0 0', 
-            margin: 'auto',
+            margin: 'auto 0',
             display: 'inline-block'
         } 
         let textStyle = {

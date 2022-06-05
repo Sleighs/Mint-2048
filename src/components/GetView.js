@@ -1,7 +1,6 @@
 import React, { Component, useLayoutEffect, useState, useEffect } from 'react';
 import Game from './Game';
 import GameManager from '../GameManager';
-import { useMediaQuery } from 'react-responsive';
 
 function useWindowSize() {
     const [size, setSize] = useState([0, 0]);
@@ -103,15 +102,12 @@ const GetView = (props) => {
     })
 
     let viewStyle = {
-        height: 705,
-        width: '95vw',
         margin: 0,
     }
     let footerStyle = {
         textAlign: 'center',
         width: '85vw',
         margin: '5% auto',
-
         marginTop: 25,
         color: '#C6BABD',
     }

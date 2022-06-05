@@ -1,50 +1,10 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
-import { useMediaQuery } from 'react-responsive';
+import { useAutoAnimate } from '@formkit/auto-animate/react'
+import autoAnimate from '@formkit/auto-animate';
 
-
-//render board
-/*
-class Board extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-        this.boardRef = React.createRef()
-
-        this.getMediaQuery = this.getMediaQuery.bind(this)
-    }
-
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
-    }
-
-    componentDidMount(){
-        GameManager.boardRef = this.boardRef.current
-    }
-
-    render() {
-    
-        //console.log('is mobile?', isMobile)
-
-        let boardStyle = {
-            borderRadius: 5,
-            backgroundColor: '#bbada0',
-            //boxShadow: !GameManager.navPowerTiles ? '' : '1px 1px 5px 11px rgb(255,225,100,.5)'
-        };
-
-        return (
-            <div className='board' ref={this.boardRef} style={boardStyle}>
-                {                    
-                    this.props.board.map((tile, i)=>{
-                        return <Tile number={!tile.num ? null : tile.num } key={i} board={this.props.board} x={this.props.board[i].x} y={this.props.board[i].y} useAbility={this.props.useAbility} changeTile={this.props.changeTile}/>
-                    })
-                }
-            </div>
-        );
-    }
-}
-*/
+// Render board
 const Board = (props) => {
     const {
         board,
@@ -53,10 +13,14 @@ const Board = (props) => {
     } = props
 
     const boardRef = React.createRef()
-    
+
+    //const [parent] = useAutoAnimate(/* optional config */)
+    //const parent = useRef(null)
+
     useEffect(() => {
         GameManager.boardRef = boardRef.current
-    })
+        //parent.current && autoAnimate(parent.current, {duration: 20,})
+    }, [boardRef])
 
     let boardStyle = {
         borderRadius: 5,
@@ -66,6 +30,7 @@ const Board = (props) => {
 
     return (
         <div className='board' style={boardStyle} ref={boardRef}>
+            <div>
             {                    
                 board.map((tile, i)=>{
                     return (
@@ -77,11 +42,11 @@ const Board = (props) => {
                             y={board[i].y} 
                             useAbility={useAbility} 
                             changeTile={changeTile}
-                            boardRef={boardRef}
                         />
                     )   
                 })
             }
+            </div>
         </div>
     )
 }
@@ -90,11 +55,12 @@ const Board = (props) => {
 class Tile extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
-        this.ref = React.createRef()
+        this.state = {
+
+        }
     }
     
-    
+
     getColor(ele){
         var backgroundColor = '#cdc1b4';
         var textColor = '#F4FEF9';
@@ -267,12 +233,8 @@ class Tile extends Component {
 
     render (){
         let tileStyle = {
-            height: (( GameManager.boardRef.offsetWidth / GameManager.size) * .865)
-                    //(( 380 / GameManager.size) * .85)
-                    ,
-            width: ((GameManager.boardRef.offsetWidth / GameManager.size) * .865)
-                    //(( 380 / GameManager.size) * .85)
-                    ,
+            height: (( GameManager.boardRef.offsetWidth / GameManager.size) * .865),
+            width: (( GameManager.boardRef.offsetWidth / GameManager.size) * .865),
             borderRadius: 7,
             margin: this.getTileMargin(GameManager.size),
             display: 'inline-block',
@@ -284,7 +246,6 @@ class Tile extends Component {
 
         return (
             <div className={'tile'} 
-                ref={this.ref}
                 style={tileStyle} 
                 onClick={()=>{
                     if (GameManager.navPowerTiles){
@@ -292,11 +253,16 @@ class Tile extends Component {
                         //this.props.changeTile(GameManager.activePower.type, GameManager.abilityTile.x, GameManager.abilityTile.y, GameManager.activePower.count)
                     }
                 }}>
-                <Number number={this.props.number !== null ? this.props.number : null} color={this.state.color}/>
+                <Number 
+                    number={this.props.number !== null ? this.props.number : null} 
+                    color={this.state.color}
+                />
             </div>
         )
     }
 }
+
+
 
 class Number extends Component {
     constructor(props) {
@@ -400,7 +366,6 @@ class Number extends Component {
             textAlign: 'center',
             marginTop: this.getMargin(this.props.number),
             padding: this.getPadding(this.props.number)
-
         }
 
         return (

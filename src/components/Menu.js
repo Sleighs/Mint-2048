@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
 import Game from './Game';
+import ReactTouchEvents from "react-touch-events";
+import Cookies from 'universal-cookie';
 
 class Menu extends Component {
     constructor(props) {
@@ -9,10 +10,16 @@ class Menu extends Component {
         
     }
 
+    componentDidMount(){
+        // check for saved high score
+
+    }
+
     render (){
         let menuContainerStyle = {
-            width: 409,
-            height: 635,
+            width: GameManager.windowWidth,
+            minHeight: GameManager.windowHeight,
+            height: 'fit-content',
             borderRadius: 4,
             //border: 'solid 1pt',
             position: 'absolute',
@@ -24,13 +31,20 @@ class Menu extends Component {
             padding: '0',
             zIndex: 3
         }
+
         return (
             <div className='menu-container' style={menuContainerStyle} onClick={(event)=>{
                 if (event.target.className === 'menu-container'){
                     GameManager.showMenu = false;
                 }
             }}>
-                <MenuItems newGame={this.props.newGame} noNewGame={this.props.noNewGame} yesNewGame={this.props.yesNewGame}/>
+                <MenuItems 
+                    newGame={this.props.newGame} 
+                    noNewGame={this.props.noNewGame} 
+                    yesNewGame={this.props.yesNewGame}
+                    clearBestScore={this.props.clearBestScore}
+                    saveGame={this.props.saveGame}
+                />
             </div>
         )
     }
@@ -63,18 +77,46 @@ class MenuItems extends Component {
         } else {
             GameManager.canUndo = false;
         }
-        
-
-        console.log('toggle undo clicked')
     }
     showStats(){
         console.log('statistics clicked')
     }
+    toggleMenu(){
+        if (!GameManager.showMenu){
+            GameManager.showMenu = true;
+        } else {
+            GameManager.showMenu = false;
+            GameManager.newGame = false;
+            GameManager.navPowerTiles = false;
+            GameManager.choosePowers = false;
+        } 
+    }
+
+    startNewGame(){
+        GameManager.newGame = false; 
+        GameManager.showMenu = false;  
+        this.props.yesNewGame()
+    }
+
+    noNewGame(){
+        GameManager.newGame = false; 
+        this.props.noNewGame()
+    }
+
+    clearScore(){
+        GameManager.showMenu = false; 
+        this.props.clearBestScore()
+    }
+    save(){
+        console.log('game saved')
+        this.props.saveGame()
+    }
+
 
     render() {
         let containerStyle = {
             background:'#eee4da',
-            width: 350,
+            width: '90%',
             padding: '5%',
             margin: '65px auto',
             borderRadius: 4
@@ -132,6 +174,7 @@ class MenuItems extends Component {
         let menuTitleStyle = {
             textAlign: 'center',
             opacity: .8,
+            fontSize: '.8em',
             margin: 'auto',
             display: 'block'
             
@@ -142,9 +185,14 @@ class MenuItems extends Component {
             return(
                 <div className='menu-list-container' style={containerStyle}>
                     <ul className={'menu-list'} style={menuListStyle}>
-                        <li style={itemStyle}><h1 style={menuTitleStyle}>Start new game?</h1></li>
-                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{GameManager.newGame = false; GameManager.showMenu = false;  this.props.yesNewGame()}}>Yes</li>
-                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{GameManager.newGame = false ; this.props.noNewGame()}}>No</li>
+                        <li style={itemStyle}><h2 style={menuTitleStyle}>Start new game?</h2></li>
+                        <ReactTouchEvents onTap={this.startNewGame.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.startNewGame()}}>Yes</li>
+                        </ReactTouchEvents>
+                        <ReactTouchEvents onTap={this.noNewGame.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.noNewGame()}}>No</li>
+                        </ReactTouchEvents>
+                        
                     </ul>
                 </div>
             )
@@ -153,13 +201,27 @@ class MenuItems extends Component {
             return(
                 <div className='menu-list-container' style={containerStyle}>
                     <ul className={'menu-list'} style={menuListStyle}>
-                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('classic')}}>Classic Play</li>
-                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('mint')}}>Mint</li>
+                        <ReactTouchEvents onTap={()=> this.actuate('classic')}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('classic')}}>Classic Play</li>
+                        </ReactTouchEvents>
+                        <ReactTouchEvents onTap={()=> this.actuate('mint')}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.actuate('mint')}}>Mint</li>
+                        </ReactTouchEvents>
                         <li className={'menu-item'} style={scoreItemStyle2} onClick={()=>{this.showStats()}}>Statistics</li>
                         <li className={'menu-item'} style={scoreItemStyle2}>Sounds OFF</li>
-                        <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.toggleUndo()}}>{!GameManager.canUndo ? 'Undo OFF' : 'Undo ON'} </li>
+                        <ReactTouchEvents onTap={this.toggleUndo.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.toggleUndo()}}>{!GameManager.canUndo ? 'Undo OFF' : 'Undo ON'} </li>
+                        </ReactTouchEvents>
                         <li className={'menu-item'} style={scoreItemStyle2}>How to play</li>
-                        <li className={'menu-item'} style={scoreItemStyle2}>About Mint 2048</li>
+                        <ReactTouchEvents onTap={this.clearScore.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.clearScore()}}>Clear high score</li>
+                        </ReactTouchEvents> 
+                        <ReactTouchEvents onTap={this.save.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle}>Save game</li>
+                        </ReactTouchEvents>
+                        <ReactTouchEvents onTap={this.toggleMenu.bind(this)}>
+                            <li className={'menu-item'} style={scoreItemStyle}>Back to game</li>
+                        </ReactTouchEvents>
                     </ul>
                 </div>
             )

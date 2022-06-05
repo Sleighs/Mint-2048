@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
-import { useMediaQuery } from 'react-responsive';
+import ReactTouchEvents from "react-touch-events";
 
 class Powers extends Component {
     constructor(props) {
         super(props);
         this.state = {
         }
-        this.getMediaQuery = this.getMediaQuery.bind(this)
+
+        this.handleTouch = this.handleTouch.bind(this)
     }
 
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
+    onComponentDidMount(){
+        //window.addEventListener('load', this.handleTouch);
+    }
+    onComponentDidUnMount(){
+        //window.removeEventListener('load', this.handleTouch);
+    }
+    handleTouch(){
+        // if powers is pressed load click handler
     }
 
     getAbilityColor(type) {
@@ -41,16 +48,52 @@ class Powers extends Component {
         return color;
     }
 
+    handleTap(){
+        if (GameManager.powersModeOn === true){  
+            var powerCount = 0;
+
+            // Get total powers available
+            for (var i = 1; i < GameManager.powers.length; i++){
+                if (GameManager.powers[i].count > 0){
+                    powerCount += GameManager.powers[i].count;
+                }
+            }
+            GameManager.powersCount = powerCount;
+            //console.log('handleInput powerCount', powerCount);
+            
+            if (GameManager.navPowerTiles === true){
+                this.props.changeTile(
+                    GameManager.currentAbility, 
+                    this.props.board[GameManager.currentPowerTile].x, 
+                    this.props.board[GameManager.currentPowerTile].y, 
+                    GameManager.currentAbilityId
+                );
+            } else {
+                // Turn menu off if on, else show abilities menu
+                if (GameManager.choosePowers === true){
+                    GameManager.choosePowers = false;
+                    //console.log('powers pressed - powers off');
+                } else {
+                    GameManager.choosePowers = true;
+                    //console.log('powers pressed - powers on');
+                }
+            }
+            GameManager.tooltip = '';
+            GameManager.tooltip2 = '';
+        } 
+    }
+
+
     render(){
         let powersWrapperStyle = {
             display: 'block',
-            width: this.getMediaQuery ? '100%' : 386,
+            width: '100%',
             //maxWidth: this.getMediaQuery ? '85vw' : '100%',
-            height: 12,
+            height: 20,
             margin: '0 auto',
         }
         let powersContainerStyle = {
-            width: this.getMediaQuery ? '95%' : 390,
+            width: '95%',
             //height: 20,
             margin: 'auto',
             //background: '#bbada0',
@@ -65,24 +108,28 @@ class Powers extends Component {
         }
 
         return(
-            <div className='powers-wrapper' style={powersWrapperStyle}>
-                <div className='powers-container' style={powersContainerStyle}>
-                    {
-                        /*this.props.powers.map((ele, i) => (
-                            <PowerItem type={ele.type} id={ele.id} index={i} useAbility={this.props.useAbility} color={this.getAbilityColor(ele.type)} ele={ele} key={i}/>
-                        ))*/
-                    }
-
-                    <PowerItem type={'multiply'} index={0}  key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'divide'} index={1} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'four tile'} index={2} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
-                    <PowerItem type={'two tile'} index={3} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
-                    
+            <ReactTouchEvents onTap={ this.handleTap.bind(this) }>
+                <div className='powers-wrapper' style={powersWrapperStyle}>
+                    <div 
+                        className='powers-container' 
+                        style={powersContainerStyle}
+                        onClick={()=>{this.handleTap()}}
+                    >
+                        {
+                            /*this.props.powers.map((ele, i) => (
+                                <PowerItem type={ele.type} id={ele.id} index={i} useAbility={this.props.useAbility} color={this.getAbilityColor(ele.type)} ele={ele} key={i}/>
+                            ))*/
+                        }
+                        <PowerItem type={'multiply'} index={0}  key={0} count={GameManager.powers[0].count} useAbility={this.props.useAbility}/>
+                        <PowerItem type={'divide'} index={1} key={1} count={GameManager.powers[1].count} useAbility={this.props.useAbility}/>
+                        <PowerItem type={'four tile'} index={2} key={2} count={GameManager.powers[2].count} useAbility={this.props.useAbility}/>
+                        <PowerItem type={'two tile'} index={3} key={3} count={GameManager.powers[3].count} useAbility={this.props.useAbility}/>
+                    </div>
+                    <div className="powers-tooltip" style={powersTooltip} >
+                        {this.state.powersTooltipMsg}
+                    </div>
                 </div>
-                <div className="powers-tooltip" style={powersTooltip} >
-                    {this.state.powersTooltipMsg}
-                </div>
-            </div>
+            </ReactTouchEvents>
         )
     }
 }
@@ -199,7 +246,7 @@ class PowerItem extends Component {
             borderRadius: 2,
             background: this.getBackgroundColor(),
             width: '25%',
-            height: 10,
+            height: 15,
             textAlign: 'center',
             margin: '0 auto',
             opacity: this.getOpacity(),

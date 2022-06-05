@@ -13,10 +13,10 @@
     "openssl": "^1.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-easy-swipe": "0.0.18",
-    "react-responsive": "^9.0.0-beta.8",
-    "react-scripts": "3.4.1",
-    "react-swipeable": "^5.5.1"
+    "react-scripts": "^5.0.1",
+    "react-swipeable": "^7.0.0",
+    "react-touch-events": "^3.0.0",
+    "universal-cookie": "^4.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

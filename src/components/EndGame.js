@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Board from './Board';
 import GameManager from '../GameManager';
-
+import ReactTouchEvents from "react-touch-events";
 
 class EndGame extends Component {
     getScreen(){
@@ -77,7 +77,7 @@ class EndGame extends Component {
         let style = {
             backgroundColor: !GameManager.gameOver ? '#FAD250' : '#eee4da',
             height: 625,
-            width: 404,
+            width: GameManager.windowWidth,
             position: 'absolute',
             borderRadius: 4,
             zIndex: 100
@@ -121,8 +121,24 @@ class EndGameButtons extends Component {
 
         return (
             <div className='btnContainer' style={containerStyle}>
-                <button className={'info-btn', 'info-btn-left', 'newgame-btn'} style={{...btnStyle, ...newStyle}} onClick={this.props.newGame}>{"New"} </button>
-                <button className={'info-btn', 'info-btn-right', 'undo-btn'} style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}</button>
+                <ReactTouchEvents onTap={()=>this.props.newGame()}>
+                    <button 
+                        className={'info-btn info-btn-left newgame-btn'} 
+                        style={{...btnStyle, ...newStyle}} 
+                        onClick={this.props.newGame}
+                    >
+                        {"New"} 
+                    </button>
+                </ReactTouchEvents>
+                <ReactTouchEvents onTap={()=>this.props.undo()}>
+                    <button 
+                        className={'info-btn info-btn-right undo-btn'} 
+                        style={{...btnStyle, ...undoStyle}} 
+                        onClick={this.props.undo}
+                    >
+                        {"Undo"}
+                    </button>
+                </ReactTouchEvents>
             </div>
         )
     }

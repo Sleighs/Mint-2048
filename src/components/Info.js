@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import GameManager from '../GameManager';
-import { useMediaQuery } from 'react-responsive';
+import ReactTouchEvents from "react-touch-events";
 
 //Render game info
 class Info extends Component {
     constructor(props){
         super(props);
         this.state = {
+        
         }
 
         this.getDetails = this.getDetails.bind(this)
@@ -47,6 +48,16 @@ class Info extends Component {
                 </div>
             )
         }*/
+    }
+    openMenu(){
+        if (!GameManager.showMenu){
+            GameManager.showMenu = true;
+        } else {
+            GameManager.showMenu = false;
+            GameManager.newGame = false;
+            GameManager.navPowerTiles = false;
+            GameManager.choosePowers = false;
+        } 
     }
 
     render (){
@@ -97,13 +108,15 @@ class Info extends Component {
             <div className='info' style={infoStyle}>
                 {(GameManager.showWinScreen || GameManager.showLoseScreen) ? null :  <Time minutes={this.props.minutes} seconds={this.props.seconds} milisec={this.props.milisec}/>}
                 <div className="info-container" style={infoContainerStyle}>
-                    <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
-                        {
-                            GameManager.navPowerTiles 
-                            ? this.getDetails()
-                            : <div className='title' style={titleStyle}>{"mint"}</div>
-                        }
-                    </div>
+                    <ReactTouchEvents onTap={this.openMenu.bind(this)}>
+                        <div className='game-title' style={gameTitleStyle} onClick={this.props.openMenu}>
+                            {
+                                GameManager.navPowerTiles 
+                                ? this.getDetails()
+                                : <div className='title' style={titleStyle}>{"mint"}</div>
+                            }
+                        </div>
+                    </ReactTouchEvents>
                     <div className='info-right' style={infoRightStyle}>
                         <Score score={this.props.score} bestScore={this.props.bestScore}/>
                         <Buttons pressed={false} newGame={this.props.newGame} undo={this.props.undo}/>
@@ -120,18 +133,14 @@ class Time extends Component {
         this.state = {
         }
 
-        this.getMediaQuery = this.getMediaQuery.bind(this)
     }
-
-    getMediaQuery(){
-        return useMediaQuery({ query: `(max-width: 760px)` })
-    }
+    
     render (){
         let timeStyle = {
             display: 'block',
             fontFamily: 'Cabin',
             height: 30,
-            width: this.getMediaQuery ? '90%' : 385,
+            width: '90%',
             margin: '3px auto',//margin: '5px 0 0 0',
             fontSize: '.58em',
             textShadow: '.3px .3px .3px silver',
@@ -232,6 +241,14 @@ class Buttons extends Component {
         super(props);
     }
 
+    newGame(){
+        this.props.newGame()
+    }
+
+    undo(){
+        this.props.undo()
+    }
+
     render (){
         let containerStyle = {
             height: 65,
@@ -262,8 +279,26 @@ class Buttons extends Component {
 
         return (
             <div className='btnContainer' style={containerStyle}>
-                <button className='info-btn info-btn-left newgame-btn' style={btnStyle} onClick={this.props.newGame}>{"New"} </button>
-                <button className='info-btn info-btn-right undo-btn' style={{...btnStyle, ...undoStyle}} onClick={this.props.undo}>{"Undo"}<UndoNodes /></button>
+                <ReactTouchEvents onTap={this.newGame.bind(this)}>
+                    <button 
+                        className='info-btn info-btn-left newgame-btn' 
+                        style={btnStyle} 
+                        onClick={this.props.newGame}
+                    >
+                        {"New"} 
+                    </button>
+                </ReactTouchEvents>
+                <ReactTouchEvents onTap={this.undo.bind(this)}>
+                    <button 
+                        className='info-btn info-btn-right undo-btn' 
+                        style={{...btnStyle, ...undoStyle}} 
+                        onClick={this.props.undo}
+                    >
+                        {"Undo"}
+                        <UndoNodes />
+                    </button>
+                </ReactTouchEvents>
+                
             </div>
         )
     }

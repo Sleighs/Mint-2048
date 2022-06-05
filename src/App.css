@@ -59,7 +59,7 @@ a {
   }
 }
 .view {
-  
+  height: fit-content;
 }
 .divide {
   background-color: 'black'
@@ -70,7 +70,6 @@ a {
   height: 650px;
   width: 415px;
   border-radius: 9px;
-  margin: auto;
   padding: 10px;
 }
 .board {
@@ -86,14 +85,16 @@ a {
   
 @media only screen and (max-device-width: 768px) {
   .view {
-    padding: 0;
-    
+    height: 100vh;
+    width: 100%;
+    margin: 0;
+    background: #faf8ef;
   }
   .game {
     height: fit-content;
     /*width: 90%;*/
-    margin: 25% 0 0 0;
-    padding: 1%;
+    /*margin: 24% 0 0 0;*/
+    padding: 12.5% 1%;
   }
   .details-container {
     /*display: none;*/

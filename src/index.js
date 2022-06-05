@@ -6,6 +6,3 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
-
-console.log('Mint 2048 is running');
-

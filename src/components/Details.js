@@ -9,9 +9,8 @@ class Details extends Component {
         let containerStyle = {
             position: 'absolute',
             margin: '-370px 0 0 475px',
-            padding: 5,
-            width: 250,
-            height: 250,
+            width: 285,
+            height: 280,
             fontSize: '1em',
         }
         let instructionsStyle = {

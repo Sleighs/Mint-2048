@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 import GameManager from '../GameManager';
+import ReactTouchEvents from "react-touch-events";
 
 class PowersMenu extends Component {
     constructor(props) {
@@ -155,12 +156,14 @@ class Powers extends Component {
 
 
         return (
-            <div className={'power', this.props.type} style={containerStyle}>
+            <div className={'power '+ this.props.type} style={containerStyle}>
                 <table style={tableStyle}>
                     <tbody>
                     <tr>
                         <td style={emptyStyle}></td>
-                        <td style={itemStyle1}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
+                        <ReactTouchEvents onTap={()=> console.log(GameManager.powers[1].type + ' clicked')}>
+                            <td style={itemStyle1}>{GameManager.powers[1].type} <br/>{GameManager.powers[1].count}</td>
+                        </ReactTouchEvents>
                         <td style={emptyStyle}></td>
                     </tr>
                     <tr>
