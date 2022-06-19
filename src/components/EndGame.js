@@ -2,30 +2,38 @@ import React, { Component } from 'react';
 import Board from './Board';
 import GameManager from '../GameManager';
 import ReactTouchEvents from "react-touch-events";
+import autoAnimate from '@formkit/auto-animate';
 
 class EndGame extends Component {
     getScreen(){
         let winStyle = {
             textAlign: 'center',
             margin: 'auto',
-            color: 'white'
+            color: 'white',
         }
         let winTitleStyle = {
-            fontSize: '3.5em',
-            fontWeight: 'bold'
+            fontSize: '3.2em',
+            fontWeight: 'bold',
         }
         let winTextStyle = {
-            fontSize: '1.8em',
+            textAlign: 'center',
+            fontSize: '1.5em',
             padding: '5px',
-            width: 404,
-            height: 92
+            margin: 'auto',
+            width: '90%',
+        }
+        let winText2Style = {
+            textAlign: 'center',
+            fontSize: '1.2em',
+            padding: '5px',
+            margin: 'auto',
         }
 
         let loseStyle = {
             textAlign: 'center',
             margin: 'auto',
             color: '#775e65',
-            zIndex: 9
+            zIndex: 9,
         }
         let loseTitleStyle = {
             fontSize: '3.5em',
@@ -34,8 +42,8 @@ class EndGame extends Component {
         let loseTextStyle = {
             fontSize: '1.7em',
             padding: '5px',
-            width: 404,
-            height: 92
+            margin: 'auto',
+            width: '90%',
         }
 
         if (this.props.type === 'win') {
@@ -46,11 +54,26 @@ class EndGame extends Component {
                     </div>
                     <p style={winTextStyle}>
                         {'You unlocked the 2048 tile with '}
-                        {GameManager.moves}
+                        {this.props.moveCount}
                         {' moves in '}
                         {GameManager.time}
                     </p>
-                    <Board board={this.props.board}/>
+                    <p  style={winText2Style}>
+                        {'Undos: '}
+                        {this.props.undoCount}
+                    </p>
+                    <div style={{
+                        width: 400,
+                        height: 400,
+                        margin: 'auto',
+                    }}>
+                        <Board board={this.props.board}/>
+                    </div>
+                    <EndGameButtons 
+                        type={'win'} 
+                        newGame={this.props.newGame} 
+                        undo={this.props.undo}
+                    />
                 </div>
             )
         }
@@ -66,8 +89,18 @@ class EndGame extends Component {
                         {' in '}
                         {GameManager.time}
                     </p>
-                    <Board board={this.props.board}/>
-                    <EndGameButtons  newGame={this.props.newGame} undo={this.props.undo}/>
+                    <div style={{
+                        width: 400,
+                        height: 400,
+                        margin: 'auto',
+                    }}>
+                        <Board board={this.props.board}/>
+                    </div>
+                    <EndGameButtons  
+                        type={'lose'} 
+                        newGame={this.props.newGame} 
+                        undo={this.props.undo}
+                    />
                 </div>
             )
         }
@@ -76,11 +109,13 @@ class EndGame extends Component {
     render (){
         let style = {
             backgroundColor: !GameManager.gameOver ? '#FAD250' : '#eee4da',
-            height: 625,
-            width: GameManager.windowWidth,
+            height: '125vh',
+            width: '100vw',//GameManager.windowWidth,
             position: 'absolute',
             borderRadius: 4,
-            zIndex: 100
+            zIndex: 100,
+            top: 0,
+            left: 0,
         }
 
         return (
@@ -96,13 +131,13 @@ class EndGameButtons extends Component {
         let containerStyle = {
             height: 65,
             width: 330,
-            margin: 'auto',
+            margin: '1% auto',
             display: 'block',
             fontSize: '2em'
         }
         let btnStyle = {
-            width: 150,
-            height: 40,
+            width: 165,
+            height: 45,
             backgroundColor: '#775e65',
             color: 'white',
             fontSize: '.6em',
@@ -116,7 +151,7 @@ class EndGameButtons extends Component {
             float: 'right'
         }
         let newStyle = {
-            float: 'left'
+            float: this.props.type === 'win' ? '' : 'left',
         }
 
         return (
@@ -127,18 +162,23 @@ class EndGameButtons extends Component {
                         style={{...btnStyle, ...newStyle}} 
                         onClick={this.props.newGame}
                     >
-                        {"New"} 
+                        {"New Game"} 
                     </button>
                 </ReactTouchEvents>
-                <ReactTouchEvents onTap={()=>this.props.undo()}>
-                    <button 
-                        className={'info-btn info-btn-right undo-btn'} 
-                        style={{...btnStyle, ...undoStyle}} 
-                        onClick={this.props.undo}
-                    >
-                        {"Undo"}
-                    </button>
-                </ReactTouchEvents>
+                {
+                    this.props.type === 'lose' ?
+                    <ReactTouchEvents onTap={()=>this.props.undo()}>
+                        <button 
+                            className={'info-btn info-btn-right undo-btn'} 
+                            style={{...btnStyle, ...undoStyle}} 
+                            onClick={this.props.undo}
+                        >
+                            {"Undo"}
+                        </button>
+                    </ReactTouchEvents>
+                    : <></>
+                }
+               
             </div>
         )
     }

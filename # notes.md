@@ -1,8 +1,13 @@
 # notes
 
 ## todo
+- endgame continue option
+- style
+   - 2048 tile padding
+   - endgame board
+- prevent board from moving when undo is touched
 - add total undo count to end game screen
-- undo sometimes doesn't work
+- *undo sometimes doesn't work on touch
 - add touch function to power buttons
 - show best combo score 
 - animate

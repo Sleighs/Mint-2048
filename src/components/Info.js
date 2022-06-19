@@ -7,10 +7,7 @@ import ReactTouchEvents from "react-touch-events";
 class Info extends Component {
     constructor(props){
         super(props);
-        this.state = {
-        
-        }
-
+        this.state = { }
         this.getDetails = this.getDetails.bind(this)
     }
 
@@ -118,8 +115,19 @@ class Info extends Component {
                         </div>
                     </ReactTouchEvents>
                     <div className='info-right' style={infoRightStyle}>
-                        <Score score={this.props.score} bestScore={this.props.bestScore}/>
-                        <Buttons pressed={false} newGame={this.props.newGame} undo={this.props.undo}/>
+                        <Score 
+                            score={this.props.score} 
+                            bestScore={this.props.bestScore}
+                        />
+                        <Buttons 
+                            pressed={false} 
+                            newGame={this.props.newGame} 
+                            undo={this.props.undo}
+
+                            handleInput={this.props.handleInput}
+                            previousBoards={this.props.previousBoards}
+                            actuate={this.props.actuate}
+                        />
                     </div>  
                 </div>
             </div>
@@ -132,7 +140,6 @@ class Time extends Component {
         super(props);
         this.state = {
         }
-
     }
     
     render (){
@@ -243,10 +250,12 @@ class Buttons extends Component {
 
     newGame(){
         this.props.newGame()
+        console.log(this.props.previousBoards.length, this.props.previousBoards)
     }
 
     undo(){
-        this.props.undo()
+        this.props.undo()  
+        //console.log(this.props.previousBoards.length, this.props.previousBoards)
     }
 
     render (){
@@ -271,10 +280,10 @@ class Buttons extends Component {
             padding: '4px 12px',
             textDecoration: 'none',
             border: 'none',
-            userSelect: 'none'
+            userSelect: 'none',
         }
         let undoStyle = {
-            float: 'right'
+            float: 'right',
         }
 
         return (
@@ -288,7 +297,6 @@ class Buttons extends Component {
                         {"New"} 
                     </button>
                 </ReactTouchEvents>
-                <ReactTouchEvents onTap={this.undo.bind(this)}>
                     <button 
                         className='info-btn info-btn-right undo-btn' 
                         style={{...btnStyle, ...undoStyle}} 
@@ -296,9 +304,7 @@ class Buttons extends Component {
                     >
                         {"Undo"}
                         <UndoNodes />
-                    </button>
-                </ReactTouchEvents>
-                
+                    </button> 
             </div>
         )
     }
@@ -317,9 +323,8 @@ class UndoNodes extends Component {
             marginLeft: -5,
             display: 'block',
             position: 'absolute',
-            fontSize: '.5em'
+            fontSize: '.5em',
         }
-
         let nodeStyle = {
             background: GameManager.undoCount < 3 ? '#eee4da' : '#edcc61',
             width: 15,
@@ -327,8 +332,7 @@ class UndoNodes extends Component {
             margin: 3,
             borderRadius: 2,
             display: !GameManager.canUndo ? 'none' : 'inline-block',
-            opacity: GameManager.undoCount < 3 ? .7 : .8
-            
+            opacity: GameManager.undoCount < 3 ? .7 : .8,
         }
 
         return(
@@ -340,7 +344,11 @@ class UndoNodes extends Component {
                         )
                     })
                 }
-                {!GameManager.canUndo ? 'OFF' : null}
+                {
+                    !GameManager.canUndo 
+                        ? ''//'OFF' 
+                        : null
+                }
             </div>
         )
     }

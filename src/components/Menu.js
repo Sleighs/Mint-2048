@@ -12,7 +12,6 @@ class Menu extends Component {
 
     componentDidMount(){
         // check for saved high score
-
     }
 
     render (){
@@ -29,7 +28,7 @@ class Menu extends Component {
             background: '#FAF8EF',//'#eee4da', //'#BFF0D6', //'#ebcf8a',
             //opacity: '90%',
             padding: '0',
-            zIndex: 3
+            zIndex: 3,
         }
 
         return (
@@ -54,9 +53,7 @@ class Menu extends Component {
 class MenuItems extends Component {
     constructor(props){
         super(props);
-        this.state = {
-            
-        }
+        this.state = {}
     }
     
     actuate(option){
@@ -119,13 +116,11 @@ class MenuItems extends Component {
             width: '90%',
             padding: '5%',
             margin: '65px auto',
-            borderRadius: 4
-
+            borderRadius: 4,
         }
         let menuListStyle = {
-            listStyleType: 'none'
+            listStyleType: 'none',
         }
-
         let scoreItemStyle = {
             width: 280,
             height: 55,
@@ -139,7 +134,7 @@ class MenuItems extends Component {
             //letterSpacing: 1,
             fontWeight: 'bold',
             padding: 8,
-            userSelect: 'none'
+            userSelect: 'none',
         }
         let itemStyle = {
             width: 280,
@@ -154,7 +149,7 @@ class MenuItems extends Component {
             //letterSpacing: 1,
             fontWeight: 'bold',
             padding: 8,
-            userSelect: 'none'
+            userSelect: 'none',
         }
         let scoreItemStyle2 = {
             width: 280,
@@ -169,15 +164,14 @@ class MenuItems extends Component {
             //letterSpacing: 1,
             padding: 8,
             fontWeight: 'bold',
-            display: 'none'
+            display: 'none',
         }
         let menuTitleStyle = {
             textAlign: 'center',
             opacity: .8,
             fontSize: '.8em',
             margin: 'auto',
-            display: 'block'
-            
+            display: 'block',
         }
 
         
@@ -191,12 +185,10 @@ class MenuItems extends Component {
                         </ReactTouchEvents>
                         <ReactTouchEvents onTap={this.noNewGame.bind(this)}>
                             <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.noNewGame()}}>No</li>
-                        </ReactTouchEvents>
-                        
+                        </ReactTouchEvents>           
                     </ul>
                 </div>
             )
-            
         } else {
             return(
                 <div className='menu-list-container' style={containerStyle}>
@@ -217,7 +209,7 @@ class MenuItems extends Component {
                             <li className={'menu-item'} style={scoreItemStyle} onClick={()=>{this.clearScore()}}>Clear high score</li>
                         </ReactTouchEvents> 
                         <ReactTouchEvents onTap={this.save.bind(this)}>
-                            <li className={'menu-item'} style={scoreItemStyle}>Save game</li>
+                            <li className={'menu-item'} style={scoreItemStyle2}>Save game</li>
                         </ReactTouchEvents>
                         <ReactTouchEvents onTap={this.toggleMenu.bind(this)}>
                             <li className={'menu-item'} style={scoreItemStyle}>Back to game</li>

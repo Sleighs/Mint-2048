@@ -17,7 +17,7 @@ var GameManager = {
   showWinScreen: false,
   showLoseScreen: false,
   abilities: [],
-  gameType: 'mint',
+  gameType: 'classic',
   powers: [
     { 
       type: 'multiply',

@@ -29,7 +29,7 @@ const Board = (props) => {
     };
 
     return (
-        <div className='board' style={boardStyle} ref={boardRef}>
+        <div className='board' style={boardStyle} ref={boardRef} data-board='board-touch'>
             <div>
             {                    
                 board.map((tile, i)=>{
@@ -72,12 +72,15 @@ class Tile extends Component {
                 textColor = '#cdc1b4';
                 break;
             case 2:
-                backgroundColor = 'rgb(238,228,218, .9)';//'#eee4da';
+                backgroundColor = 'rgb(238,228,224, 1)'; //'rgb(238,228,218, .9)';//'#eee4da';
                 textColor = '#775e65';
                 break;
             case 4:
-                backgroundColor = 'rgb(252, 127, 127, .9)';//'#FC7F7F';
-                textColor = '#F4FEF9';
+                //Original red color
+                //backgroundColor = 'rgb(252, 127, 127, .9)';//'#FC7F7F';
+                //textColor = '#F4FEF9';
+                backgroundColor = 'rgb(237,224,195, 1)';//rgb(237,224,200)//'#ede0c8';
+                textColor = '#775e65';
                 break;
             case 8:
                 backgroundColor = 'rgb(141, 203, 149)'; //'#8DCB95';

@@ -10,6 +10,7 @@ import Details from './Details';
 import GameManager from '../GameManager';
 import '../App.css'
 import Cookies from 'universal-cookie';
+import ReactTouchEvents from 'react-touch-events';
 
 class Game extends Component {
     constructor(props) {
@@ -58,14 +59,8 @@ class Game extends Component {
         this.noNewGame = this.noNewGame.bind(this);
         this.yesNewGame = this.yesNewGame.bind(this);
         this.actuate = this.actuate.bind(this);
-        this.getCookies = this.getCookies.bind(this);
         this.clearBestScore = this.clearBestScore.bind(this);
         this.saveGame = this.saveGame.bind(this)
-    }
-
-    getCookies(){
-        const cookies2048 = new Cookies()
-        return cookies2048
     }
 
     componentDidMount() {
@@ -76,12 +71,12 @@ class Game extends Component {
 
         // Get cookie for best score
         const cookies = new Cookies()
-        const bestScoreCookie = cookies.get('bestScore')
 
+        const bestScoreCookie = cookies.get('bestScore')
         const savedGameCookie = cookies.get('savedGame')
 
         if (savedGameCookie){
-           // console.log('savedGame', savedGameCookie)
+            //console.log('savedGame', savedGameCookie)
             //GameManager = JSON.parse(savedGameCookie[0])
             //this.setState(savedGameCookie[0])
         }
@@ -95,14 +90,13 @@ class Game extends Component {
         }
 
         // If swiped move in direction of swipe
-        if (GameManager.swipeDirection !== null) {
-            this.direction(GameManager.swipeDirection);
-            this.move();
-        }
+        /*if (GameManager.swipeDirection !== null && GameManager.undo === false) {
+            //this.direction(GameManager.swipeDirection);
+            //this.move();
+        }*/
 
         this.initGame();
     }
-
     componentWillUnmount() {
         document.removeEventListener('keyup', this.handleInput);
         window.removeEventListener('load', this.handleTouch);
@@ -111,8 +105,10 @@ class Game extends Component {
 
     handleTouch(event) {
         var touchscreen = document.getElementById('touch-container'),
-        statusdiv = document.getElementById('statusdiv'),
-        startx = 0,
+        boardTouchEle = document.querySelectorAll('[data-board]'),
+        statusdiv = document.getElementById('statusdiv');
+
+        var startx = 0,
         starty = 0,
         distX = 0,
         distY = 0,
@@ -148,18 +144,13 @@ class Game extends Component {
         }, false);
         
         touchscreen.addEventListener('touchend', (e) => {
-            //console.log('touch end event', e);
-
-            /*console.log({
-                distX: distX,
-                distY: distY,
-                totalX: Math.abs(distX),
-                totalY: Math.abs(distY)
-            });*/
+            // console.log('touch end event', e);
 
             // Get swipe direction, only register swipes longer than 50px
             if ((50 < Math.abs(distX)) || (50 < Math.abs(distY))) {
                 GameManager.swipeMove = true;
+
+                //
                 if (!GameManager.choosePowers && !GameManager.navPowerTiles) {
                     move = true;
                 }
@@ -182,61 +173,28 @@ class Game extends Component {
                         direction = 'left';
                     }
                 }
-
                 GameManager.swipeDirection = direction;
 
                 //console.log('swipe direction', direction);
+                //console.log(distX, distY)
 
-                // Run the input handler to move
-                this.handleInput(null, direction)
-
+                // Run the input handler to actuate move
+                this.handleInput(e, direction)
             } else {
                 move = false;
                 //console.log('swipe is invalid');
             }
 
             e.preventDefault();
-
         }, false);
-
-       /* 
-        if (direction && move) {    
-            console.log(direction);
-
-            if (direction === 'up') {
-                this.setState({
-                    direction: 0
-                });
-            } else
-
-            if (direction === 'down') {
-                this.setState({
-                    direction: 2
-                });
-            } else
-
-            if (direction === 'left') {
-                this.setState({
-                    direction: 3
-                });
-            } else
-
-            if (direction === 'right') {
-                this.setState({
-                    direction: 1
-                });
-            }
-
-            this.move();
-        }*/
-        
     }
 
     // Keyboard Handles
     handleInput(event, swipeDirection) {
         // Shift - Undo/Open Power
-        if (event && event.keyCode === 16) {
+        if ((event && event.keyCode === 16) || swipeDirection === 'shift') {
            this.undoMove();
+           return;
         }
 
         // Enter Button
@@ -290,18 +248,20 @@ class Game extends Component {
 
         // Get Move Direction
         if ((event && event.keyCode === 38) || swipeDirection === 'up') {
-            
             // Up move
             //console.log("up pressed");
             this.setState({
                 direction: 0
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[1].type, count: GameManager.powers[1].count, color: GameManager.powers[1].color}
+                GameManager.activePower = {
+                    type: GameManager.powers[1].type, 
+                    count: GameManager.powers[1].count, 
+                    color: GameManager.powers[1].color,
+                }
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[1].type, 1);
                 }
-                
             } 
             if (GameManager.navPowerTiles === true) {
                 this.switchPowerTile('up');
@@ -309,7 +269,6 @@ class Game extends Component {
              if (!GameManager.choosePowers && !GameManager.navPowerTiles) {
                 this.move();
             }
-            
         }
         else if ((event && event.keyCode === 40) || swipeDirection === 'down') {
             // Down move
@@ -318,7 +277,11 @@ class Game extends Component {
                 direction: 2
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[3].type, count: GameManager.powers[3].count, color: GameManager.powers[3].color}
+                GameManager.activePower = {
+                    type: GameManager.powers[3].type, 
+                    count: GameManager.powers[3].count, 
+                    color: GameManager.powers[3].color,
+                }
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[3].type, 3);
                 }
@@ -337,7 +300,11 @@ class Game extends Component {
                 direction: 3
             });
             if (GameManager.choosePowers === true && GameManager.navPowerTiles === false){
-                GameManager.activePower = {type: GameManager.powers[0].type, count: GameManager.powers[0].count, color: GameManager.powers[0].color}
+                GameManager.activePower = {
+                    type: GameManager.powers[0].type, 
+                    count: GameManager.powers[0].count, 
+                    color: GameManager.powers[0].color,
+                }
                 if (GameManager.activePower.count > 0){
                     this.useAbility(GameManager.powers[0].type, 0);
                 }
@@ -370,7 +337,6 @@ class Game extends Component {
         if (event){
             event.preventDefault();
         }
-        
     }
     direction(dir){
         if (dir){
@@ -396,7 +362,6 @@ class Game extends Component {
                     });
                     break;
             }
-
             this.move();
         }
         
@@ -418,7 +383,7 @@ class Game extends Component {
 
         // Load normal game (powers mode in development)
 
-        GameManager.powersModeOn = false
+        GameManager.powersModeOn = false;
 
         this.actuate('new game'); 
     }
@@ -430,13 +395,16 @@ class Game extends Component {
         // If no previous game is found, create new board
         if ((!this.state.board.pop(-1) && this.state.board.length < (this.props.size * this.props.size) ) || GameManager.startNewGame === true || data == null) {
             var tileType;
+
+            // Select two different beginning tile locations at random
             var startTile1 = Math.floor(Math.random() * 16 + 1);
             var startTile2 = Math.floor(Math.random() * 16 + 1);
 
-            // Select two beginning tile locations at random
+            // Get different tile location if same
             while (startTile1 === startTile2) {
                 startTile2 = Math.floor(Math.random() * 16 + 1);
             }
+
             // Create new board
             var counter = 0;
             for (var x = 0; x < this.props.size; x++){
@@ -449,7 +417,6 @@ class Game extends Component {
                     } else {
                         tileType = false;
                     }   
-
                     // Add tile to board
                     board.push(this.newTile(x, y, tileType));
                     row.push(this.newTile(x, y, tileType));
@@ -462,9 +429,10 @@ class Game extends Component {
                 board: board,
                 cells: this.grid(board),
                 previousBoards: prevBoards,
-                score: 0
+                score: 0,
             }); 
         } else if (!data){
+            // If no data entered create new board
             this.getBoard(null);
         } else {
             for (var a = 0; a < this.props.size; a++){
@@ -489,18 +457,15 @@ class Game extends Component {
                 timeBeganMaster: this.state.timeBegan
             });        
         }
-
         if (this.state.timestopped !== null) {
             this.setState({
                 stoppedDuration: this.state.stoppedDuration + (new Date() - this.state.timeStopped)
             });
         }
-
         this.setState({
             timeState: 'running',
             timeStarted: true
         });
-
         GameManager.interval = setInterval(() => {this.clockRunning()}, 100); 
     }
     stopTime(){
@@ -514,9 +479,10 @@ class Game extends Component {
             hr: timeElapsed.getUTCHours(),
             min: timeElapsed.getUTCMinutes(),
             sec: timeElapsed.getUTCSeconds(),
-            ms: timeElapsed.getUTCMilliseconds()
+            ms: timeElapsed.getUTCMilliseconds(),
         });   
     }
+
     newTile (x, y, type, num, mergedFrom, previousPosition) {
         var randomNum = Math.floor(Math.random() * 100 + 1);  
         var tile = {
@@ -546,13 +512,14 @@ class Game extends Component {
 
         var moved = false;
         var merge = false;
+
         GameManager.moved = false;
         GameManager.winGame = false;
         GameManager.choosePowers = false;
         
         this.actuate();
 
-        if (GameManager.gameOver === true){
+        if (GameManager.gameOver === true || GameManager.undo === true){
             return;
         }
 
@@ -565,7 +532,7 @@ class Game extends Component {
         this.setState({
             traversals: traversals,
             undoScore: this.state.score,
-            canUndo: true,
+            //canUndo: true,
         });
         
         var cell;
@@ -634,11 +601,44 @@ class Game extends Component {
         });
 
         if (moved) {
+            GameManager.moved = true;
+
+            // Allow user to undo
+            GameManager.canUndo = true;
+            GameManager.swipeDirection = null;
+
+            // Add randomm tile if possible
+            this.addRandomTile();
+
+            // Update list of previous boards
+            var prevBoards = [];
+            for (var m = 0; m < this.state.previousBoards.length; m++) {
+                prevBoards.push(this.state.previousBoards[m]);
+            }
+            // If board changed add to prev boards array
+            if (prevBoards[prevBoards.length - 1] !== this.state.board){
+                prevBoards.push(this.state.board);
+            }
+
+            this.setState({
+                previousBoards: prevBoards,
+                //canUndo: true,
+                moveCounter: this.state.moveCounter + 1,
+            });
+
+            // Make undo available
+            if (GameManager.undoCount === 0) {
+                //GameManager.undoCount = GameManager.undoCount + 1;
+                GameManager.undoCount += 1;
+            }
+
             // Add combo point if tiles merged else reset combo
             if (merge){
                 GameManager.combo = GameManager.combo + 1;
 
-            /*    var comboLength = GameManager.combo;
+            /*  
+                // cash system
+                var comboLength = GameManager.combo;
                 console.log('moved');
             switch (comboLength) {
                 case (comboLength < 6):
@@ -659,8 +659,6 @@ class Game extends Component {
             } else {
                 GameManager.combo = 0;
             }
-            // Add randomm tile if possible
-            this.addRandomTile();
 
             // Update high score
             if (this.state.bestScore < this.state.score) {
@@ -669,37 +667,29 @@ class Game extends Component {
                 });
 
                 cookies.set('bestScore', this.state.score, 
-                    {path:'/', maxAge: 1200,}
+                    {path:'/', maxAge: 648000,}
                 )
             }
+            /*console.log('moved', this.state.moveCounter, {
+                undo: GameManager.undo,
+                canUndo: GameManager.canUndo,
+                undoNodes: GameManager.undoNodes,
+                undoCount: GameManager.undoCount,
+                prevBoards: this.state.previousBoards,
+            })*/
 
-            // Update list of previous boards
-            var prevBoards = [];
-            for (var m = 0; m < this.state.previousBoards.length; m++) {
-                prevBoards.push(this.state.previousBoards[m]);
-            }
-            if (prevBoards[prevBoards.length -1] !== this.state.board){
-                prevBoards.push(this.state.board);
-            }
-
-            this.setState({
-                previousBoards: prevBoards,
-                canUndo: true
-            });
-
-            GameManager.moved = true;
-            GameManager.undo = true;
-            GameManager.canUndo = true;
-
-            // Make undo available
-            if (GameManager.undoCount === 0) {
-                GameManager.undoCount = GameManager.undoCount + 1;
-            }
+            /*var statusdivs = document.getElementsByClassName('status-divs')
+            var statEle = document.createElement('div')
+            statEle.innerHTML = JSON.stringify({
+                gameManagerUndo: GameManager.undo, 
+                stateCanUndo: this.state.canUndo,
+                gameManagerUndoCount: GameManager.undoCount,
+                gameManagerCanUndo: GameManager.canUndo,
+                prevBoards: this.state.previousBoards,
+            })*/
+            //statusdivs[0].push(statEle)
         }
-        this.setState({
-            moveCounter: this.state.moveCounter + 1
-        });
-
+        
         //console.log('move', this.state.moveCounter);
 
         if (GameManager.combo !== 0 && GameManager.combo % 5 === 0){
@@ -710,6 +700,7 @@ class Game extends Component {
             }
 
             if (GameManager.undoCount < 3){
+                //GameManager.undoCount = GameManager.undoCount + 1;
                 GameManager.undoCount += 1;
             }
         }
@@ -840,7 +831,7 @@ class Game extends Component {
     grid(board){
         var cells = [];
 
-        if ( board && board.length > this.props.size){
+        if (board && board.length > this.props.size){
             // Create grid from board
             var index = 0;
             for (var x = 0; x < this.props.size; x++){
@@ -1005,7 +996,7 @@ class Game extends Component {
     }
     movesAvailable() {
         var a = this.availableCells();
-        
+
         if (!this.tileMatchesAvailable() && a.length === 0){
             return false;
         } else {
@@ -1016,18 +1007,16 @@ class Game extends Component {
 
     // Actuate Game
     actuate(type){
-        // if game over
+        // If game is over show win screen
         if (GameManager.winGame === true){
-            //show win screen 
             GameManager.showWinScreen = true;
             GameManager.winCount += 1;
         } else {
             GameManager.showWinScreen = false;
         }
 
-        // if lose game
+        // If game is over show lose screen
         if (GameManager.gameOver === true){
-            //show lose screen
             GameManager.showLoseScreen = true;
         } else {
             GameManager.showLoseScreen = false;
@@ -1059,8 +1048,23 @@ class Game extends Component {
         }
 
         // Undo Move
-        if (type === 'undo' && GameManager.undo === true && this.state.canUndo === true && GameManager.undoCount > 0 && GameManager.canUndo === true) {
+        if (
+            type === 'undo' 
+            && GameManager.undoCount > 0 
+            && GameManager.canUndo === true
+        ) {
+            /*console.log('actuate: before undo', {
+                gameManagerUndo: GameManager.undo, 
+                stateCanUndo: this.state.canUndo,
+                gameManagerUndoCount: GameManager.undoCount,
+                gameManagerCanUndo: GameManager.canUndo,
+                prevBoards: this.state.previousBoards,
+            })*/
+
+            // If pressing undo from end game screen
             GameManager.showLoseScreen = false;
+            GameManager.showWinScreen = false;
+            GameManager.gameOver = false;
 
             // Get previous board list, remove most recent, update grid to previous board
             if (this.state.previousBoards.length >= 2){
@@ -1074,42 +1078,40 @@ class Game extends Component {
 
                 var board = boards[boards.length - 1];
 
-                this.setState({
-                    board: board,
-                    previousBoards: boards,
-                    cells: this.grid(board),
-                    score: this.state.undoScore
-                });
+                GameManager.undoCount = GameManager.undoCount - 1;
 
+                // Reset combo if undo count less than 3
                 if (GameManager.undoCount < 3){
                     GameManager.combo = 0;
                     GameManager.comboBlocks = [];
                 } 
 
-                /* else {
-                    GameManager.combo -= 1;
-                    GameManager.comboBlocks.pop();
+                // If last undo was used disable undo
+                if (GameManager.undoCount === 0){
+                    GameManager.canUndo = false;
+                    /*this.setState({
+                        canUndo: false,
+                    })*/
                 }
-                */ 
-            }
 
-            GameManager.undoCount = GameManager.undoCount - 1;
-            if (GameManager.undoCount === 0){
+                // 
+                GameManager.undoNodes = [];
+                for (var a = 0; a < GameManager.undoCount; a++){
+                    GameManager.undoNodes.push(a);
+                }
+
                 this.setState({
-                    canUndo: false
-                })
+                    board: board,
+                    previousBoards: boards,
+                    cells: this.grid(board),
+                    score: this.state.undoScore,
+                });
             }
-            
-            GameManager.undo = false;
-            GameManager.gameOver = false;
-            GameManager.showWinScreen = false;
-            GameManager.showLoseScreen = false;            
-            
-        }
 
-        GameManager.undoNodes = [];
-        for (var a = 0; a < GameManager.undoCount; a++){
-            GameManager.undoNodes.push(a);
+            GameManager.undo = false; 
+        }  
+        if (type === 'undo'){
+            GameManager.undo = false; 
         }
     }
     newGame(mode){
@@ -1153,23 +1155,23 @@ class Game extends Component {
         this.newGame(GameManager.gameType);
     }
     undoMove(){
-        if (GameManager.undo  !== true && GameManager.canUndo === true){
+        if (GameManager.canUndo === true){
             GameManager.undo = true;
-            GameManager.gameOver = false;
             GameManager.navPowerTiles = false;
 
             // Reset combo
             if (GameManager.undoCount !== 3){
                 GameManager.comboBlocks = [];
             }
-
-            // Update total undo's
-            this.setState({
-                totalUndoCount: this.state.totalUndoCount + 1,
-            })
         }
 
         this.actuate('undo');
+        
+        // Update total undo's
+        this.setState({
+            totalUndoCount: this.state.totalUndoCount + 1,
+        })
+
     }
     openMenu(){
         if (GameManager.showMenu){
@@ -1185,7 +1187,6 @@ class Game extends Component {
            // GameManager.showMenu = false;
         } 
 
-        
         //this.actuate();
     }
 
@@ -1224,7 +1225,6 @@ class Game extends Component {
         }
         
         console.log(type, 'ability used');
-        
     }
     usePower(){
         GameManager.navPowerTiles = true;
@@ -1405,8 +1405,6 @@ class Game extends Component {
             GameManager.currentPower = 1;
             GameManager.currentPowerTile = 0;
 
-            
-
             this.setState({
                 powerTile: null
             });
@@ -1576,7 +1574,6 @@ class Game extends Component {
         this.setState({
             saved: true,
         })
-
     }
 
 
@@ -1611,7 +1608,14 @@ class Game extends Component {
                 }
                 { !GameManager.showWinScreen 
                     ? null 
-                    : <EndGame type={'win'} board={this.state.board}/> 
+                    : <EndGame 
+                        type={'win'} 
+                        board={this.state.board}
+                        moveCount={this.state.moveCounter}
+                        undoCount={this.state.totalUndoCount}
+                        newGame={this.newGame} 
+                        undo={this.undoMove}
+                    /> 
                 }
                 { !GameManager.showLoseScreen 
                     ? null 
@@ -1634,6 +1638,10 @@ class Game extends Component {
                     openMenu={this.openMenu}
                     windowHeight={this.props.windowHeight}
                     windowWidth={this.props.windowWidth}
+                    handleInput={this.handleInput}
+
+                    previousBoards={this.state.previousBoards}
+                    actuate={this.actuate}
                 />
                 { !GameManager.showWinScreen || !GameManager.showLoseScreen 
                     ? <Combo comboLength={GameManager.combo}/> 
@@ -1661,8 +1669,31 @@ class Game extends Component {
                     ? <></>
                     : <Details tooltip={GameManager.tooltip}/> 
                 }
-                
-                
+
+                <ReactTouchEvents onTap={this.undoMove.bind(this)}> 
+                    <div 
+                        className='info-btn info-btn-right undo-btn' 
+                        style={{
+                            width: '50%',
+                            height: 60,
+                            backgroundColor: '#775e65',
+                            color: 'white',
+                            fontFamily: 'Cabin',
+                            fontSize: '.6em',
+                            letterSpacing: .7,
+                            margin: 'auto',
+                            display: 'inline-block',
+                            borderRadius: 4,
+                            padding: '4px 12px',
+                            textDecoration: 'none',
+                            border: 'none',
+                            userSelect: 'none',
+                        }} 
+                    >
+                        {"Undo"}
+                    </div>
+                </ReactTouchEvents> 
+
             </div>
         )
     }
