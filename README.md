@@ -2,7 +2,7 @@
 
 Mint is a fresh reimagining of the puzzle game 2048 made with new gameplay features. Match tiles, perform combos and use abilities to create the 2048 tile and win the game.
 
-### [Play Mint 2048](https://mint2048.com/)
+### [Play Mint 2048](https://plus-7ed02.web.app/)
  
 
 ![](pics/2048mint-sample2.PNG)
